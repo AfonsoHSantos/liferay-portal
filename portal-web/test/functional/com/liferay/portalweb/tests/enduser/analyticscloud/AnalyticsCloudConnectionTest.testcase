@@ -115,24 +115,6 @@ definition {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 	}
 
-	@description = "Automation ID: LRAC-8128 | Test Summary: View asset added by DXP data source"
-	@ignore = "true"
-	@priority = "5"
-	test ViewAssetAddedByDXPDataSource {
-
-		// TODO LRAC-8128 ViewAssetAddedByDXPDataSource
-
-	}
-
-	@description = "Automation ID: LRAC-8127 | Test Summary: View page added by DXP data source"
-	@ignore = "true"
-	@priority = "5"
-	test ViewPageAddedByDXPDataSource {
-
-		// TODO LRAC-8127 ViewPageAddedByDXPDataSource
-
-	}
-
 	@description = "Automation ID: LRAC-8837 | Test Summary: Invalid OAuth Credentials"
 	@ignore = "true"
 	@priority = "2"
@@ -151,6 +133,33 @@ definition {
 
 	}
 
+	@description = "Automation ID: LRAC-8820 | Test Summary: There is a list of connected data sources including a table of properties/status"
+	@ignore = "true"
+	@priority = "5"
+	test ListOfConnectedDataSourcesIncludingTablePropertiesStatus {
+
+		// TODO LRAC-8820 ListOfConnectedDataSourcesIncludingTablePropertiesStatus
+
+	}
+
+	@description = "Automation ID: LRAC-8833 | Test Summary: Preview number of contacts to be added when configuring contacts"
+	@ignore = "true"
+	@priority = "5"
+	test PreviewNumberOfContactsToAddedWhenSyncContacts {
+
+		// TODO LRAC-8833 PreviewNumberOfContactsToAddedWhenSyncContacts
+
+	}
+
+	@description = "Automation ID: LRAC-8128 | Test Summary: View asset added by DXP data source"
+	@ignore = "true"
+	@priority = "5"
+	test ViewAssetAddedByDXPDataSource {
+
+		// TODO LRAC-8128 ViewAssetAddedByDXPDataSource
+
+	}
+
 	@description = "Automation ID: LRAC-8128 | Test Summary: View asset added by DXP data source"
 	@ignore = "true"
 	@priority = "5"
@@ -169,21 +178,12 @@ definition {
 
 	}
 
-	@description = "Automation ID: LRAC-8820 | Test Summary: There is a list of connected data sources including a table of properties/status"
+	@description = "Automation ID: LRAC-8127 | Test Summary: View page added by DXP data source"
 	@ignore = "true"
 	@priority = "5"
-	test ListOfConnectedDataSourcesIncludingTablePropertiesStatus {
+	test ViewPageAddedByDXPDataSource {
 
-		// TODO LRAC-8820 ListOfConnectedDataSourcesIncludingTablePropertiesStatus
-
-	}
-
-	@description = "Automation ID: LRAC-8833 | Test Summary: Preview number of contacts to be added when configuring contacts"
-	@ignore = "true"
-	@priority = "5"
-	test PreviewNumberOfContactsToAddedWhenSyncContacts {
-
-		// TODO LRAC-8833 PreviewNumberOfContactsToAddedWhenSyncContacts
+		// TODO LRAC-8127 ViewPageAddedByDXPDataSource
 
 	}
 
