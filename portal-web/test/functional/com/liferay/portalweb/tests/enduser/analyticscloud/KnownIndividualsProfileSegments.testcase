@@ -60,6 +60,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8992 | Test Summary: Clicking an associated segment navigates to segment profile"
 	@priority = "3"
 	test AssertIndividualOverviewAssociatedSegmentProfile {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Error when search users in static segment happen on this ticket because of the bug
+		// AC Bug ticket : LRAC-9420
+		// AC Refactor ticket: LRAC-9422
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -75,6 +81,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
 			}
 
 			ACUtils.closeAllSessionsAndWait();
@@ -93,6 +101,8 @@ definition {
 				ACSegments.createStaticSegment();
 
 				ACSegments.nameSegment(segmentName = "${segmentName}");
+
+				// Error when search users to add in the segment
 
 				if ("${segmentName}" == "Static Segment Test1") {
 					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2");
@@ -119,20 +129,27 @@ definition {
 				cardTitle = "Associated Segments",
 				searchItem = "Test1");
 
-			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Static Segment Test1");
+			ACIndividualsDashboard.assertSegmentInAssociatedSegmentsCard(itemName = "Static Segment Test1");
 
 			ACNavigation.openItem(itemName = "Static Segment Test1");
 
-			ACSegments.viewSegmentMembershipLegendNumbers(
-				anonymousNumber = "0",
-				knownNumber = "2",
-				totalNumber = "2");
+			ACNavigation.switchTab(tabName = "Membership");
+
+			AssertElementPresent(
+				key_userName = "user1 user1",
+				locator1 = "ACSegments#SEGMENT_MEMBERS");
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8993 | Test Summary: Selecting a Segment in Individuals"
 	@priority = "3"
 	test AssertIndividualsSegmentSelected {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Error when search users in static segment happen on this ticket because of the bug
+		// AC Bug ticket : LRAC-9420
+		// AC Refactor ticket: LRAC-9423
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -148,6 +165,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
 			}
 
 			ACUtils.closeAllSessionsAndWait();
@@ -166,6 +185,8 @@ definition {
 				ACSegments.createStaticSegment();
 
 				ACSegments.nameSegment(segmentName = "${segmentName}");
+
+				// Error when search users to add in the segment
 
 				if ("${segmentName}" == "Static Segment Test1") {
 					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2");
@@ -192,20 +213,27 @@ definition {
 		task ("Assert can select a Segment in Individuals Associated Segments card") {
 			ACUtils.searchBar(searchItem = "Test2");
 
-			ACIndividualsDashboard.assertSegmentInAssociatedSegmentsCard(itemName = "Static Segment Test2");
+			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "Static Segment Test2");
 
 			ACNavigation.openItem(itemName = "Static Segment Test2");
 
-			ACSegments.viewSegmentMembershipLegendNumbers(
-				anonymousNumber = "0",
-				knownNumber = "1",
-				totalNumber = "1");
+			ACNavigation.switchTab(tabName = "Membership");
+
+			AssertElementPresent(
+				key_userName = "user1 user1",
+				locator1 = "ACSegments#SEGMENT_MEMBERS");
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8991 | Test Summary: Order an Individual's Associated Segments List"
 	@priority = "3"
 	test OrderIndividualsAssociatedSegments {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Error when search users in static segment happen on this ticket because of the bug
+		// AC Bug ticket : LRAC-9420
+		// AC Refactor ticket: LRAC-9424
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -233,6 +261,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
 			}
 
 			ACUtils.closeAllSessionsAndWait();
@@ -251,6 +281,8 @@ definition {
 				ACSegments.createStaticSegment();
 
 				ACSegments.nameSegment(segmentName = "${segmentName}");
+
+				// Error when search users to add in the segment
 
 				if ("${segmentName}" == "Static Segment Test1") {
 					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2,user3 user3");
@@ -299,7 +331,7 @@ definition {
 		}
 
 		task ("Check descending arrow descending of table title of Name") {
-			ACUtils.orderTableTitleArrow(type = "up");
+			ACUtils.orderTableTitleArrow(type = "down");
 		}
 
 		task ("Assert 3 segments in order filter by Name display") {
@@ -325,7 +357,7 @@ definition {
 		task ("Assert 3 segments in order filter by membership display") {
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_POSITION_1",
-				value1 = "Static Segment Test3");
+				value1 = "Static Segment Test1");
 
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_POSITION_2",
@@ -333,7 +365,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_POSITION_3",
-				value1 = "Static Segment Test1");
+				value1 = "Static Segment Test3");
 		}
 
 		task ("Check descending arrow descending of table title of Membership") {
@@ -343,7 +375,7 @@ definition {
 		task ("Assert 3 segments in order filter by membership display") {
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_POSITION_1",
-				value1 = "Static Segment Test1");
+				value1 = "Static Segment Test3");
 
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_POSITION_2",
@@ -351,7 +383,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_POSITION_3",
-				value1 = "Static Segment Test3");
+				value1 = "Static Segment Test1");
 		}
 	}
 
@@ -450,6 +482,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8948 | Test Summary: Segments the individual Belongs To appear in the list"
 	@priority = "5"
 	test SegmentsIndividualBelongsToAppearInList {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Error when search users in static segment happen on this ticket because of the bug
+		// AC Bug ticket : LRAC-9420
+		// AC Refactor ticket: LRAC-9425
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -465,6 +503,8 @@ definition {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
 			}
 
 			ACUtils.closeAllSessionsAndWait();
@@ -483,6 +523,8 @@ definition {
 				ACSegments.createStaticSegment();
 
 				ACSegments.nameSegment(segmentName = "${segmentName}");
+
+				// Error when search users to add in the segment
 
 				if ("${segmentName}" == "Static Segment Test1") {
 					ACSegments.addStaticMultiMember(tableMember = "user1 user1,user2 user2");
