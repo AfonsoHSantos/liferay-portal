@@ -60,11 +60,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8992 | Test Summary: Clicking an associated segment navigates to segment profile"
 	@priority = "3"
 	test AssertIndividualOverviewAssociatedSegmentProfile {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: Error when search users in static segment happen on this ticket because of the bug
-		// AC Bug ticket : LRAC-9420
-		// AC Refactor ticket: LRAC-9422
+		property portal.upstream = "afonso";
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
@@ -142,11 +138,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8993 | Test Summary: Selecting a Segment in Individuals"
 	@priority = "3"
 	test AssertIndividualsSegmentSelected {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: Error when search users in static segment happen on this ticket because of the bug
-		// AC Bug ticket : LRAC-9420
-		// AC Refactor ticket: LRAC-9423
+		property portal.upstream = "afonso";
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
@@ -224,11 +216,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8991 | Test Summary: Order an Individual's Associated Segments List"
 	@priority = "3"
 	test OrderIndividualsAssociatedSegments {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: Error when search users in static segment happen on this ticket because of the bug
-		// AC Bug ticket : LRAC-9420
-		// AC Refactor ticket: LRAC-9424
+		property portal.upstream = "afonso";
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
@@ -478,11 +466,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8948 | Test Summary: Segments the individual Belongs To appear in the list"
 	@priority = "5"
 	test SegmentsIndividualBelongsToAppearInList {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: Error when search users in static segment happen on this ticket because of the bug
-		// AC Bug ticket : LRAC-9420
-		// AC Refactor ticket: LRAC-9425
+		property portal.upstream = "afonso";
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
