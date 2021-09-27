@@ -6,19 +6,22 @@ definition {
 	property property.group = "analytics.cloud.profile";
 	property testray.main.component.name = "Analytics Cloud";
 
-	setUp {
-		task ("Copy the token from AC") {
-			ACUtils.launchAC();
+	//setUp {
+	//	task ("Copy the token from AC") {
+	//		ACUtils.launchAC();
 
-			ACSettings.takeTokenFromAnalyticsCloud();
-		}
+	//		ACSettings.takeTokenFromAnalyticsCloud();
 
-		task ("Set up instance and sign in DXP") {
-			TestCase.setUpPortalInstance();
+	//}
 
-			ACUtils.launchDXP();
-		}
-	}
+	//	task ("Set up instance and sign in DXP") {
+	//		TestCase.setUpPortalInstance();
+
+	//		ACUtils.launchDXP();
+
+	//}
+
+	//}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
@@ -65,24 +68,12 @@ definition {
 	@description = "Automation ID: LRAC-8119 | Test Summary: Create Access Request"
 	@priority = "5"
 	test CanCreateAccessRequest {
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-		}
-
 		task ("Create Access Request") {
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
 
-			ACSettings.createRequestLogByEmail(
-				emailAdresses = "test@liferay.com",
-				jobTypes = "Access");
+			var email = ACSettings.createRequestLogByEmail(jobType = "Access");
 		}
 
 		task ("Assert that Access Request was created and is on the list") {
@@ -93,32 +84,20 @@ definition {
 			Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
 
 			ACSettings.assertRequestLog(
-				emailAdresses = "test@liferay.com",
-				jobType = "Access");
+				jobType = "Access",
+				key_emailAdress = "${email}");
 		}
 	}
 
 	@description = "Automation ID: LRAC-8117 | Test Summary: Create Delete Request"
 	@priority = "5"
 	test CanCreateDeleteRequest {
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-		}
-
 		task ("Create Delete Request") {
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
 
-			ACSettings.createRequestLogByEmail(
-				emailAdresses = "test@liferay.com",
-				jobTypes = "Delete");
+			var email = ACSettings.createRequestLogByEmail(jobType = "Delete");
 		}
 
 		task ("Assert that Delete Request was created and is on the list") {
@@ -129,29 +108,20 @@ definition {
 			Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
 
 			ACSettings.assertRequestLog(
-				emailAdresses = "test@liferay.com",
-				jobType = "Delete");
+				jobType = "Delete",
+				key_emailAdress = "${email}");
 		}
 	}
 
 	@description = "Automation ID: LRAC-8109 | Test Summary: Create Suppress Request"
 	@priority = "5"
 	test CanCreateSuppressRequest {
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Switch the property in AC") {
+		task ("Go to settings and create a suppress request") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
-		}
-		task ("Go to settings and create a suppress request") {
 			ACNavigation.goToSettings();
 
-			ACSettings.createRequestLogByEmail(
-				emailAdresses = "test@liferay.com",
-				jobTypes = "Suppress");
+			var email = ACSettings.createRequestLogByEmail(jobType = "Suppress");
 		}
 
 		task ("Assert that the suppress request was created") {
@@ -162,10 +132,10 @@ definition {
 			Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
 
 			ACSettings.assertRequestLog(
-				emailAdresses = "test@liferay.com",
-				jobType = "Suppress");
+				jobType = "Suppress",
+				key_emailAdress = "${email}");
 		}
-	}
+	}	
 
 	@description = "Automation ID: LRAC-8893 | Test Summary: Able to unsuppress user"
 	@priority = "3"
