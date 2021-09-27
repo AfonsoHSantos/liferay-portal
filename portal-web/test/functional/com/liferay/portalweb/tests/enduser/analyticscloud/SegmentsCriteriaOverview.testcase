@@ -113,6 +113,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8497 | Test Summary: Segment criterias nest correctly in the criteria card"
 	@priority = "4"
 	test SegmentCriteriasNestCorrectlyInTheCriteriaCard {
+		property portal.acceptance = "afonso";
+
 		task ("Connect the DXP to Analytics Cloud") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}
