@@ -34,6 +34,8 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONUser.tearDownNonAdminUsers();
 		}
 
 		ACUtils.tearDownAC();
@@ -42,6 +44,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8913 | Test Summary: Assert Individual Activities Chart popover follows format"
 	@priority = "3"
 	test AssertIndividualActivitiesChartPopover {
+		property portal.acceptance = "afonso";
+
 		task ("Add DM to AC Page") {
 			ACUtils.createDMAndAddToPage();
 		}
@@ -63,11 +67,15 @@ definition {
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
 
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+			for (var n : list "1,2,3,4,5") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
 
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+				DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+			}
 		}
 
 		task ("Close all sessions") {
@@ -107,16 +115,19 @@ definition {
 
 		task ("Assert chart popover date formatted") {
 			var formattedDate = ACIndividualsDashboard.getChartPopoverDate();
+			var formattedDate = StringUtil.extractFirst("${formattedDate}",",");
 
 			ACUtils.assertDatePattern(
 				date = "${formattedDate}",
-				format = "yyyy MMM dd");
+				format = "MMM d");
 		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8916 | Test Summary: Selected individual activity point can clear date selection"
 	@priority = "3"
 	test AssertIndividualActivitiesOverviewClearDate {
+		property portal.acceptance = "afonso";
+
 		task ("Add DM to AC Page") {
 			ACUtils.createDMAndAddToPage();
 		}
@@ -138,11 +149,15 @@ definition {
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
 
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+			for (var n : list "1,2,3,4,5") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
 
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+				DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+
+				Pause(locator1 = "5000");
+			}
 		}
 
 		task ("Close all sessions") {
