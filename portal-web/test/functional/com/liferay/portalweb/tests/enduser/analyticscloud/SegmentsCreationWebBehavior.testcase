@@ -638,9 +638,14 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9218 | Test Summary: Add segment using a web behavior 'between' some time"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentUsingBetween {
-		ACUtils.createWCAndAddToPage();
+		property portal.upstream = "afonso";
 
-		Navigator.openURL();
+		// AC Refactor: Issues with segment members may happen on this test case
+		// AC Refactor ticket: 9464
+		// AC Fix ticket: LRAC-9463
+		// AC Bug ticket : LRAC-9412
+
+		ACUtils.createWCAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -656,9 +661,13 @@ definition {
 			userLoginEmailAddress = "ac@liferay.com",
 			userLoginFullName = "ac ac");
 
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
+		for (var n : list "1,2,3") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
+		}
 
 		ACUtils.closeAllSessionsAndWait();
 
@@ -678,13 +687,15 @@ definition {
 
 		ACSegments.generateSecondDayMonthAndYearValues(dateDifferenceFromCurrentDate = "1");
 
+		// Couldn't assert the user due to missing data.
+
 		ACSegments.editWebBehaviorCriterion(
 			day = "${staticDay}",
 			day2 = "${staticDay2}",
 			indexField = "1",
 			month = "${staticMonth}",
 			month2 = "${staticMonth2}",
-			occurenceNumber = "4",
+			occurenceNumber = "6",
 			searchTerm = "Web Content AC Title",
 			timeOption = "between",
 			year = "${staticYear}",
@@ -704,6 +715,8 @@ definition {
 			Navigator.gotoSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();
@@ -716,9 +729,7 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertElementPresent(
-			key_userName = "ac ac",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");
+		ACUtils.viewNameList(nameList = "ac ac");
 	}
 
 	@description = "Add segment using a web behavior 'ever' done"
