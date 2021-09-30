@@ -638,6 +638,13 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9218 | Test Summary: Add segment using a web behavior 'between' some time"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentUsingBetween {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: Issues with segment members may happen on this test case
+		// AC Refactor ticket: 9464
+		// AC Fix ticket: LRAC-9463
+		// AC Bug ticket : LRAC-9412
+
 		ACUtils.createWCAndAddToPage();
 
 		Navigator.openURL();
@@ -677,6 +684,8 @@ definition {
 		ACSegments.generateDayMonthAndYearValues(dateDifferenceFromCurrentDate = "-1");
 
 		ACSegments.generateSecondDayMonthAndYearValues(dateDifferenceFromCurrentDate = "1");
+
+		// Couldn't assert the user due to missing data.
 
 		ACSegments.editWebBehaviorCriterion(
 			day = "${staticDay}",
