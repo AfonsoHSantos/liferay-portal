@@ -227,6 +227,8 @@ definition {
 	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8542 | Test Summary: Delete multiple custom asset report"
 	@priority = "5"
 	test CanDeleteMultipleCustomAssetReport {
+		property portal.upstream = "afonso";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -238,9 +240,13 @@ definition {
 		}
 
 		task ("View the site page") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+			for (var n : list "1,2,3,4,5") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+			}
 		}
 
 		task ("Close sessions") {
@@ -290,6 +296,8 @@ definition {
 	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8543 | Test Summary: Delete one report out of many created"
 	@priority = "3"
 	test CanDeleteOneReportOutOfManyCreated {
+		property portal.upstream = "afonso";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -301,9 +309,13 @@ definition {
 		}
 
 		task ("View the site page") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+			for (var n : list "1,2,3,4,5") {
+				Navigator.gotoSitePage(
+					pageName = "AC Page",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+			}
 		}
 
 		task ("Close sessions") {
@@ -353,6 +365,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8132 | Test Summary: Custom asset list shows a list of custom assets"
 	@priority = "5"
 	test CanShowsCustomAssetList {
+		property portal.upstream = "afonso";
+
 		var assetName = "Custom Asset Analytics Cloud,Custom Asset Analytics Cloud 2,Custom Asset Analytics Cloud 3";
 
 		for (var layoutName : list "AC Page 2,AC Page 3") {
@@ -379,9 +393,13 @@ definition {
 		}
 
 		for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
-			Navigator.gotoSitePage(
-				pageName = "${pageName}",
-				siteName = "Site Name");
+			for (var n : list "1,2,3,4,5") {
+				Navigator.gotoSitePage(
+					pageName = "${pageName}",
+					siteName = "Site Name");
+
+				Pause(locator1 = "5000");
+			}
 		}
 
 		ACUtils.closeAllSessionsAndWait();

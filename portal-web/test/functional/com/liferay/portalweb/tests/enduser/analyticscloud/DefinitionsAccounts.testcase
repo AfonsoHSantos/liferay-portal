@@ -30,6 +30,8 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONUser.tearDownNonAdminUsers();
 		}
 
 		ACUtils.tearDownAC();
@@ -38,6 +40,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8153 | Test Summary: Redirects to Accounts page"
 	@priority = "5"
 	test CanRedirectsToAccountsPage {
+		property portal.upstream = "afonso";
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(

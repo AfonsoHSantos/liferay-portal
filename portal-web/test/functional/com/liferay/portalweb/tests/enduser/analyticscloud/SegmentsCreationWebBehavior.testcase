@@ -476,6 +476,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9216 | Test Summary: Add segment using a web behavior 'after' some time"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentUsingAfter {
+		property portal.upstream = "afonso";
+
 		ACUtils.createWCAndAddToPage();
 
 		Navigator.openURL();
@@ -557,6 +559,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9217 | Test Summary: Add segment using a web behavior 'before' some time"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentUsingBefore {
+		property portal.upstream = "afonso";
+
 		ACUtils.createWCAndAddToPage();
 
 		Navigator.openURL();
@@ -638,6 +642,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9218 | Test Summary: Add segment using a web behavior 'between' some time"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentUsingBetween {
+		property portal.upstream = "afonso";
+
 		ACUtils.createWCAndAddToPage();
 
 		Navigator.openURL();
@@ -898,6 +904,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9219 | Test Summary: Add segment using a web behavior 'on' some time"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentUsingOn {
+		property portal.upstream = "afonso";
+
 		ACUtils.createWCAndAddToPage();
 
 		Navigator.openURL();
