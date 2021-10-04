@@ -390,71 +390,83 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		AssertClick(
-			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
-			value1 = "Select");
-
-		Pause(locator1 = "5000");
-
-		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
-
-		if (isSet(depotName)) {
-			var key_rowEntry = "${webContentTitle}";
-
-			AssertClick(
-				key_breadcrumbName = "Sites and Libraries",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "Sites and Libraries");
-
-			AssertClick(
-				key_groupTab = "Asset Library",
-				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-				value1 = "Asset Library");
-
-			Click(
-				key_card = "${depotName}",
-				locator1 = "Card#CARD_TITLE");
-
-			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		if (IsElementPresent(value1 = "Change",locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON")) {
+			PortletEntry.save();
 
 			SelectFrame(value1 = "relative=top");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			AssertTextEquals(
-				key_card = "${webContentTitle} (${depotName})",
-				locator1 = "Card#CARD_TITLE",
-				value1 = "${webContentTitle} (${depotName})");
+			if ("${contentPage}" == "true") {
+				Click(locator1 = "Icon#CLOSE");
+			}
 		}
 
 		else {
-			var key_listEntry = "${webContentTitle}";
-			var key_webContentTitle = "${webContentTitle}";
+			AssertClick(
+				locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
+				value1 = "Select");
 
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+			Pause(locator1 = "5000");
 
-			if (IsElementPresent.pauseIsElementPresent(locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK")) {
+			SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
+
+			if (isSet(depotName)) {
+				var key_rowEntry = "${webContentTitle}";
+
 				AssertClick(
-					locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
+					key_breadcrumbName = "Sites and Libraries",
+					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+					value1 = "Sites and Libraries");
+
+				AssertClick(
+					key_groupTab = "Asset Library",
+					locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+					value1 = "Asset Library");
+
+				Click(
+					key_card = "${depotName}",
+					locator1 = "Card#CARD_TITLE");
+
+				Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+				SelectFrame(value1 = "relative=top");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				AssertTextEquals(
+					key_card = "${webContentTitle} (${depotName})",
+					locator1 = "Card#CARD_TITLE",
+					value1 = "${webContentTitle} (${depotName})");
+			}
+
+			else {
+				var key_listEntry = "${webContentTitle}";
+				var key_webContentTitle = "${webContentTitle}";
+
+				LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+				if (IsElementPresent.pauseIsElementPresent(locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK")) {
+					AssertClick(
+						locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK",
+						value1 = "${webContentTitle}");
+				}
+
+				SelectFrame(value1 = "relative=top");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				AssertTextEquals(
+					key_card = "${webContentTitle}",
+					locator1 = "Card#CARD_TITLE",
 					value1 = "${webContentTitle}");
 			}
 
+			PortletEntry.save();
+
 			SelectFrame(value1 = "relative=top");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			AssertTextEquals(
-				key_card = "${webContentTitle}",
-				locator1 = "Card#CARD_TITLE",
-				value1 = "${webContentTitle}");
-		}
-
-		PortletEntry.save();
-
-		SelectFrame(value1 = "relative=top");
-
-		if ("${contentPage}" == "true") {
-			Click(locator1 = "Icon#CLOSE");
+			if ("${contentPage}" == "true") {
+				Click(locator1 = "Icon#CLOSE");
+			}
 		}
 	}
 
