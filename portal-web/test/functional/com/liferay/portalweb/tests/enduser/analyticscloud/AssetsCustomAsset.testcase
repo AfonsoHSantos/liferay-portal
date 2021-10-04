@@ -62,6 +62,8 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			JSONUser.tearDownNonAdminUsers();
 		}
 
 		ACUtils.tearDownAC();
@@ -115,6 +117,8 @@ definition {
 	@description = "Feature ID: LRAC-7532 | Automation ID: LRAC-8539 | Test Summary: Create multiple custom asset report"
 	@priority = "5"
 	test CanCreateMultipleCustomAssetReport {
+		property portal.upstream = "afonso";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
 		}
@@ -240,7 +244,7 @@ definition {
 		}
 
 		task ("View the site page") {
-			for (var n : list "1,2,3,4,5") {
+			for (var n : list "1,2,3") {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
@@ -309,7 +313,7 @@ definition {
 		}
 
 		task ("View the site page") {
-			for (var n : list "1,2,3,4,5") {
+			for (var n : list "1,2,3") {
 				Navigator.gotoSitePage(
 					pageName = "AC Page",
 					siteName = "Site Name");
@@ -339,7 +343,8 @@ definition {
 				ACAssets.addCustomAssetReport(
 					assetName = "Custom Asset Analytics Cloud",
 					metric = "Asset Views (sum)",
-					reportName = "Test Custom Asset Report ${n}");
+					reportName = "Test Custom Asset Report ${n}");property portal.upstream = "afonso";
+
 
 				var n = ${n} + 1;
 			}
@@ -393,13 +398,11 @@ definition {
 		}
 
 		for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
-			for (var n : list "1,2,3,4,5") {
-				Navigator.gotoSitePage(
-					pageName = "${pageName}",
-					siteName = "Site Name");
+			Navigator.gotoSitePage(
+				pageName = "${pageName}",
+				siteName = "Site Name");
 
-				Pause(locator1 = "5000");
-			}
+			Pause(locator1 = "5000");
 		}
 
 		ACUtils.closeAllSessionsAndWait();
