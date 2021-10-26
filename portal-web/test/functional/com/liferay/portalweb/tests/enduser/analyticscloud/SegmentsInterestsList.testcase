@@ -83,11 +83,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8613 | Test Summary: Assert no interest found in segment"
 	@priority = "3"
 	test AssertNoInterestFoundInSegment {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: Test was written in a local to UAT test environment where data took hours to process and will need to be revisited.
-		// AC Refactor ticket: LRAC-9164
-
 		var usernameList = "user1,user2,user3,user4,user5";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
@@ -122,8 +117,6 @@ definition {
 				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the documents page as different users") {
@@ -133,8 +126,6 @@ definition {
 				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the web content page as different users") {
@@ -143,7 +134,7 @@ definition {
 				pageName = "Web Content Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -162,36 +153,8 @@ definition {
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
 		}
 
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Add the user1 user1 as member") {
-			Click(
-				key_TableMember = "user1 user1",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
-		}
-
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Navigate to page 2") {
-			ACUtils.checkAnyPage(pageNumber = "2");
-		}
-
-		task ("Add the userfn userln as member") {
-			Click(
-				key_TableMember = "userfn userln",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
+		task ("Add the users as member") {
+			ACSegments.addStaticMultiMember(tableMember = "user1 user1,userfn userln");
 		}
 
 		task ("Create the segment") {
@@ -253,8 +216,6 @@ definition {
 				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the documents page as different users") {
@@ -264,8 +225,6 @@ definition {
 				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the web content page as different users") {
@@ -274,7 +233,7 @@ definition {
 				pageName = "Web Content Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -293,36 +252,8 @@ definition {
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
 		}
 
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Add the user1 user1 as member") {
-			Click(
-				key_TableMember = "user1 user1",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
-		}
-
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Navigate to page 2") {
-			ACUtils.checkAnyPage(pageNumber = "2");
-		}
-
-		task ("Add the userfn userln as member") {
-			Click(
-				key_TableMember = "userfn userln",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
+		task ("Add the users as member") {
+			ACSegments.addStaticMultiMember(tableMember = "user1 user1,userfn userln");
 		}
 
 		task ("Create the segment") {
@@ -375,8 +306,6 @@ definition {
 				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the documents page as different users") {
@@ -386,8 +315,6 @@ definition {
 				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the web content page as different users") {
@@ -396,7 +323,7 @@ definition {
 				pageName = "Web Content Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -415,36 +342,8 @@ definition {
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
 		}
 
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Add the user1 user1 as member") {
-			Click(
-				key_TableMember = "user1 user1",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
-		}
-
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Navigate to page 2") {
-			ACUtils.checkAnyPage(pageNumber = "2");
-		}
-
-		task ("Add the userfn userln as member") {
-			Click(
-				key_TableMember = "userfn userln",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
+		task ("Add the users as member") {
+			ACSegments.addStaticMultiMember(tableMember = "user1 user1,userfn userln");
 		}
 
 		task ("Create the segment") {
@@ -530,8 +429,6 @@ definition {
 				emailList = "userea@liferay.com,usera@liferay.com,userf@liferay.com,userg@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the documents page as different users") {
@@ -541,8 +438,6 @@ definition {
 				emailList = "userb@liferay.com,userc@liferay.com,userh@liferay.com,useri@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the web content page as different users") {
@@ -551,7 +446,7 @@ definition {
 				pageName = "Web Content Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -568,12 +463,6 @@ definition {
 
 		task ("Type the segment name") {
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
-		}
-
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "20");
 		}
 
 		task ("Add multiple members") {
@@ -815,8 +704,6 @@ definition {
 				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the documents page as different users") {
@@ -826,8 +713,6 @@ definition {
 				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the web content page as different users") {
@@ -836,7 +721,7 @@ definition {
 				pageName = "Web Content Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -855,36 +740,8 @@ definition {
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
 		}
 
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Add the user1 user1 as member") {
-			Click(
-				key_TableMember = "user1 user1",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
-		}
-
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Navigate to page 2") {
-			ACUtils.checkAnyPage(pageNumber = "2");
-		}
-
-		task ("Add the userfn userln as member") {
-			Click(
-				key_TableMember = "userfn userln",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
+		task ("Add the users as member") {
+			ACSegments.addStaticMultiMember(tableMember = "user1 user1,userfn userln");
 		}
 
 		task ("Create the segment") {
@@ -1034,8 +891,6 @@ definition {
 				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the documents page as different users") {
@@ -1045,8 +900,6 @@ definition {
 				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the web content page as different users") {
@@ -1055,7 +908,7 @@ definition {
 				pageName = "Web Content Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -1074,36 +927,8 @@ definition {
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
 		}
 
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
 		task ("Add the user1 user1 as member") {
-			Click(
-				key_TableMember = "user1 user1",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
-		}
-
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Navigate to page 2") {
-			ACUtils.checkAnyPage(pageNumber = "2");
-		}
-
-		task ("Add the userfn userln as member") {
-			Click(
-				key_TableMember = "userfn userln",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
+			ACSegments.addStaticMultiMember(tableMember = "user1 user1,userfn userln");
 		}
 
 		task ("Create the segment") {
@@ -1275,8 +1100,6 @@ definition {
 				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the documents page as different users") {
@@ -1286,8 +1109,6 @@ definition {
 				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the web content page as different users") {
@@ -1295,8 +1116,6 @@ definition {
 				emailList = "user4@liferay.com,user5@liferay.com",
 				pageName = "Web Content Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the second blogs page as different users") {
@@ -1306,8 +1125,6 @@ definition {
 				emailList = "user6@liferay.com,user7@liferay.com",
 				pageName = "Blogs Second Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the second documents page as different users") {
@@ -1317,8 +1134,6 @@ definition {
 				emailList = "user8@liferay.com,user9@liferay.com",
 				pageName = "Documents Second Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the second web content page as different users") {
@@ -1327,7 +1142,7 @@ definition {
 				pageName = "Web Content Second Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -1344,12 +1159,6 @@ definition {
 
 		task ("Type the segment name") {
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
-		}
-
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "20");
 		}
 
 		task ("Add multiple members") {
@@ -1569,8 +1378,6 @@ definition {
 				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the documents page as different users") {
@@ -1580,8 +1387,6 @@ definition {
 				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the web content page as different users") {
@@ -1590,7 +1395,7 @@ definition {
 				pageName = "Web Content Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -1609,36 +1414,8 @@ definition {
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
 		}
 
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
 		task ("Add the user1 user1 as member") {
-			Click(
-				key_TableMember = "user1 user1",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
-		}
-
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Navigate to page 2") {
-			ACUtils.checkAnyPage(pageNumber = "2");
-		}
-
-		task ("Add the userfn userln as member") {
-			Click(
-				key_TableMember = "userfn userln",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
+			ACSegments.addStaticMultiMember(tableMember = "user1 user1,userfn userln");
 		}
 
 		task ("Create the segment") {
@@ -1726,8 +1503,6 @@ definition {
 				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the documents page as different users") {
@@ -1737,8 +1512,6 @@ definition {
 				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the web content page as different users") {
@@ -1747,7 +1520,7 @@ definition {
 				pageName = "Web Content Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -1766,36 +1539,8 @@ definition {
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
 		}
 
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
 		task ("Add the user1 user1 as member") {
-			Click(
-				key_TableMember = "user1 user1",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
-		}
-
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Navigate to page 2") {
-			ACUtils.checkAnyPage(pageNumber = "2");
-		}
-
-		task ("Add the userfn userln as member") {
-			Click(
-				key_TableMember = "userfn userln",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
+			ACSegments.addStaticMultiMember(tableMember = "user1 user1,userfn userln");
 		}
 
 		task ("Create the segment") {
@@ -1868,8 +1613,6 @@ definition {
 				documentTitleList = "Blogs AC Title",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the documents page as different users") {
@@ -1879,8 +1622,6 @@ definition {
 				emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the web content page as different users") {
@@ -1889,7 +1630,7 @@ definition {
 				pageName = "Web Content Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -1906,12 +1647,6 @@ definition {
 
 		task ("Type the segment name") {
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
-		}
-
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
 		}
 
 		task ("Add multiple members") {
@@ -1992,8 +1727,6 @@ definition {
 				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the web content page as different users") {
@@ -2002,7 +1735,7 @@ definition {
 				pageName = "Web Content Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -2021,36 +1754,8 @@ definition {
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
 		}
 
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
 		task ("Add the user1 user1 as member") {
-			Click(
-				key_TableMember = "user1 user1",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
-		}
-
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Navigate to page 2") {
-			ACUtils.checkAnyPage(pageNumber = "2");
-		}
-
-		task ("Add the userfn userln as member") {
-			Click(
-				key_TableMember = "userfn userln",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
+			ACSegments.addStaticMultiMember(tableMember = "user1 user1,userfn userln");
 		}
 
 		task ("Create the segment") {
@@ -2134,8 +1839,6 @@ definition {
 				emailList = "userea@liferay.com,user1@liferay.com",
 				pageName = "Blogs Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the documents page as different users") {
@@ -2145,8 +1848,6 @@ definition {
 				emailList = "user2@liferay.com,user3@liferay.com",
 				pageName = "Documents Page",
 				siteName = "Site Name");
-
-			ACUtils.closeAllSessions();
 		}
 
 		task ("View the web content page as different users") {
@@ -2155,7 +1856,7 @@ definition {
 				pageName = "Web Content Page",
 				siteName = "Site Name");
 
-			ACUtils.closeAllSessions();
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Switch to new property in AC") {
@@ -2174,36 +1875,8 @@ definition {
 			ACSegments.nameSegment(segmentName = "Static Segment Test");
 		}
 
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
 		task ("Add the user1 user1 as member") {
-			Click(
-				key_TableMember = "user1 user1",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
-		}
-
-		task ("Select the 5 items in Add Members modal") {
-			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
-
-			ACUtils.changePagination(itemsPerPage = "5");
-		}
-
-		task ("Navigate to page 2") {
-			ACUtils.checkAnyPage(pageNumber = "2");
-		}
-
-		task ("Add the userfn userln as member") {
-			Click(
-				key_TableMember = "userfn userln",
-				locator1 = "ACSegments#TABLE_CHECKBOX");
-
-			Click(locator1 = "ACSegments#ADD_BUTTON");
+			ACSegments.addStaticMultiMember(tableMember = "user1 user1,userfn userln");
 		}
 
 		task ("Create the segment") {
