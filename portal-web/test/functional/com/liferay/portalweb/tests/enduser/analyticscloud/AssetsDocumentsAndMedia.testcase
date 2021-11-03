@@ -666,7 +666,7 @@ definition {
 
 		ACTimeFilter.setLast24Hours();
 
-		ACNavigation.openItem(itemName = "DM AC Title");
+		ACNavigation.openItem(itemName = "Document_1.jpg");
 
 		ACIndividualsDashboard.goToKnownIndividualsTab();
 
