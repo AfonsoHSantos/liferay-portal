@@ -125,6 +125,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8916 | Test Summary: Selected individual activity point can clear date selection"
 	@priority = "3"
 	test AssertIndividualActivitiesOverviewClearDate {
+		property portal.upstream = "afonso";
+
 		task ("Add DM to AC Page") {
 			ACUtils.createDMAndAddToPage();
 		}

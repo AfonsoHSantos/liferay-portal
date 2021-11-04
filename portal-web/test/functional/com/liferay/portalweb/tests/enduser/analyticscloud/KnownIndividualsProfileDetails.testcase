@@ -186,7 +186,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8938 | Test Summary: Order an Individual's Details"
 	@priority = "3"
 	test OrderIndividualDetails {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(

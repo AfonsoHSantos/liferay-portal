@@ -240,7 +240,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8906 | Test Summary: As a Business User, I should be able to select a point on individual overview activities graph"
 	@priority = "3"
 	test SelectDataOnIndividualsActivitiesChart {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
@@ -416,6 +416,12 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8902 | Test Summary: As an Business User, I should be able to assert the cards on the Overview tab of an Individual's page"
 	@priority = "4"
 	test ViewCardsInTheOverviewTabOfIndividualsPage {
+		property portal.upstream = "afonso";
+
+		task ("Get site assigned property name") {
+			var propertyName = ACDXPSettings.getAssignedPropertyName(siteName = "Site Name");
+		}
+
 		task ("View the site page with new user") {
 			ACUtils.navigateToSitePageWithUser(
 				emailList = "userea@liferay.com",

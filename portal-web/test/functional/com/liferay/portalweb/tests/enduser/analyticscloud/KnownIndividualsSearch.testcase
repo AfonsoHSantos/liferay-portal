@@ -933,7 +933,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9031 | Test Summary: Table Pagination"
 	@priority = "4"
 	test TablePagination {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		var usernameList = "user1,user2,user3,user4,user5,user6";
 

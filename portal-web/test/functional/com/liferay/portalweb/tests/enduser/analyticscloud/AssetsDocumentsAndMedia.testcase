@@ -514,7 +514,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8415 | Test Summary: Documents downloads by technology card shows downloads by the expected browser"
 	@priority = "5"
 	test DocumentsTechnologyCardShowsViewsByExpectedBrowser {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -566,7 +566,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8414 | Test Summary: Documents downloads by technology card shows downloads by the expected device"
 	@priority = "5"
 	test DocumentsTechnologyCardShowsViewsByExpectedDevice {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		var documentNameList = "DM AC Title,DM AC Title";
 
@@ -614,7 +614,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8118 | Test Summary: Document known individuals list shows the individuals who have viewed the documents"
 	@priority = "5"
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedDocuments {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Quarantine reason: The name of the known individuals do not appear in the list
 		// AC Quarantine ticket: LRAC-9807
