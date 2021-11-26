@@ -579,6 +579,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8428 | Test Summary: Form submissions by technology card shows views by expected device"
 	@priority = "5"
 	test FormsTechnologyCardShowsViewsByExpectedDevice {
+		property portal.upstream = "quarantine";
+		
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Submit the form") {
@@ -623,6 +625,8 @@ definition {
 	@description = "Form known individuals shows which individuals interact with the form"
 	@priority = "5"
 	test KnownIndividualsShowsWhichIndividualsInteractWithForm {
+		property portal.upstream = "quarantine";
+
 		var nameList = "ac ac,liferay liferay,dxp dxp";
 
 		var usernameList = "ac,liferay,dxp";
@@ -720,6 +724,8 @@ definition {
 	@description = "Forms visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViews {
+		property portal.upstream = "quarantine";
+
 		property portal.acceptance = "true";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
