@@ -130,7 +130,6 @@ definition {
 			ACTimeFilter.clickTimeFilterButton();
 
 			ACTimeFilter.setLast24Hours();
-
 		}
 
 		task ("Set time filter use Custom Range") {
