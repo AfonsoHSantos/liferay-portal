@@ -98,11 +98,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8372 | Test Summary: Custom Range time period filter in Interests List"
 	@priority = "5"
 	test CanTimeFilterUseCustomRangeInInterestsList {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor: data doesn't appear on time and the test needs data from a past date
-		// AC Refactor ticket: LRAC-8885
-
 		task ("Connect DXP to Analytics Cloud and get the property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
@@ -136,8 +131,6 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			// Unable to perform the declaration because the data does not appear at the time
-
 		}
 
 		task ("Set time filter use Custom Range") {
@@ -151,9 +144,6 @@ definition {
 		}
 
 		task ("Assert result returns") {
-
-			// It is not possible to perform the assert because this test needs data from the past
-
 			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Jul 1, 2020 - Jul 13, 2020");
 		}
 	}
