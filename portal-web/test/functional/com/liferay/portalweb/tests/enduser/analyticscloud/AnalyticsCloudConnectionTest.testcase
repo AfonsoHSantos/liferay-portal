@@ -657,6 +657,7 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8128 | Test Summary: View asset added by DXP data source"
+	@ignore = "true"
 	@priority = "5"
 	test ViewAssetAddedByDXPDataSource {
 		property portal.release = "true";

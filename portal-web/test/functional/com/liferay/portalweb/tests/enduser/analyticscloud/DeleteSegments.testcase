@@ -104,6 +104,7 @@ definition {
 	}
 
 	@description = "Delete a dynamic segment"
+	@ignore = "true"
 	@priority = "5"
 	test CanDeleteDynamicSegment {
 		property portal.upstream = "quarantine";

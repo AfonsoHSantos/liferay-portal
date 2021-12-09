@@ -258,6 +258,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8513 | Test Summary: Order the Segment Profile Membership List"
+	@ignore = "true"
 	@priority = "3"
 	test OrderSegmentProfileMembershipList {
 		property portal.upstream = "quarantine";
@@ -344,6 +345,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8519 | Test Summary: Search a Dynamic Segment's Membership Preview Modal"
+	@ignore = "true"
 	@priority = "3"
 	test SearchDynamicSegmentsMembershipPreviewModal {
 		property portal.upstream = "quarantine";

@@ -864,6 +864,7 @@ definition {
 	}
 
 	@description = "Add segment using a web behavior 'since' some time"
+	@ignore = "true"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingSince {
 		property portal.upstream = "quarantine";

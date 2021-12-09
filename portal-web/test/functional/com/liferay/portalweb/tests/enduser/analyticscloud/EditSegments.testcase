@@ -36,6 +36,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8588 | Test Summary: Assert segment overview shows criteria"
+	@ignore = "true"
 	@priority = "3"
 	test AssertSegmentOverviewShowsCriteria {
 		property portal.upstream = "quarantine";
@@ -103,6 +104,7 @@ definition {
 	}
 
 	@description = "Edit a dynamic segment and check the edits are saved"
+	@ignore = "true"
 	@priority = "5"
 	test CanEditDynamicSegmentCheckEditSaved {
 		property portal.acceptance = "false";
@@ -210,6 +212,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8135 | Test Summary: Edit a static segment and check the edits are saved"
+	@ignore = "true"
 	@priority = "5"
 	test CanEditStaticSegmentCheckEditSaved {
 		property portal.upstream = "quarantine";
@@ -281,6 +284,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8136 | Test Summary: Rename Individuals Segment"
+	@ignore = "true"
 	@priority = "5"
 	test CanRenameIndividualsSegment {
 		property portal.upstream = "quarantine";
