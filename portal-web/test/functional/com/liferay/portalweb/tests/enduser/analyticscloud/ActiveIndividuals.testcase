@@ -356,11 +356,11 @@ definition {
 		var previousMonth = DateUtil.getFormattedDate("-1", "MMMM");
 
 		ACUtils.assertActiveIndividualChart(
-			endDay = "${displayDateDay}",
-			endMonth = "${displayDateMonth}",
+			endDay = "${previousDay}",
+			endMonth = "${previousMonth}",
 			endYear = "${displayDateYear}",
-			startDay = "${previousDay}",
-			startMonth = "${previousMonth}",
+			startDay = "${displayDateDay}",
+			startMonth = "${displayDateMonth}",
 			startYear = "${displayDateYear}",
 			timeFilter = "Custom Range");
 	}
