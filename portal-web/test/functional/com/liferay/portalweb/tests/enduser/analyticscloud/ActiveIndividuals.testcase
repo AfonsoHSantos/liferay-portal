@@ -329,7 +329,7 @@ definition {
 	@description = "Set custom range filter with data for individual activity"
 	@priority = "5"
 	test CanSetDataWithCustomRangeOnIndividualActivitiesCard {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		ACUtils.createDMAndAddToPage();
 
