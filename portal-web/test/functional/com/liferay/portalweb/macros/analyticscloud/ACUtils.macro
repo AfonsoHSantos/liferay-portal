@@ -413,7 +413,7 @@ definition {
 
 		// It needs a 30 second pause which is the time required for the command to be executed. For more information about pause see LRAC-9518
 
-		Pause(locator1 = "90000");
+		Pause(locator1 = "30000");
 	}
 
 	macro closeModal {
@@ -683,6 +683,9 @@ definition {
 
 				FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
 			}
+
+			ACUtils.closeAllSessions();
+		
 		}
 	}
 
