@@ -39,7 +39,7 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test AssertSegmentOverviewShowsCriteria {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 
@@ -110,7 +110,7 @@ definition {
 	@priority = "5"
 	test CanEditDynamicSegmentCheckEditSaved {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 
@@ -219,7 +219,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanEditStaticSegmentCheckEditSaved {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 
@@ -293,7 +293,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanRenameIndividualsSegment {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 

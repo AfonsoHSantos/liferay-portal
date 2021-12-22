@@ -41,7 +41,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesBlogExists {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 		// AC Refactor: It is not possible to perform the assert because this test presents timing problems.
@@ -155,7 +155,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInBlogs {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 
@@ -216,7 +216,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInBlogs {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 
@@ -365,7 +365,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test BlogsTechnologyCardShowsViewsByExpectedBrowser {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 
@@ -420,7 +420,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test BlogsTechnologyCardShowsViewsByExpectedDevice {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 
@@ -469,7 +469,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanBlogsListSearchable {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 
@@ -514,7 +514,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanNavigatesToBlogsOverviewPage {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 
@@ -632,7 +632,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedBlog {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 
@@ -707,7 +707,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewAllBlogsShownInAssetList {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 

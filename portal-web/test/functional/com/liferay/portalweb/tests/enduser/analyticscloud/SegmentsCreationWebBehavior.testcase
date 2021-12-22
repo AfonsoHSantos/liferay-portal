@@ -740,6 +740,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingHasNot {
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 
@@ -898,7 +899,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentUsingSince {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingSince";
 
 		// AC Bug Ticket: LRAC-10060
@@ -983,6 +984,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentViewingBlog {
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 

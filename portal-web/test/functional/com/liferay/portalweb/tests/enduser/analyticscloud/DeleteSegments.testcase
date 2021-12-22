@@ -107,7 +107,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanDeleteDynamicSegment {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 

@@ -661,7 +661,7 @@ definition {
 	@priority = "5"
 	test ViewAssetAddedByDXPDataSource {
 		property portal.release = "true";
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 

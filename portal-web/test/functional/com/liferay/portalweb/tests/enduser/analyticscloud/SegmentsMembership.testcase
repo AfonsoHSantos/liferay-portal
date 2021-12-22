@@ -261,7 +261,7 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test OrderSegmentProfileMembershipList {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 
@@ -350,7 +350,7 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test SearchDynamicSegmentsMembershipPreviewModal {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10060
 
