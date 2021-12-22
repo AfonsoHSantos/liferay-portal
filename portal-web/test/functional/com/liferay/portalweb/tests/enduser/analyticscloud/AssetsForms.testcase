@@ -95,7 +95,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInForms {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10154
 
@@ -166,7 +166,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInForms {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10154
 
@@ -264,7 +264,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanFormsListSearchable {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10154
 
@@ -317,7 +317,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CanNavigatesToFormsOverviewPage {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10154
 
@@ -453,7 +453,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test FormAbandonmentCardShowsExpectedAmountFormAbandonment {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10154
 
@@ -558,7 +558,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test FormsTechnologyCardShowsViewsByExpectedBrowser {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10154
 
@@ -609,7 +609,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test FormsTechnologyCardShowsViewsByExpectedDevice {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10154
 
@@ -658,7 +658,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test KnownIndividualsShowsWhichIndividualsInteractWithForm {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10154
 
@@ -714,7 +714,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test ViewAllFormsShownInAssetList {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10154
 
@@ -764,7 +764,7 @@ definition {
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViews {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		// AC Bug Ticket: LRAC-10154
 
