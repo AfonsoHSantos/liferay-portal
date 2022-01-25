@@ -58,7 +58,7 @@
 </tr>
 <tr>
 	<td>METRIC_BAR</td>
-	<td>//div[contains(@class,'card-root')][.//h5[contains(@class,'card-title')][normalize-space(text())='${key_cardTitle}']]//tbody[.//td[contains(@class,'name')][normalize-space()='${entryName}']]//div[contains(@class,'metric-bar-root')]//div[contains(@class,'bar')]</td>
+	<td>//div[contains(@class,'card-root')]//h5[contains(@class,'card-title') and contains (.,'${key_cardTitle}')]/../..//td[contains(@class,'name') and contains(.,'${entryName}')]/..//div[contains(@class,'metric-bar-root')]//div[contains(@class,'bar')]</td>
 	<td></td>
 </tr>
 <tr>
