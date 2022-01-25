@@ -347,25 +347,29 @@ definition {
 		task ("Get the portal URL") {
 			var portalUrl = PropsUtil.get("portal.url");
 			var portalUrl = StringUtil.replace("${portalUrl}", "http://", "");
-			var portalUrl = StringUtil.replace("${portalUrl}", ":8080", "");
+			var portalUrl = StringUtil.extractFirst("${portalUrl}", ":");
+		}
+
+		task ("Create a new user and add to AC") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			ACDXPSettings.syncNewContactData();
 		}
 
 		task ("Sign out then sign in as Test Test") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 		}
 
-		task ("Navigate to the new site via Applications Menu") {
-			ApplicationsMenu.gotoSite(site = "Site Name");
-		}
-
-		task ("View the site page") {
-			Page.viewCurrentPage(pageName = "AC Page");
-		}
-
-		task ("Wait for page loading") {
-			WaitForPageLoad();
+		task ("Navigate to site page with the new user") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close session") {
