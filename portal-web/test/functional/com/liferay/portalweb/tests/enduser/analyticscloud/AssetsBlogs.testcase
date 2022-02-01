@@ -444,8 +444,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8382 | Test Summary: The blogs list is searchable"
+	@ignore = "true"
 	@priority = "5"
 	test CanBlogsListSearchable {
+
+		// AC Bug ticket: LRAC-10445
+
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");

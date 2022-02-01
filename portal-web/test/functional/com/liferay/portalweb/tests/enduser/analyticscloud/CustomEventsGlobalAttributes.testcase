@@ -349,8 +349,12 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10217 | Test Summary: Search for global attribute"
+	@ignore = "true"
 	@priority = "4"
 	test SearchForGlobalAttribute {
+
+		// AC Bug ticket: LRAC-10445
+
 		var globalAttributesList = "canonicalUrl,pageDescription,pageTitle";
 
 		task ("Fill fields and create custom event") {

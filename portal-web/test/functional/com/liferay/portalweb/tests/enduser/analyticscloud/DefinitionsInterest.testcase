@@ -59,8 +59,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8786 | Test Summary: Add keyword when there are none"
+	@ignore = "true"
 	@priority = "3"
 	test AddKeywordCurrentlyNone {
+
+		// AC Bug ticket: LRAC-10445
+
 		task ("Go to AC Settings > definitions > Interests") {
 			ACNavigation.goToSettings();
 
@@ -189,8 +193,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8789 | Test Summary: Delete a keyword block"
+	@ignore = "true"
 	@priority = "3"
 	test DeleteKeywordBlock {
+
+		// AC Bug ticket: LRAC-10445
+
 		task ("Go to settings, definitions and definitions type") {
 			ACNavigation.goToSettings();
 
@@ -255,8 +263,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8791 | Test Summary: Delete multiple keywords"
+	@ignore = "true"
 	@priority = "3"
 	test DeleteMultipleKeywords {
+
+		// AC Bug ticket: LRAC-10445
+
 		task ("Go to settings, definitions and definitions type") {
 			ACNavigation.goToSettings();
 
