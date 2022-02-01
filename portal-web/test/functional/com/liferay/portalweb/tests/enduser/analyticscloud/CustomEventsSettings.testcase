@@ -334,8 +334,12 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10007 | Test Summary: Search for Custom Event"
+	@ignore = "true"
 	@priority = "3"
 	test CustomEventListSearchable {
+
+		// AC Bug ticket: LRAC-10445
+
 		task ("Fill fields and create 2 custom events") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 

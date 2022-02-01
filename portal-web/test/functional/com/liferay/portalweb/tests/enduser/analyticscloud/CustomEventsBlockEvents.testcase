@@ -76,8 +76,12 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10147 | Test Summary: Block single custom event and block custom events in bulk"
+	@ignore = "true"
 	@priority = "5"
 	test CanBlockCustomEvent {
+
+		// AC Bug ticket: LRAC-10445
+
 		task ("Fill fields and create 3 custom events") {
 			var customEventName1 = ACCustomEvents.generateCustomEventName();
 
