@@ -345,6 +345,8 @@ definition {
 		task ("Add another document") {
 			ACUtils.createDMAndAddToPage(
 				dmDocumentFile = "Document_2.jpg",
+
+
 				dmDocumentTitle = "New Document");
 		}
 
