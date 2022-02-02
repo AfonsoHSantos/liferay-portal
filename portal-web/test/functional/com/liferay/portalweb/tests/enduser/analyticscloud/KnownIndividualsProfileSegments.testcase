@@ -62,7 +62,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8992 | Test Summary: Clicking an associated segment navigates to segment profile"
 	@priority = "3"
 	test AssertIndividualOverviewAssociatedSegmentProfile {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
 
@@ -429,7 +429,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8948 | Test Summary: Segments the individual Belongs To appear in the list"
 	@priority = "5"
 	test SegmentsIndividualBelongsToAppearInList {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
 

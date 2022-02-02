@@ -683,6 +683,9 @@ definition {
 
 				FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
 			}
+
+			ACUtils.closeAllSessions();
+		
 		}
 	}
 

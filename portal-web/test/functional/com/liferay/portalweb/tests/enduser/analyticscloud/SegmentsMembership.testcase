@@ -124,7 +124,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8512 | Test Summary: Segment membership list is searchable"
 	@priority = "5"
 	test CanSearchMembershipList {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "afonso";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3";
