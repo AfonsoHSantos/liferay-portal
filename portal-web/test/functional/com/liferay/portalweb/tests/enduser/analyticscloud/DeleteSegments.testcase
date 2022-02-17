@@ -273,7 +273,7 @@ definition {
 	@priority = "5"
 	test CheckIfKnownIndividualsDontDisappearAfterDeleteStaticSegment {
 		task ("Connect the DXP to AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Add a new user") {
