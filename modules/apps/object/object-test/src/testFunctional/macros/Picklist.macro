@@ -130,8 +130,8 @@ definition {
 
 	macro assertEmptyStateMessageDisplayed2 {
 		AssertTextEquals(
-			locator1 = "Message#EMPTY_STATE_INFO",
-			emptyMessage = "Sorry, no results were found.");
+			emptyMessage = "Sorry, no results were found.",
+			locator1 = "Message#EMPTY_STATE_INFO");
 	}
 
 	macro assertEntryRelationshipFieldPicklist {

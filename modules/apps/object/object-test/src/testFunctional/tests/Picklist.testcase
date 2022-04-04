@@ -506,7 +506,7 @@ definition {
 	@priority = "3"
 	test EmptyStateMessageDisplayedWhenNoPicklistItem {
 		property portal.upstream = "afonso";
-		
+
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
 		Picklist.gotoPicklists();

@@ -5806,7 +5806,7 @@ definition {
 	@priority = "3"
 	test EmptyStateNoResultObject {
 		property portal.upstream = "afonso";
-		
+
 		ObjectAdmin.openObjectAdmin();
 
 		Search.searchCP(searchTerm = "Object X 130");
@@ -8002,7 +8002,7 @@ definition {
 	@priority = "4"
 	test RelationshipFieldNotCreatedOnManyToMany {
 		property portal.upstream = "afonso";
-		
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 141659 ${letter}",

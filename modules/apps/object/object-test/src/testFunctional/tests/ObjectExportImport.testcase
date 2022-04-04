@@ -176,7 +176,7 @@ definition {
 	@priority = "4"
 	test CannotImportRelationships {
 		property portal.upstream = "afonso";
-		
+
 		ObjectExportImport.importObject(
 			objectFileName = "ImportedObjectWithRelationship",
 			objectName = "ImportedObjectWithRelationship146359");

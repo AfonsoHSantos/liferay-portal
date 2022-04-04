@@ -27,7 +27,7 @@ definition {
 	@priority = "4"
 	test CanAccessPicklistWithAccessPermission {
 		property portal.upstream = "afonso";
-		
+
 		JSONRole.addRegularRole(roleTitle = "Regular Role");
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {

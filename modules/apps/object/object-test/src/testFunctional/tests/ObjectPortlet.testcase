@@ -2363,7 +2363,7 @@ definition {
 	@priority = "3"
 	test EmptyStateDisplayedForSearch {
 		property portal.upstream = "afonso";
-		
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 280",
 			objectName = "CustomObject280",
@@ -2425,7 +2425,7 @@ definition {
 	@priority = "4"
 	test EmptyStateIsDisplayedWhenNoEntry {
 		property portal.upstream = "afonso";
-		
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 282",
 			objectName = "CustomObject282",
