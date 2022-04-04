@@ -495,6 +495,8 @@ definition {
 	@description = "LPS-136595 - Verify the empty state message when there is no Picklist"
 	@priority = "3"
 	test EmptyStateMessageDisplayedWhenNoPicklist {
+		property portal.upstream = "afonso";
+
 		Picklist.gotoPicklists();
 
 		Picklist.assertEmptyStateMessageDisplayed2();
@@ -503,6 +505,8 @@ definition {
 	@description = "LPS-136595 - Verify the empty state message when where is no items for a Picklist"
 	@priority = "3"
 	test EmptyStateMessageDisplayedWhenNoPicklistItem {
+		property portal.upstream = "afonso";
+		
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
 		Picklist.gotoPicklists();

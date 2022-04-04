@@ -26,6 +26,8 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to view and access the Picklist portlet with the Access in Control Panel permission"
 	@priority = "4"
 	test CanAccessPicklistWithAccessPermission {
+		property portal.upstream = "afonso";
+		
 		JSONRole.addRegularRole(roleTitle = "Regular Role");
 
 		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {

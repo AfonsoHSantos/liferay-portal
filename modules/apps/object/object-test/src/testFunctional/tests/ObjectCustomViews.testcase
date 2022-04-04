@@ -94,6 +94,8 @@ definition {
 	@description = "LPS-135394 - Verify it is possible to cancel the creation of a View"
 	@priority = "4"
 	test CanCancelViewCreation {
+		property portal.upstream = "afonso";
+		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Object 147754",
 			objectName = "Object147754",
@@ -872,6 +874,8 @@ definition {
 	@description = "LPS-135394 - Verify the empty state for the View tab"
 	@priority = "3"
 	test EmptyStateViewTab {
+		property portal.upstream = "afonso";
+		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 201",
 			objectName = "CustomObject201",
@@ -918,6 +922,8 @@ definition {
 	@description = "LPS-135394 - Verify the no result message when searching for a view"
 	@priority = "3"
 	test NoResultMessageView {
+		property portal.upstream = "afonso";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 202",
 			objectName = "CustomObject202",

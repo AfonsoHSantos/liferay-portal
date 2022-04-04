@@ -663,6 +663,8 @@ definition {
 	@description = "LPS-135400 - Verify it is possible to cancel the creation of a Relationship"
 	@priority = "4"
 	test CanCancelRelationshipCreation {
+		property portal.upstream = "afonso";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 13",
 			objectName = "CustomObject13",
@@ -1447,6 +1449,7 @@ definition {
 	@priority = "5"
 	test CanDeleteRelationship {
 		property portal.acceptance = "true";
+		property portal.upstream = "afonso";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 36",
@@ -5802,6 +5805,8 @@ definition {
 	@description = "LPS-135547 - Verify the empty state when searching for an Object returns nothing"
 	@priority = "3"
 	test EmptyStateNoResultObject {
+		property portal.upstream = "afonso";
+		
 		ObjectAdmin.openObjectAdmin();
 
 		Search.searchCP(searchTerm = "Object X 130");
@@ -5812,6 +5817,8 @@ definition {
 	@description = "LPS-135547 - Verify the empty state when searching for an Object field returns nothing"
 	@priority = "3"
 	test EmptyStateNoResultObjectField {
+		property portal.upstream = "afonso";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 130",
 			objectName = "CustomObject130",
@@ -5840,6 +5847,8 @@ definition {
 	@description = "LPS-135400 - Verify the empty state message when there is no Relationship"
 	@priority = "3"
 	test EmptyStateWhenNoRelationship {
+		property portal.upstream = "afonso";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 131",
 			objectName = "CustomObject131",
@@ -7992,6 +8001,8 @@ definition {
 	@description = "LPS-135401 - Verify that the Relationship field is not created"
 	@priority = "4"
 	test RelationshipFieldNotCreatedOnManyToMany {
+		property portal.upstream = "afonso";
+		
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 141659 ${letter}",

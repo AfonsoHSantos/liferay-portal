@@ -27,6 +27,7 @@ definition {
 	@priority = "5"
 	test CanAddObjectPortletWidget {
 		property portal.acceptance = "true";
+		property portal.upstream = "afonso";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 5280",

@@ -175,6 +175,8 @@ definition {
 	@description = "LPS-142175 - Verify it is not possible to maintain Relationships after importing an Object"
 	@priority = "4"
 	test CannotImportRelationships {
+		property portal.upstream = "afonso";
+		
 		ObjectExportImport.importObject(
 			objectFileName = "ImportedObjectWithRelationship",
 			objectName = "ImportedObjectWithRelationship146359");

@@ -2362,6 +2362,8 @@ definition {
 	@description = "LPS-135393 - Verify the empty state when searching for a value that does not exist on the auto-generated table on the Custom Object Portlet"
 	@priority = "3"
 	test EmptyStateDisplayedForSearch {
+		property portal.upstream = "afonso";
+		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 280",
 			objectName = "CustomObject280",
@@ -2422,6 +2424,8 @@ definition {
 	@description = "LPS-135393 - Verify if the empty state is displayed when there is no entry on the Custom Object Portlet"
 	@priority = "4"
 	test EmptyStateIsDisplayedWhenNoEntry {
+		property portal.upstream = "afonso";
+		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 282",
 			objectName = "CustomObject282",

@@ -26,6 +26,8 @@ definition {
 	@description = "LPS-139008 - Verify it is possible to cancel the creation of an Action"
 	@priority = "4"
 	test CanCancelAction {
+		property portal.upstream = "afonso";
+		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 181",
 			objectName = "CustomObject181",
