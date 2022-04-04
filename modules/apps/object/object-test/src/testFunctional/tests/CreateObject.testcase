@@ -692,7 +692,7 @@ definition {
 
 		Button.clickCancel();
 
-		ObjectAdmin.assertNoItemsWereFound();
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-135397 - Verify it is possible to Cancel the update of a Layout"
@@ -1468,7 +1468,7 @@ definition {
 
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "Delete");
 
-		ObjectAdmin.assertNoItemsWereFound();
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to add an Object without the Add Object Definition permission"
@@ -5806,7 +5806,7 @@ definition {
 
 		Search.searchCP(searchTerm = "Object X 130");
 
-		ObjectAdmin.assertNoItemsWereFound();
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-135547 - Verify the empty state when searching for an Object field returns nothing"
@@ -5834,7 +5834,7 @@ definition {
 
 		Search.searchCP(searchTerm = "CustomObject X 130");
 
-		ObjectAdmin.assertNoItemsWereFound();
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-135400 - Verify the empty state message when there is no Relationship"
@@ -5851,7 +5851,7 @@ definition {
 
 		ObjectAdmin.gotoRelationshipsTab();
 
-		ObjectAdmin.assertNoItemsWereFound();
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-135549 - Verify that the Field Name is autofilled when Label is filled"
@@ -8012,7 +8012,7 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		CreateObject.viewEmptyFieldTable();
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field is displayed again when the parent object is reactivated (One to Many)"
