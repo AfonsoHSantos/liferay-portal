@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_STATE_INFO</td>
+	<td>//*[contains(@class,'text') and contains(.,'${emptyMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DANGER_INFO</td>
 	<td>//*[contains(@class,'danger-info')][contains(.,'${key_dangerInfo}')]</td>
 	<td></td>
