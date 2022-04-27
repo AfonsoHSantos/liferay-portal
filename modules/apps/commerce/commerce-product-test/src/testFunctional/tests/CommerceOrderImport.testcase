@@ -51,11 +51,7 @@ definition {
 				productName = "U-Joint",
 				productQuantity = "1");
 
-			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "View Details");
-
-			Button.click(button = "Checkout");
+			CommerceCheckout.gotoCheckout();
 
 			CommerceCheckout.initializersCheckout(
 				newAddressAddress = "Test Address",
@@ -149,11 +145,7 @@ definition {
 
 			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
-			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "View Details");
-
-			Button.click(button = "Checkout");
+			CommerceCheckout.gotoCheckout();
 
 			CommerceCheckout.initializersCheckout(
 				newAddressAddress = "Test Address",
@@ -243,11 +235,7 @@ definition {
 					productName = "${productName}",
 					productQuantity = "1");
 
-				CommerceNavigator.gotoMiniCart();
-
-				Button.click(button = "View Details");
-
-				Button.click(button = "Checkout");
+				CommerceCheckout.gotoCheckout();
 
 				CommerceCheckout.initializersCheckout(
 					newAddressAddress = "Test Address",
@@ -352,11 +340,7 @@ definition {
 					productName = "${productName}",
 					productQuantity = "1");
 
-				CommerceNavigator.gotoMiniCart();
-
-				Button.click(button = "View Details");
-
-				Button.click(button = "Checkout");
+				CommerceCheckout.gotoCheckout();
 
 				CommerceCheckout.initializersCheckout(
 					newAddressAddress = "Test Address",
@@ -450,11 +434,7 @@ definition {
 
 			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
-			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "View Details");
-
-			Button.click(button = "Checkout");
+			CommerceCheckout.gotoCheckout();
 
 			CommerceCheckout.initializersCheckout(
 				newAddressAddress = "Test Address",
@@ -511,11 +491,7 @@ definition {
 					productName = "${productName}",
 					productQuantity = "1");
 
-				CommerceNavigator.gotoMiniCart();
-
-				Button.click(button = "View Details");
-
-				Button.click(button = "Checkout");
+				CommerceCheckout.gotoCheckout();
 
 				CommerceCheckout.initializersCheckout(
 					newAddressAddress = "Test Address",
@@ -628,11 +604,7 @@ definition {
 					productName = "${productName}",
 					productQuantity = "1");
 
-				CommerceNavigator.gotoMiniCart();
-
-				Button.click(button = "View Details");
-
-				Button.click(button = "Checkout");
+				CommerceCheckout.gotoCheckout();
 
 				CommerceCheckout.initializersCheckout(
 					newAddressAddress = "Test Address",
@@ -701,11 +673,7 @@ definition {
 
 			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
 
-			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "View Details");
-
-			Button.click(button = "Checkout");
+			CommerceCheckout.gotoCheckout();
 
 			CommerceCheckout.checkout(
 				newAddressAddress = "Test Address",
