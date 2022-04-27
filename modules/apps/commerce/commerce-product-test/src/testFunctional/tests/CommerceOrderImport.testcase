@@ -85,7 +85,7 @@ definition {
 
 		task ("Then the modal is closed and the user stay on the same page and the user stay on the same page") {
 			AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
-	
+
 			AssertLocation.assertPartialLocation(value1 = "group/minium/pending-orders");
 		}
 
@@ -103,7 +103,7 @@ definition {
 
 		task ("Then the modal is closed and the user stay on the same page and the user stay on the same page") {
 			AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
-	
+
 			AssertLocation.assertPartialLocation(value1 = "group/minium/pending-orders");
 		}
 
@@ -121,7 +121,7 @@ definition {
 
 		task ("Then the modal is closed and the user stay on the same page and the user stay on the same page") {
 			AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
-	
+
 			AssertLocation.assertPartialLocation(value1 = "group/minium/pending-orders");
 		}
 	}
@@ -191,7 +191,7 @@ definition {
 
 		task ("Then the modal is closed and the user stay on the same page") {
 			AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
-	
+
 			AssertLocation.assertPartialLocation(value1 = "group/minium/pending-orders");
 		}
 
