@@ -488,18 +488,84 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
+	@description = "Verify orders can be search when importing an order"
+	@priority = "3"
 	test ImportFromOrderUseSearchBar {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-7686 ImportFromOrderUseSearchBar pending implementation
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
 
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given 3 completed orders") {
+			for (var product : list "U-Joint:24,Mount:3,Torque Converters:34") {
+				var productName = StringUtil.extractFirst("${product}", ":");
+				var productUnitPrice = StringUtil.extractLast("${product}", ":");
+
+				FrontStore.addInitializerProductToCart(
+					productName = "${productName}",
+					productQuantity = "1");
+
+				CommerceNavigator.gotoMiniCart();
+
+				Button.click(button = "View Details");
+
+				Button.click(button = "Checkout");
+
+				CommerceCheckout.initializersCheckout(
+					newAddressAddress = "Test Address",
+					newAddressCity = "Test City",
+					newAddressCountry = "United States",
+					newAddressName = "Address Name",
+					newAddressZipCode = "Test Zip Code",
+					productName = "${productName}",
+					productQuantity = "1",
+					productUnitPrice = "${productUnitPrice}",
+					shippingMethod = "Standard");
+
+				CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+			}
+		}
+
+		task ("And given the user is importing an order") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			Click(locator1 = "CommerceEntry#DROPDOWN");
+
+			MenuItem.click(menuItem = "Import from Orders");
+		}
+
+		task ("When the buyer searches the ID of a completed order") {
+			IFrame.selectModalFrame();
+
+			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = "1");
+
+			var orderId1 = StringUtil.extractFirst("${orderIds}", ",");
+			var orderIds2 = StringUtil.extractLast("${orderIds}", ",");
+		}
+
+		task ("Then only that order should appear") {
+			Search.searchCP(searchTerm = "${orderId}");
+
+			AssertElementNotPresent(
+				key_entryName = "${orderId1}",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+			for (var orderId : list "${orderIds2}") {
+				AssertElementNotPresent(
+					key_entryName = "${orderId}",
+					locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+			}
+		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test TryImportWithoutOrders {
 		property portal.acceptance = "false";
