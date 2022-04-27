@@ -126,12 +126,98 @@ definition {
 		}
 	}
 
+	@description = "Create an order, and add something to the wishlist, then verify if the cancel button and the 'X' button for closing the Preview modal."
 	@priority = "4"
 	test AbortImportFromPreview {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-7700 AbortImportFromPreview pending implementation
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
 
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given a completed order") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "View Details");
+
+			Button.click(button = "Checkout");
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		}
+
+		task ("When the buyer is importing a new order") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			Click(locator1 = "CommerceEntry#DROPDOWN");
+
+			MenuItem.click(menuItem = "Import from Orders");
+		}
+
+		task ("And select the ID of order") {
+			IFrame.selectModalFrame();
+
+			var orderId = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = "1");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "${orderId}");
+		}
+
+		task ("And abort the import clicking on Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then the modal is closed and the user stay on the same page") {
+			AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
+	
+			AssertLocation.assertPartialLocation(value1 = "group/minium/pending-orders");
+		}
+
+		task ("When the buyer is importing a new order") {
+			SelectFrameTop();
+
+			Click(locator1 = "CommerceEntry#DROPDOWN");
+
+			MenuItem.click(menuItem = "Import from Orders");
+		}
+
+		task ("And abort the import clicking on the 'X' button") {
+			Click(locator1 = "CommerceEntry#MODAL_CLOSE");
+		}
+
+		task ("Then the modal is closed and the user stay on the same page") {
+			AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
+
+			AssertLocation.assertPartialLocation(value1 = "group/minium/pending-orders");
+		}
+
+		task ("Then the modal is closed and the user stay on the same page") {
+			AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
+
+			AssertLocation.assertPartialLocation(value1 = "group/minium/pending-orders");
+		}
 	}
 
 	@description = "[Please Update]"
