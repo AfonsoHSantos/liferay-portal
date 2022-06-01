@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS_ITEM_CHECKBOX</td>
+	<td>//input[contains(@value,'${key_itemName}${key_checkboxName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
