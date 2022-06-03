@@ -65,4 +65,48 @@ definition {
         }
     }
 
+    @description = "COMMERCE-9400. Verify if store admin can create organizations by using the widget"
+	@priority = "3"
+	test CanCreateOrganizationUsingWidget {
+        task ("When the widget page is reached") {
+            Navigator.openSitePage(
+                pageName = "Test Public Content Page",
+                siteName = "Minium");
+        }
+
+        task ("And when the organization svg node is clicked") {
+            Click(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE",
+                key_nodeName = "Organization 1");
+        }
+
+        task ("And when the plus button is clicked") {
+           Click.clickNoWaitForVisible(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
+        }
+
+        task ("And the organization icon is clicked") {
+            WaitForElementPresent(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION",
+                key_orgType = "organization");
+
+            Click(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION",
+                key_orgType = "organization");
+        }
+
+        task ("Then the admin is able to create a new organization") {
+            Type(
+                locator1 = "TextInput#NAME",
+                value1 = "Organization 1");
+            
+            Button.clickSave();
+        }
+
+        task ("And then the new organization is present in the admin console") {
+            AssertElementPresent(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE",
+                key_nodeName = "Organization 1");
+        }
+    }
+
 }
