@@ -257,4 +257,154 @@ definition {
         }
     }
 
+    @description = "COMMERCE-9404. Verify if store admin can move accounts/organizations"
+	@priority = "3"
+	test CanMoveAccountsAndOrganizationsInWidget {
+        task ("Given a new organization") {
+            JSONOrganization.addOrganization(
+            organizationName = "Organization 2",
+            organizationSite = "true");
+
+           Refresh();
+        }
+
+        task ("When the widget page is reached") {
+            Navigator.openSitePage(
+                pageName = "Test Public Content Page",
+                siteName = "Minium");
+        }
+
+        task ("And when the organization svg node is clicked") {
+            Click(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE",
+                key_nodeName = "Organization 1");
+        }
+
+        task ("And a child organization is created") {
+            WaitForElementPresent(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
+
+            Click.clickNoWaitForVisible(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
+ 
+            WaitForElementPresent(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION",
+                key_orgType = "organization");
+
+            Click(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION",
+                key_orgType = "organization");
+
+            Type(
+                locator1 = "TextInput#NAME",
+                value1 = "Organization 3");
+            
+            Button.clickSave();
+        }
+
+        task ("And when an account belongs to one organization ") {
+            Click(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE",
+                key_nodeName = "Organization 3");
+
+            WaitForElementPresent(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
+
+            Click.clickNoWaitForVisible(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
+
+            WaitForElementPresent(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION",
+                key_orgType = "account");
+
+            Click.clickAtNotVisible(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION",
+                key_orgType = "account");
+
+            SelectFrameTop();
+
+            Click.clickAtNotVisible(
+                key_radioOption = "Create New Account",
+                locator1 = "CommerceEntry#RADIO_BUTTON");
+
+            Type(
+                locator1 = "TextInput#NAME",
+                value1 = "Account 1");
+            
+            Button.clickSave();
+        }
+
+        task ("And a user belongs to the account") {
+            Click(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE",
+                key_nodeName = "Account 1");
+
+            WaitForElementPresent(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
+
+            Click.clickAtNotVisible(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
+
+            WaitForElementPresent(locator1 = "CommerceOrganizationManagementWidget#INVITE_EMAIL_INPUT");
+
+            Type(
+                locator1 = "CommerceOrganizationManagementWidget#INVITE_EMAIL_INPUT",
+                value1 = "user1@liferay.com");
+
+            Click(
+                locator1 = "CommerceOrganizationManagementWidget#SELECT_ROLE",
+                key_roleOption = "Account Member");
+            
+            Button.clickSave();
+
+            Refresh();
+        }
+
+        task ("Then the admin is able to drag and drop the account to the other parent organization") {
+            Click(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE",
+                key_nodeName = "Organization 1");
+
+            Click(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE",
+                key_nodeName = "Organization 3");
+
+            DragAndDrop.dragAndDropPortletToPortletNoError(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_ORIGIN",
+                locator2 = "CommerceOrganizationManagementWidget#NODE_DESTINATION",
+                key_nodeDestination = "Organization 2",
+                key_nodeOrigin = "Account 1",
+                value1 = "Account 1");
+
+            AssertConfirm(value1 = "Account 1 will be moved into Organization 2.");
+        }
+
+        task ("And then admin is able to drag and drop the child organization to the other parent organization") {
+            DragAndDrop.dragAndDropPortletToPortletNoError(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_ORIGIN",
+                locator2 = "CommerceOrganizationManagementWidget#NODE_DESTINATION",
+                key_nodeDestination = "Organization 2",
+                key_nodeOrigin = "Organization 1",
+                value1 = "Organization 1");
+
+            AssertConfirm(value1 = "Organization 1 will be moved into Organization 2.");
+        }
+
+        task ("And the admin is able to click on the child organization ellipses and click remote to move the child organization outside the parent organization (Requires a refresh to view the child as new parent)") {
+            Click(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE",
+                key_nodeName = "Organization 2");
+
+            Click(
+                locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS",
+                key_nodeName = "Organization 1");
+
+            ClickNoError(
+                key_menuItem = "Remove",
+                locator1 = "CommerceEntry#ANY_MENU_ITEM");
+
+            AssertConfirm(value1 = "Organization 1 will be removed from Organization 2.");
+
+            Refresh();
+
+            AssertElementPresent(
+                locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE",
+                key_nodeName = "Organization 1");
+        }
+    }
+
 }
