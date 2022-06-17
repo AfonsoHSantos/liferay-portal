@@ -37,13 +37,7 @@ definition {
 
 		Click(locator1 = "Button#ADD");
 
-		Site.openSitesAdmin();
-
-		while (IsElementNotPresent(key_siteName = "${siteName}", locator1 = "Sites#SITE_TABLE_NAME")) {
-			Refresh();
-
-			WaitForPageLoad();
-		}
+		Pause(locator1 = "30000");
 	}
 
 	macro dismissAlert {

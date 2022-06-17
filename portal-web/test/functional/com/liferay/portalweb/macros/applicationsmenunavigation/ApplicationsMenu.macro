@@ -38,9 +38,19 @@ definition {
 	macro gotoSite {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
+		while (IsElementNotPresent(key_site = "${site}", locator1 = "ApplicationsMenu#SITE_LINK")) {
+			Refresh();
+
+			WaitForPageLoad();
+
+			ApplicationsMenuHelper.openApplicationsMenu();
+		}
+
 		Click(
 			key_site = "${site}",
 			locator1 = "ApplicationsMenu#SITE_LINK");
+
+		WaitForPageLoad();
 	}
 
 	@summary = "Navigate to Applications Menu > Sites > Sites Modal > ${site}"

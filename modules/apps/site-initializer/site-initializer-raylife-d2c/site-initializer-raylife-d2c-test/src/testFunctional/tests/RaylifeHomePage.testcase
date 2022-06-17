@@ -14,18 +14,18 @@ definition {
 		Raylife.createRaylifeSite(siteName = "Raylife");
 	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+	// tearDown {
+	// 	var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Raylife.tearDownCP();
+	// 	Raylife.tearDownCP();
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			User.logoutPG();
-		}
-	}
+	// 	if ("${testPortalInstance}" == "true") {
+	// 		PortalInstances.tearDownCP();
+	// 	}
+	// 	else {
+	// 		User.logoutPG();
+	// 	}
+	// }
 
 	@description = "LPS-142187 - Verify if error message appear after inserting a wrong ZipCode."
 	@priority = "4"
@@ -56,6 +56,8 @@ definition {
 	@description = "LPS-142184 - Verify ZipCode Max number of characters (max chars 5)."
 	@priority = "2"
 	test ZipCodeMaxNumber {
+		property portal.upstream = "afonso";
+
 		ApplicationsMenu.gotoSite(site = "Raylife");
 
 		AssertElementPresent(locator1 = "RaylifeHomePage#HOME_PAGE_MESSAGE_MAX_NUMBER_CHARACTERS");
