@@ -37,7 +37,7 @@ definition {
 
 		Click(locator1 = "Button#ADD");
 
-		Pause(locator1 = "30000");
+		Pause(locator1 = "60000");
 	}
 
 	macro dismissAlert {
