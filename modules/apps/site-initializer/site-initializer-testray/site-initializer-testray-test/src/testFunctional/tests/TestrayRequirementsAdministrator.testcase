@@ -28,9 +28,7 @@ definition {
 			Testray.changePagination(
 				numberItems = "20",
 				valuePagination = "150");
-
 		}
-
 	}
 
 	tearDown {
@@ -43,32 +41,32 @@ definition {
 		}
 	}
 
-    @description = "This is a test for LPS-160544 - Verify if as an Administrator, I should be able to link a Case to a Requirement"
+	@description = "This is a test for LPS-160544 - Verify if as an Administrator, I should be able to link a Case to a Requirement"
 	@priority = "5"
 	test AdminCanLinkCaseToRequirement {
-        Testray.goToProjectPage(projectName = "Projects_1 Project");
+		Testray.goToProjectPage(projectName = "Projects_1 Project");
 
-        Testray.projectTabNavigator(navTabName = "Cases");
+		Testray.projectTabNavigator(navTabName = "Cases");
 
-        TestrayCases.addCase(
-            caseName = "ATF_Requirements Case",
-            priority = "5",
-            CaseTypeId = "Automated Functional Test",
-            componentId = "Smoke",
-            duration = "10",
-            description = "ATF_Requirements Case Description",
-            steps = "ATF_Requirements Case Steps");
+		TestrayCases.addCase(
+			caseName = "ATF_Requirements Case",
+			CaseTypeId = "Automated Functional Test",
+			componentId = "Smoke",
+			description = "ATF_Requirements Case Description",
+			duration = "10",
+			priority = "5",
+			steps = "ATF_Requirements Case Steps");
 
-        Testray.projectTabNavigator(navTabName = "Requirements");
+		Testray.projectTabNavigator(navTabName = "Requirements");
 
-        TestrayRequirements.goToRequirement(requirementSummary = "ATF_Requirements Summary");
+		TestrayRequirements.goToRequirement(requirementSummary = "ATF_Requirements Summary");
 
-        TestrayRequirements.addRequirementCase(caseName = "ATF_Requirements Case");
+		TestrayRequirements.addRequirementCase(caseName = "ATF_Requirements Case");
 
-        TestrayRequirements.verifyRequirementCase(
-            requirementPriority = "5",
-            requirementComponent = "Components_1 Project 1",
-            requirementCaseName = "ATF_Requirements Case");
+		TestrayRequirements.verifyRequirementCase(
+			requirementCaseName = "ATF_Requirements Case",
+			requirementComponent = "Components_1 Project 1",
+			requirementPriority = "5");
 	}
 
 }
