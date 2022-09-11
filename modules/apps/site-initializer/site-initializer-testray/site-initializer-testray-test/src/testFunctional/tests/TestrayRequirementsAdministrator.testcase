@@ -1,0 +1,74 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		task ("Login and create a Testray Site") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Testray.createTestraySite(siteName = "Testray 2");
+
+			Refresh();
+		}
+
+		task ("Go to Testray, Create Project and change pagination") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+
+			Testray.createProjectTestray(
+				description = "Projects_1 Description",
+				key_name = "Projects_1 Project");
+
+			Testray.changePagination(
+				numberItems = "20",
+				valuePagination = "150");
+
+		}
+
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+    @description = "This is a test for LPS-160544 - Verify if as an Administrator, I should be able to link a Case to a Requirement"
+	@priority = "5"
+	test AdminCanLinkCaseToRequirement {
+        Testray.goToProjectPage(projectName = "Projects_1 Project");
+
+        Testray.projectTabNavigator(navTabName = "Cases");
+
+        TestrayCases.addCase(
+            caseName = "ATF_Requirements Case",
+            priority = "5",
+            CaseTypeId = "Automated Functional Test",
+            componentId = "Smoke",
+            duration = "10",
+            description = "ATF_Requirements Case Description",
+            steps = "ATF_Requirements Case Steps");
+
+        Testray.projectTabNavigator(navTabName = "Requirements");
+
+        TestrayRequirements.goToRequirement(requirementSummary = "ATF_Requirements Summary");
+
+        TestrayRequirements.addRequirementCase(caseName = "ATF_Requirements Case");
+
+        TestrayRequirements.verifyRequirementCase(
+            requirementPriority = "5",
+            requirementComponent = "Components_1 Project 1",
+            requirementCaseName = "ATF_Requirements Case");
+	}
+
+}
