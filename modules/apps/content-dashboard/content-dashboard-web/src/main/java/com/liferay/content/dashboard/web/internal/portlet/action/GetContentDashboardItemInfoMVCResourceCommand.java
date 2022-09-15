@@ -28,6 +28,7 @@ import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPort
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -40,6 +41,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -230,6 +234,23 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					ResourceBundleUtil.getString(
 						ResourceBundleUtil.getBundle(locale, getClass()),
 						"an-unexpected-error-occurred")));
+		}
+	}
+
+	private boolean _checkSubscribeArticlePermission(long classPK) {
+		try {
+			_journalArticleModelResourcePermission.check(
+				GuestOrUserUtil.getPermissionChecker(), classPK,
+				ActionKeys.SUBSCRIBE);
+
+			return true;
+		}
+		catch (PortalException portalException) {
+			if (_log.isInfoEnabled()) {
+				_log.info(portalException);
+			}
+
+			return false;
 		}
 	}
 
@@ -484,6 +505,10 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				contentDashboardItemActions.get(0);
 
 			return JSONUtil.put(
+				"disabled",
+				!_checkSubscribeArticlePermission(
+					ParamUtil.getLong(httpServletRequest, "classPK"))
+			).put(
 				"icon", contentDashboardItemAction.getIcon()
 			).put(
 				"label",
@@ -524,6 +549,10 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				contentDashboardItemActions.get(0);
 
 			return JSONUtil.put(
+				"disabled",
+				!_checkSubscribeArticlePermission(
+					ParamUtil.getLong(httpServletRequest, "classPK"))
+			).put(
 				"icon", contentDashboardItemAction.getIcon()
 			).put(
 				"label",
@@ -647,6 +676,12 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission;
 
 	@Reference
 	private Language _language;
