@@ -1,0 +1,106 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+    property testray.main.component.name = "Forms";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        Navigator.openURL();
+    }
+
+    tearDown {
+        User.logoutAndLoginPG(
+            userLoginEmailAddress = "test@liferay.com",
+            userLoginFullName = "Test Test");
+    }
+    @description = "Access Portal Global Menu and validate CONFIGURATION string at Control Panel"
+    @priority = "5"
+    test CreateFormAndValidate { //nome do teste;
+        
+        ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Forms"); //Clica no "Product Menu" e seleciona o botao das forms;
+
+        FormsAdmin.addForm(); //Cria uma pagina de forms;
+
+        Form.editName(formTitle = "My form"); //Adiciona um titulo para o formulario;
+
+        Form.gotoAddField(fieldType = "Numeric"); //Adiciona um campo de texto numerico na pagina do form;
+        
+        Form.editFieldLabelMetal(fieldValue = "Age"); //Adiciona um titulo para a caixa de texto numerico, editando na sessao fields;
+        
+        Form.closeSidebar(); //Feixa a barra lateral da pagina forms;
+
+        Form.gotoAddField(fieldType = "Text"); //Adiciona um campo de texto to tipo "Text";
+        
+        Form.editFieldLabelMetal(fieldValue = "Full name"); //Titulo do campo de texto;
+
+        Form.save(); //Salva os campos ja acresentados;
+
+        Form.addTranslation(localizedLanguage = "Portuguese (Brazil)"); //Adiciona uma pagina em outra lingua;
+
+        Form.editName(formTitle = "Meu formulario");
+
+        FormViewBuilder.editFieldLabel(
+            fieldLabel = "Age",
+            label = "Idade");
+
+        FormViewBuilder.editFieldLabel(
+            fieldLabel = "Full name",
+            label = "Nome completo");
+
+        Form.publishForm(); //Publica o formulario criado;
+
+        FormsAdminNavigator.gotoPublishedForm(); //Leva o navegador para a area onde as formas estao publicadas;
+
+        FormFields.editText(
+            fieldLabel = "Text",
+            fieldName = "Text",
+            fieldValue = "Jubileu da Silva"); //Entra nos formularios publicados e os preenche com os dados listados;
+
+        FormFields.editText(
+            fieldLabel = "Numeric",
+            fieldName = "Numeric",
+            fieldValue = "33");
+
+        FormPortlet.submitSuccessfully(); //Aperta no botao "Submit";
+
+        Form.submitAgain(); //Aperta no botao "Submit again";
+
+        FormPortletConfiguration.changeLanguage(
+            currentLanguage = "en-US",
+            newLanguage = "português-Brasil"); //Troca a linguagem do formulario;
+
+        FormFields.editText(
+            fieldLabel = "Text",
+            fieldName = "Text",
+            fieldValue = "Mateus Sandes");
+
+        FormFields.editText(
+            fieldLabel = "Numeric",
+            fieldName = "Numeric",
+            fieldValue = "99");
+
+        FormPortlet.submitSuccessfully();
+
+        FormsAdminNavigator.closePublishedFormWindow(); //Fecha a tela dos forms publicadas;
+
+        FormsAdminNavigator.gotoViewEntries(); //Entra na opcao "Entries" dentro da pagina dos forms publicados;
+
+        AssertElementPresent(
+			key_rowAny = "Jubileu da Silva",
+			key_rowEntry = "33",
+            key_text = "en-us",
+			locator1 = "Icon#ANY_LANGUAGE_ICON"); //Valida se os elementos listados dentro dessa funcao foram submetidos;
+
+        AssertElementPresent(
+			key_rowAny = "Mateus Sandes",
+			key_rowEntry = "99",
+            key_text = "pt-br",
+			locator1 = "Icon#ANY_LANGUAGE_ICON");
+
+    }
+
+}

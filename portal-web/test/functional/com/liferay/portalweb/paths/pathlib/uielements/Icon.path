@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_LANGUAGE_ICON</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//td[contains(.,'${key_rowAny}')]/..//*[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_ENABLED</td>
 	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]][not(@disabled='')]</td>
 	<td></td>

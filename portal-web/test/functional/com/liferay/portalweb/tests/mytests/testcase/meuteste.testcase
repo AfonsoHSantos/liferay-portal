@@ -1,0 +1,60 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+    property testray.main.component.name = "Forms";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        Navigator.openURL();
+    }
+
+    tearDown {
+        User.logoutAndLoginPG(
+            userLoginEmailAddress = "test@liferay.com",
+            userLoginFullName = "Teste Teste");
+    }
+
+    @description = "Access Portal Global Menu and validate CONFIGURATION string at Control Panel"
+    @priority = "5"
+    test ValidateConfigurationStringAtControlPanel {
+
+        Click(locator1 = "//button[@data-qa-id='applicationsMenu']");
+
+        Click(locator1 = "//li[contains(@id,'tab_2')]");
+
+        AssertElementPresent(locator1 = "//h2[contains(text(), 'Configuration')]");
+
+
+    }
+
+    @description = "Set Screen size to custom and validate values"
+    @priority = "5"
+    test SetScreenSizeAndValidateValues {
+
+       Click(locator1 = "//a[@data-qa-id='simulation']");
+
+     Click(locator1 = "//button[@data-device='custom']");
+
+       Type(
+			locator1 = "//input[@id='_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_height']",
+			value1 = "1920");
+
+       Type(
+           locator1 = "//input[@id='_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_width']",
+           value1 = "1080");
+
+       Click(locator1 = "//a[@class='close sidenav-close']");
+
+       Click(locator1 = "//a[@data-qa-id='simulation']");
+
+       AssertElementPresent(locator1 = "//div[contains(@style, 'height: 1920px; width: 1080px')]");
+
+       Click(locator1 = "//button[@data-qa-id='applicationsMenu']");
+
+       Click(locator1 = "//a[contains(@href, 'administration_content')]");
+    }
+
+   
+}

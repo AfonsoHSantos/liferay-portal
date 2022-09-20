@@ -1,0 +1,22 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+    property testray.main.component.name = "Forms";
+
+    setUp {
+        task("Setup: Navigate to the Liferay Learn website.") {
+            Open(locator1 = "https://learn.liferay.com");
+        }
+    }
+
+    @description = "There should be no search result when I search for my name."
+    @priority = "5"
+    test CannotSearchForName {
+        task("When i search for my name") {
+            LiferayLearnSearch.searchForTerm(searchTerm = "Mateus");
+        }
+
+        task("Then I should see the No Result massege.") {
+            LiferayLearnSearch.assertNoResult(searchTerm = "Mateus");
+        }
+    }
+}

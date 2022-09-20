@@ -1,0 +1,10 @@
+definition {
+    macro openMenuButton {
+        Click(locator1 = "MinhaPath#MENU_BUTTON");
+
+        Click(locator1 = "MinhaPath#CONTROL_PANEL");
+
+        AssertElementPresent(locator1 = "MinhaPath#CONFIGURATION_STRING");
+
+    }
+}
