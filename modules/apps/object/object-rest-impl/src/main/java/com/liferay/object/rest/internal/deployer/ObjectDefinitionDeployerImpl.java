@@ -293,7 +293,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				objectDefinition.getRESTContextPath())) {
 
 			List<ComponentInstance> componentInstances =
-				_componentInstancesMap.get(
+				_componentInstancesMap.remove(
 					objectDefinition.getRESTContextPath());
 
 			if (componentInstances != null) {
@@ -303,7 +303,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			}
 
 			List<ServiceRegistration<?>> serviceRegistrations =
-				_serviceRegistrationsMap.get(
+				_serviceRegistrationsMap.remove(
 					objectDefinition.getRESTContextPath());
 
 			if (serviceRegistrations != null) {
