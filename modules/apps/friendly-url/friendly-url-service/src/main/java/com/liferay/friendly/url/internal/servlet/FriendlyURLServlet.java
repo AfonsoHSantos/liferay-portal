@@ -811,9 +811,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		long groupId, HttpServletRequest httpServletRequest,
 		String layoutFriendlyURL, RedirectProvider redirectProvider) {
 
-		RedirectProvider currentRedirectProvider = redirectProvider;
-
-		if ((currentRedirectProvider != null) &&
+		if ((redirectProvider != null) &&
 			!LiferayWindowState.isExclusive(httpServletRequest) &&
 			!LiferayWindowState.isPopUp(httpServletRequest)) {
 
