@@ -1549,7 +1549,7 @@ public class PoshiValidation {
 		if (liferaySeleniumMethod == null) {
 			_exceptions.add(
 				new PoshiElementException(
-					poshiElement, "Invalid selenium method name: \"",
+					poshiElement, "Invalid Selenium method name: \"",
 					seleniumMethodName, "\"\n"));
 
 			return;
