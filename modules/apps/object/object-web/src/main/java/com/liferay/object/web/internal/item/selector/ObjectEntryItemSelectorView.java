@@ -287,47 +287,7 @@ public class ObjectEntryItemSelectorView
 					"no-entries-were-found");
 
 			try {
-				List<ObjectEntry> objectEntries = new ArrayList<>();
-
-				if (Validator.isNull(
-						ParamUtil.getLong(
-							_portletRequest, "objectDefinitionId"))) {
-
-					Group scopeGroup = _themeDisplay.getScopeGroup();
-
-					Page<com.liferay.object.rest.dto.v1_0.ObjectEntry>
-						objectEntriesPage =
-							_objectEntryManager.getObjectEntries(
-								_themeDisplay.getCompanyId(), _objectDefinition,
-								scopeGroup.getGroupKey(), null,
-								_getDTOConverterContext(), StringPool.BLANK,
-								null, null, null);
-
-					objectEntries = TransformUtil.transform(
-						objectEntriesPage.getItems(),
-						objectEntry -> _toObjectEntry(
-							_objectDefinition.getObjectDefinitionId(),
-							objectEntry));
-				}
-				else {
-					ObjectRelatedModelsProvider objectRelatedModelsProvider =
-						_objectRelatedModelsProviderRegistry.
-							getObjectRelatedModelsProvider(
-								_objectDefinition.getClassName(),
-								ParamUtil.getString(
-									_portletRequest, "objectRelationshipType"));
-
-					objectEntries =
-						objectRelatedModelsProvider.getUnrelatedModels(
-							_objectDefinition.getCompanyId(),
-							ParamUtil.getLong(_portletRequest, "groupId"),
-							_objectDefinition,
-							ParamUtil.getLong(_portletRequest, "objectEntryId"),
-							ParamUtil.getLong(
-								_portletRequest, "objectRelationshipId"));
-				}
-
-				searchContainer.setResultsAndTotal(objectEntries);
+				searchContainer.setResultsAndTotal(_getObjectEntries());
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -336,6 +296,50 @@ public class ObjectEntryItemSelectorView
 			}
 
 			return searchContainer;
+		}
+
+		private List<ObjectEntry> _getObjectEntries() throws Exception {
+			List<ObjectEntry> objectEntries = new ArrayList<>();
+
+			if (Validator.isNull(
+					ParamUtil.getLong(
+						_portletRequest, "objectDefinitionId"))) {
+
+				Group scopeGroup = _themeDisplay.getScopeGroup();
+
+				Page<com.liferay.object.rest.dto.v1_0.ObjectEntry>
+					objectEntriesPage =
+						_objectEntryManager.getObjectEntries(
+							_themeDisplay.getCompanyId(), _objectDefinition,
+							scopeGroup.getGroupKey(), null,
+							_getDTOConverterContext(), StringPool.BLANK,
+							null, null, null);
+
+				objectEntries = TransformUtil.transform(
+					objectEntriesPage.getItems(),
+					objectEntry -> _toObjectEntry(
+						_objectDefinition.getObjectDefinitionId(),
+						objectEntry));
+			}
+			else {
+				ObjectRelatedModelsProvider objectRelatedModelsProvider =
+					_objectRelatedModelsProviderRegistry.
+						getObjectRelatedModelsProvider(
+							_objectDefinition.getClassName(),
+							ParamUtil.getString(
+								_portletRequest, "objectRelationshipType"));
+
+				objectEntries =
+					objectRelatedModelsProvider.getUnrelatedModels(
+						_objectDefinition.getCompanyId(),
+						ParamUtil.getLong(_portletRequest, "groupId"),
+						_objectDefinition,
+						ParamUtil.getLong(_portletRequest, "objectEntryId"),
+						ParamUtil.getLong(
+							_portletRequest, "objectRelationshipId"));
+			}
+
+			return objectEntries;
 		}
 
 		private DTOConverterContext _getDTOConverterContext() {
