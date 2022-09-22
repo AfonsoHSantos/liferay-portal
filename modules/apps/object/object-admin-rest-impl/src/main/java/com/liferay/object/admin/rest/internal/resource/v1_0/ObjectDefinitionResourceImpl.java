@@ -588,9 +588,6 @@ public class ObjectDefinitionResourceImpl
 				if (GetterUtil.getBoolean(
 						PropsUtil.get("feature.flag.LPS-152650"))) {
 
-					String customObjectRESTContextPath = "/o";
-					String systemObjectRESTContextPath = "/o/";
-
 					if (objectDefinition.isSystem()) {
 						SystemObjectDefinitionMetadata
 							systemObjectDefinitionMetadata =
@@ -598,18 +595,15 @@ public class ObjectDefinitionResourceImpl
 									getSystemObjectDefinitionMetadata(
 										objectDefinition.getName());
 
-						systemObjectRESTContextPath +=
-							systemObjectDefinitionMetadata.getRESTContextPath();
+						restContextPath =
+							"/o/" +
+								systemObjectDefinitionMetadata.
+									getRESTContextPath();
 					}
 					else {
-						customObjectRESTContextPath +=
-							objectDefinition.getRESTContextPath();
+						restContextPath =
+							"/o" + objectDefinition.getRESTContextPath();
 					}
-
-					restContextPath =
-						objectDefinition.isSystem() ?
-							systemObjectRESTContextPath :
-								customObjectRESTContextPath;
 				}
 
 				scope = objectDefinition.getScope();
