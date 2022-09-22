@@ -1,0 +1,69 @@
+@component-name = "portal-lima"
+definition {
+
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Creates a new page and add a blog widget in it via API") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Blogs Page",
+				widgetName = "Blogs");
+		}
+
+		task ("Creates a new blog entry via API") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+
+			Blogs.tearDownConfigurationDisplaySettingsPG(
+				pageName = "Blogs Page",
+				portletName = "Blogs");
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+
+			PagesAdmin.tearDownCP();
+		}
+	}
+
+	@description = "Can Create a Blog"
+	@priority = "5"
+	test CanCreateBlog {
+		task ("Add a new blog entry via UI") {
+			Blogs.addEntry(
+				entryContent = "UI Blogs Entry Content",
+				entryTitle = "UI Blogs Entry Title");
+		}
+
+		task ("Validate the existence of the new blog entry created via user interface") {
+			BlogsEntry.viewPG(
+				entryContent = "UI Blogs Entry Content",
+				entryTitle = "UI Blogs Entry Title");
+		}
+	}
+
+}
