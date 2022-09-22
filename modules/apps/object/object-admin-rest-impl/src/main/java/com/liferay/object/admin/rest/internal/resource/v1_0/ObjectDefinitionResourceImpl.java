@@ -584,28 +584,6 @@ public class ObjectDefinitionResourceImpl
 				pluralLabel = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getPluralLabelMap());
 				portlet = objectDefinition.getPortlet();
-
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-152650"))) {
-
-					if (objectDefinition.isSystem()) {
-						SystemObjectDefinitionMetadata
-							systemObjectDefinitionMetadata =
-								_systemObjectDefinitionMetadataTracker.
-									getSystemObjectDefinitionMetadata(
-										objectDefinition.getName());
-
-						restContextPath =
-							"/o/" +
-								systemObjectDefinitionMetadata.
-									getRESTContextPath();
-					}
-					else {
-						restContextPath =
-							"/o" + objectDefinition.getRESTContextPath();
-					}
-				}
-
 				scope = objectDefinition.getScope();
 				status = new Status() {
 					{
@@ -628,6 +606,30 @@ public class ObjectDefinitionResourceImpl
 
 				system = objectDefinition.isSystem();
 
+				setRestContextPath(
+					() -> {
+						if (!GetterUtil.getBoolean(
+								PropsUtil.get("feature.flag.LPS-152650"))) {
+
+							return null;
+						}
+
+						if (objectDefinition.isSystem()) {
+							SystemObjectDefinitionMetadata
+								systemObjectDefinitionMetadata =
+									_systemObjectDefinitionMetadataTracker.
+										getSystemObjectDefinitionMetadata(
+											objectDefinition.getName());
+
+							String restContextPath =
+								systemObjectDefinitionMetadata.
+									getRESTContextPath();
+
+							return "/o/" + restContextPath;
+						}
+
+						return "/o" + objectDefinition.getRESTContextPath();
+					});
 				setParameterRequired(
 					() -> {
 						String restContextPath = StringPool.BLANK;
