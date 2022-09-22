@@ -40,6 +40,7 @@ import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.object.util.ObjectRelationshipUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -363,18 +364,18 @@ public class ObjectRelationshipLocalServiceImpl
 			).from(
 				ObjectRelationshipTable.INSTANCE
 			).where(
-				ObjectRelationshipTable.INSTANCE.reverse.eq(
-					false
-				).and(
-					ObjectRelationshipTable.INSTANCE.name.eq(
-						objectRelationshipName)
-				).and(
+				Predicate.withParentheses(
 					ObjectRelationshipTable.INSTANCE.objectDefinitionId1.eq(
 						objectDefinitionId
 					).or(
 						ObjectRelationshipTable.INSTANCE.objectDefinitionId2.eq(
 							objectDefinitionId)
-					).withParentheses()
+					)
+				).and(
+					ObjectRelationshipTable.INSTANCE.name.eq(
+						objectRelationshipName)
+				).and(
+					ObjectRelationshipTable.INSTANCE.reverse.eq(false)
 				)
 			));
 
