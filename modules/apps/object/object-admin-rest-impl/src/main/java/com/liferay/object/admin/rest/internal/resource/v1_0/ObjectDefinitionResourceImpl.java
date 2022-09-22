@@ -614,6 +614,8 @@ public class ObjectDefinitionResourceImpl
 							return null;
 						}
 
+						String restContextPath = StringPool.BLANK;
+
 						if (objectDefinition.isSystem()) {
 							SystemObjectDefinitionMetadata
 								systemObjectDefinitionMetadata =
@@ -621,14 +623,20 @@ public class ObjectDefinitionResourceImpl
 										getSystemObjectDefinitionMetadata(
 											objectDefinition.getName());
 
-							String restContextPath =
-								systemObjectDefinitionMetadata.
-									getRESTContextPath();
+							if (systemObjectDefinitionMetadata != null) {
+								restContextPath =
+									systemObjectDefinitionMetadata.
+										getRESTContextPath();
 
-							return "/o/" + restContextPath;
+								restContextPath = "/o/" + restContextPath;
+							}
+						}
+						else {
+							restContextPath =
+								"/o" + objectDefinition.getRESTContextPath();
 						}
 
-						return "/o" + objectDefinition.getRESTContextPath();
+						return restContextPath;
 					});
 				setParameterRequired(
 					() -> {
