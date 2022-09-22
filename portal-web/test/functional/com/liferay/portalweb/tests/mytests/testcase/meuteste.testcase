@@ -26,16 +26,15 @@ definition {
 
         AssertElementPresent(locator1 = "//h2[contains(text(), 'Configuration')]");
 
-
     }
 
     @description = "Set Screen size to custom and validate values"
     @priority = "5"
     test SetScreenSizeAndValidateValues {
 
-       Click(locator1 = "//a[@data-qa-id='simulation']");
+        Click(locator1 = "//a[@data-qa-id='simulation']");
 
-     Click(locator1 = "//button[@data-device='custom']");
+        Click(locator1 = "//button[@data-device='custom']");
 
        Type(
 			locator1 = "//input[@id='_com_liferay_product_navigation_simulation_web_portlet_SimulationPortlet_height']",
