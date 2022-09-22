@@ -827,12 +827,12 @@ public class FriendlyURLServlet extends HttpServlet {
 				_normalizeFriendlyURL(
 					originalHttpServletRequest.getRequestURI()));
 
-		if (redirect != null) {
-			return new Redirect(
-				redirect.getDestinationURL(), true, redirect.isPermanent());
+		if (redirect == null) {
+			return null;
 		}
 
-		return null;
+		return new Redirect(
+			redirect.getDestinationURL(), true, redirect.isPermanent());
 	}
 
 	private ServiceContext _getServiceContext(
