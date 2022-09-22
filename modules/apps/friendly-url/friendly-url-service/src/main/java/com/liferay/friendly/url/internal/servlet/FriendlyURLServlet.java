@@ -818,16 +818,15 @@ public class FriendlyURLServlet extends HttpServlet {
 			HttpServletRequest originalHttpServletRequest =
 				portal.getOriginalServletRequest(httpServletRequest);
 
-			RedirectProvider.Redirect redirectProviderRedirect =
+			RedirectProvider.Redirect redirect =
 				redirectProvider.getRedirect(
 					groupId, _normalizeFriendlyURL(layoutFriendlyURL),
 					_normalizeFriendlyURL(
 						originalHttpServletRequest.getRequestURI()));
 
-			if (redirectProviderRedirect != null) {
+			if (redirect != null) {
 				return new Redirect(
-					redirectProviderRedirect.getDestinationURL(), true,
-					redirectProviderRedirect.isPermanent());
+					redirect.getDestinationURL(), true, redirect.isPermanent());
 			}
 		}
 
