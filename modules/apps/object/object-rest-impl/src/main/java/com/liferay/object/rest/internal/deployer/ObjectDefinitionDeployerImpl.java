@@ -102,14 +102,18 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			return Collections.emptyList();
 		}
 
-		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
-
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
 
-		if (!_objectDefinitionsMap.containsKey(
-				objectDefinition.getRESTContextPath())) {
+		Map<Long, ObjectDefinition> objectDefinitions =
+			_objectDefinitionsMap.get(objectDefinition.getRESTContextPath());
+
+		if (objectDefinitions == null) {
+			objectDefinitions = new HashMap<>();
+
+			_objectDefinitionsMap.put(
+				objectDefinition.getRESTContextPath(), objectDefinitions);
 
 			_excludeScopedMethods(objectDefinition, objectScopeProvider);
 
@@ -239,7 +243,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						).build())));
 		}
 
-		serviceRegistrations.add(
+		objectDefinitions.put(
+			objectDefinition.getCompanyId(), objectDefinition);
+
+		return Collections.singletonList(
 			_bundleContext.registerService(
 				GraphQLDTOContributor.class,
 				ObjectDefinitionGraphQLDTOContributor.of(
@@ -251,15 +258,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				HashMapDictionaryBuilder.<String, Object>put(
 					"dto.name", objectDefinition.getDBTableName()
 				).build()));
-
-		Map<Long, ObjectDefinition> objectDefinitions =
-			_objectDefinitionsMap.computeIfAbsent(
-				objectDefinition.getRESTContextPath(), k -> new HashMap<>());
-
-		objectDefinitions.put(
-			objectDefinition.getCompanyId(), objectDefinition);
-
-		return serviceRegistrations;
 	}
 
 	public ObjectDefinition getObjectDefinition(
@@ -289,29 +287,31 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			}
 		}
 
-		if (!_objectDefinitionsMap.containsKey(
+		if (_objectDefinitionsMap.containsKey(
 				objectDefinition.getRESTContextPath())) {
 
-			List<ComponentInstance> componentInstances =
-				_componentInstancesMap.remove(
-					objectDefinition.getRESTContextPath());
+			return;
+		}
 
-			if (componentInstances != null) {
-				for (ComponentInstance componentInstance : componentInstances) {
-					componentInstance.dispose();
-				}
+		List<ComponentInstance> componentInstances =
+			_componentInstancesMap.remove(
+				objectDefinition.getRESTContextPath());
+
+		if (componentInstances != null) {
+			for (ComponentInstance componentInstance : componentInstances) {
+				componentInstance.dispose();
 			}
+		}
 
-			List<ServiceRegistration<?>> serviceRegistrations =
-				_serviceRegistrationsMap.remove(
-					objectDefinition.getRESTContextPath());
+		List<ServiceRegistration<?>> serviceRegistrations =
+			_serviceRegistrationsMap.remove(
+				objectDefinition.getRESTContextPath());
 
-			if (serviceRegistrations != null) {
-				for (ServiceRegistration<?> serviceRegistration :
-						serviceRegistrations) {
+		if (serviceRegistrations != null) {
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations) {
 
-					serviceRegistration.unregister();
-				}
+				serviceRegistration.unregister();
 			}
 		}
 	}
