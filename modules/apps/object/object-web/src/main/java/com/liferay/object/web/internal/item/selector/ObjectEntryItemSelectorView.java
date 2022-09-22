@@ -286,9 +286,9 @@ public class ObjectEntryItemSelectorView
 					_portletRequest, _portletURL, null,
 					"no-entries-were-found");
 
-			List<ObjectEntry> objectEntries = new ArrayList<>();
-
 			try {
+				List<ObjectEntry> objectEntries = new ArrayList<>();
+
 				if (Validator.isNull(
 						ParamUtil.getLong(
 							_portletRequest, "objectDefinitionId"))) {
