@@ -811,23 +811,25 @@ public class FriendlyURLServlet extends HttpServlet {
 		long groupId, HttpServletRequest httpServletRequest,
 		String layoutFriendlyURL, RedirectProvider redirectProvider) {
 
-		if ((redirectProvider != null) &&
-			!LiferayWindowState.isExclusive(httpServletRequest) &&
-			!LiferayWindowState.isPopUp(httpServletRequest)) {
+		if ((redirectProvider == null) ||
+			LiferayWindowState.isExclusive(httpServletRequest) ||
+			LiferayWindowState.isPopUp(httpServletRequest)) {
 
-			HttpServletRequest originalHttpServletRequest =
-				portal.getOriginalServletRequest(httpServletRequest);
+			return null;
+		}
 
-			RedirectProvider.Redirect redirect =
-				redirectProvider.getRedirect(
-					groupId, _normalizeFriendlyURL(layoutFriendlyURL),
-					_normalizeFriendlyURL(
-						originalHttpServletRequest.getRequestURI()));
+		HttpServletRequest originalHttpServletRequest =
+			portal.getOriginalServletRequest(httpServletRequest);
 
-			if (redirect != null) {
-				return new Redirect(
-					redirect.getDestinationURL(), true, redirect.isPermanent());
-			}
+		RedirectProvider.Redirect redirect =
+			redirectProvider.getRedirect(
+				groupId, _normalizeFriendlyURL(layoutFriendlyURL),
+				_normalizeFriendlyURL(
+					originalHttpServletRequest.getRequestURI()));
+
+		if (redirect != null) {
+			return new Redirect(
+				redirect.getDestinationURL(), true, redirect.isPermanent());
 		}
 
 		return null;
