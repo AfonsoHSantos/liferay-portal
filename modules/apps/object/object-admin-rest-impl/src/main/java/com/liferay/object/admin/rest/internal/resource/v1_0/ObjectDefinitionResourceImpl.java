@@ -464,6 +464,25 @@ public class ObjectDefinitionResourceImpl
 		String permissionName =
 			com.liferay.object.model.ObjectDefinition.class.getName();
 
+		String restContextPath = StringPool.BLANK;
+
+		if (objectDefinition.isSystem()) {
+			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+				_systemObjectDefinitionMetadataTracker.
+					getSystemObjectDefinitionMetadata(
+						objectDefinition.getName());
+
+			if (systemObjectDefinitionMetadata != null) {
+				restContextPath =
+					"/o/" + systemObjectDefinitionMetadata.getRESTContextPath();
+			}
+		}
+		else {
+			restContextPath = "/o" + objectDefinition.getRESTContextPath();
+		}
+
+		String finalRESTContextPath = restContextPath;
+
 		return new ObjectDefinition() {
 			{
 				accountEntryRestricted =
@@ -614,53 +633,11 @@ public class ObjectDefinitionResourceImpl
 							return null;
 						}
 
-						String restContextPath = StringPool.BLANK;
-
-						if (objectDefinition.isSystem()) {
-							SystemObjectDefinitionMetadata
-								systemObjectDefinitionMetadata =
-									_systemObjectDefinitionMetadataTracker.
-										getSystemObjectDefinitionMetadata(
-											objectDefinition.getName());
-
-							if (systemObjectDefinitionMetadata != null) {
-								restContextPath =
-									systemObjectDefinitionMetadata.
-										getRESTContextPath();
-
-								restContextPath = "/o/" + restContextPath;
-							}
-						}
-						else {
-							restContextPath =
-								"/o" + objectDefinition.getRESTContextPath();
-						}
-
-						return restContextPath;
+						return finalRESTContextPath;
 					});
 				setParameterRequired(
 					() -> {
-						String restContextPath = StringPool.BLANK;
-
-						if (objectDefinition.isSystem()) {
-							SystemObjectDefinitionMetadata
-								systemObjectDefinitionMetadata =
-									_systemObjectDefinitionMetadataTracker.
-										getSystemObjectDefinitionMetadata(
-											objectDefinition.getName());
-
-							if (systemObjectDefinitionMetadata != null) {
-								restContextPath =
-									systemObjectDefinitionMetadata.
-										getRESTContextPath();
-							}
-						}
-						else {
-							restContextPath =
-								objectDefinition.getRESTContextPath();
-						}
-
-						return restContextPath.matches(".*/\\{\\w+}/.*");
+						return finalRESTContextPath.matches(".*/\\{\\w+}/.*");
 					});
 				setTitleObjectFieldName(
 					() -> {
