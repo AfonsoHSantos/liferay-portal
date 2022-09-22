@@ -906,10 +906,10 @@ public class FriendlyURLServlet extends HttpServlet {
 		String refererURL = httpServletRequest.getHeader(HttpHeaders.REFERER);
 
 		if (Validator.isNotNull(refererURL)) {
-			int questionPos = refererURL.indexOf(CharPool.QUESTION);
+			int index = refererURL.indexOf(CharPool.QUESTION);
 
-			if (questionPos != -1) {
-				refererURL = refererURL.substring(0, questionPos);
+			if (index != -1) {
+				refererURL = refererURL.substring(0, index);
 			}
 		}
 
