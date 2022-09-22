@@ -132,8 +132,7 @@ public class FriendlyURLServlet extends HttpServlet {
 				groupFriendlyURL, companyId, group, locale);
 
 		String layoutFriendlyURL = null;
-
-		Redirect skippedRedirect = null;
+		Redirect redirectProviderRedirect = null;
 
 		if ((pos != -1) && ((pos + 1) != path.length())) {
 			layoutFriendlyURL = path.substring(pos);
@@ -143,14 +142,14 @@ public class FriendlyURLServlet extends HttpServlet {
 					0, layoutFriendlyURL.length() - 1);
 			}
 
-			skippedRedirect = _getRedirectProviderRedirect(
+			redirectProviderRedirect = _getRedirectProviderRedirect(
 				group.getGroupId(), httpServletRequest, layoutFriendlyURL,
 				redirectProvider);
 
-			if ((skippedRedirect != null) &&
+			if ((redirectProviderRedirect != null) &&
 				!_isSkipRedirect(httpServletRequest)) {
 
-				return skippedRedirect;
+				return redirectProviderRedirect;
 			}
 		}
 		else {
@@ -237,11 +236,11 @@ public class FriendlyURLServlet extends HttpServlet {
 					throw new LayoutPermissionException();
 				}
 
-				if ((skippedRedirect != null) &&
+				if ((redirectProviderRedirect != null) &&
 					!LayoutPermissionUtil.containsLayoutUpdatePermission(
 						permissionChecker, layout)) {
 
-					return skippedRedirect;
+					return redirectProviderRedirect;
 				}
 			}
 
