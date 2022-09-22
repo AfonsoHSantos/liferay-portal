@@ -299,47 +299,40 @@ public class ObjectEntryItemSelectorView
 		}
 
 		private List<ObjectEntry> _getObjectEntries() throws Exception {
-			List<ObjectEntry> objectEntries = null;
-
 			long objectDefinitionId = ParamUtil.getLong(
 				_portletRequest, "objectDefinitionId");
 
 			if (objectDefinitionId > 0) {
 				Group scopeGroup = _themeDisplay.getScopeGroup();
 
-				Page<com.liferay.object.rest.dto.v1_0.ObjectEntry>
-					objectEntriesPage =
-						_objectEntryManager.getObjectEntries(
-							_themeDisplay.getCompanyId(), _objectDefinition,
-							scopeGroup.getGroupKey(), null,
-							_getDTOConverterContext(), StringPool.BLANK,
-							null, null, null);
+				Page<com.liferay.object.rest.dto.v1_0.ObjectEntry> page =
+					_objectEntryManager.getObjectEntries(
+						_themeDisplay.getCompanyId(), _objectDefinition,
+						scopeGroup.getGroupKey(), null,
+						_getDTOConverterContext(), StringPool.BLANK,
+						null, null, null);
 
-				objectEntries = TransformUtil.transform(
-					objectEntriesPage.getItems(),
+				return TransformUtil.transform(
+					page.getItems(),
 					objectEntry -> _toObjectEntry(
 						_objectDefinition.getObjectDefinitionId(),
 						objectEntry));
 			}
-			else {
-				ObjectRelatedModelsProvider objectRelatedModelsProvider =
-					_objectRelatedModelsProviderRegistry.
-						getObjectRelatedModelsProvider(
-							_objectDefinition.getClassName(),
-							ParamUtil.getString(
-								_portletRequest, "objectRelationshipType"));
 
-				objectEntries =
-					objectRelatedModelsProvider.getUnrelatedModels(
-						_objectDefinition.getCompanyId(),
-						ParamUtil.getLong(_portletRequest, "groupId"),
-						_objectDefinition,
-						ParamUtil.getLong(_portletRequest, "objectEntryId"),
-						ParamUtil.getLong(
-							_portletRequest, "objectRelationshipId"));
-			}
+			ObjectRelatedModelsProvider objectRelatedModelsProvider =
+				_objectRelatedModelsProviderRegistry.
+					getObjectRelatedModelsProvider(
+						_objectDefinition.getClassName(),
+						ParamUtil.getString(
+							_portletRequest, "objectRelationshipType"));
 
-			return objectEntries;
+			return objectRelatedModelsProvider.getUnrelatedModels(
+				_objectDefinition.getCompanyId(),
+				ParamUtil.getLong(_portletRequest, "groupId"),
+				_objectDefinition,
+				ParamUtil.getLong(_portletRequest, "objectEntryId"),
+				ParamUtil.getLong(
+					_portletRequest, "objectRelationshipId"));
 		}
 
 		private DTOConverterContext _getDTOConverterContext() {
