@@ -821,11 +821,9 @@ public class FriendlyURLServlet extends HttpServlet {
 		HttpServletRequest originalHttpServletRequest =
 			portal.getOriginalServletRequest(httpServletRequest);
 
-		RedirectProvider.Redirect redirect =
-			redirectProvider.getRedirect(
-				groupId, _normalizeFriendlyURL(layoutFriendlyURL),
-				_normalizeFriendlyURL(
-					originalHttpServletRequest.getRequestURI()));
+		RedirectProvider.Redirect redirect = redirectProvider.getRedirect(
+			groupId, _normalizeFriendlyURL(layoutFriendlyURL),
+			_normalizeFriendlyURL(originalHttpServletRequest.getRequestURI()));
 
 		if (redirect == null) {
 			return null;
