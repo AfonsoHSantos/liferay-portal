@@ -4438,8 +4438,4 @@ public class CommerceCurrencyPersistenceImpl
 	@Reference
 	private PortalUUID _portalUUID;
 
-	@Reference
-	private CommerceCurrencyModelArgumentsResolver
-		_commerceCurrencyModelArgumentsResolver;
-
 }
