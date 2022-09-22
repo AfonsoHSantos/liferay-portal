@@ -144,7 +144,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 
 			skippedRedirect = _getRedirectProviderRedirect(
-				httpServletRequest, group.getGroupId(), layoutFriendlyURL,
+				group.getGroupId(), httpServletRequest, layoutFriendlyURL,
 				redirectProvider);
 
 			if ((skippedRedirect != null) &&
@@ -809,7 +809,7 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	private Redirect _getRedirectProviderRedirect(
-		HttpServletRequest httpServletRequest, long groupId,
+		long groupId, HttpServletRequest httpServletRequest,
 		String layoutFriendlyURL, RedirectProvider redirectProvider) {
 
 		RedirectProvider currentRedirectProvider = redirectProvider;
