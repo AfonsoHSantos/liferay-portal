@@ -837,20 +837,6 @@ public class FriendlyURLServlet extends HttpServlet {
 		return null;
 	}
 
-	private String _getRefererURL(HttpServletRequest httpServletRequest) {
-		String refererURL = httpServletRequest.getHeader(HttpHeaders.REFERER);
-
-		if (Validator.isNotNull(refererURL)) {
-			int questionPos = refererURL.indexOf(CharPool.QUESTION);
-
-			if (questionPos != -1) {
-				refererURL = refererURL.substring(0, questionPos);
-			}
-		}
-
-		return refererURL;
-	}
-
 	private ServiceContext _getServiceContext(
 			Group group, HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -917,7 +903,15 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	private boolean _isSkipRedirect(HttpServletRequest httpServletRequest) {
-		String refererURL = _getRefererURL(httpServletRequest);
+		String refererURL = httpServletRequest.getHeader(HttpHeaders.REFERER);
+
+		if (Validator.isNotNull(refererURL)) {
+			int questionPos = refererURL.indexOf(CharPool.QUESTION);
+
+			if (questionPos != -1) {
+				refererURL = refererURL.substring(0, questionPos);
+			}
+		}
 
 		if (Validator.isNotNull(refererURL)) {
 			return refererURL.contains(
