@@ -634,11 +634,7 @@ public class ObjectDefinitionResourceImpl
 					() -> {
 						String restContextPath = StringPool.BLANK;
 
-						if (!objectDefinition.isSystem()) {
-							restContextPath =
-								objectDefinition.getRESTContextPath();
-						}
-						else {
+						if (objectDefinition.isSystem()) {
 							SystemObjectDefinitionMetadata
 								systemObjectDefinitionMetadata =
 									_systemObjectDefinitionMetadataTracker.
@@ -650,6 +646,10 @@ public class ObjectDefinitionResourceImpl
 									systemObjectDefinitionMetadata.
 										getRESTContextPath();
 							}
+						}
+						else {
+							restContextPath =
+								objectDefinition.getRESTContextPath();
 						}
 
 						return restContextPath.matches(".*/\\{\\w+}/.*");
