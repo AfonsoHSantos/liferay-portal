@@ -299,12 +299,12 @@ public class ObjectEntryItemSelectorView
 		}
 
 		private List<ObjectEntry> _getObjectEntries() throws Exception {
-			List<ObjectEntry> objectEntries = new ArrayList<>();
+			List<ObjectEntry> objectEntries = null;
 
-			if (Validator.isNull(
-					ParamUtil.getLong(
-						_portletRequest, "objectDefinitionId"))) {
+			long objectDefinitionId = ParamUtil.getLong(
+				_portletRequest, "objectDefinitionId");
 
+			if (objectDefinitionId > 0) {
 				Group scopeGroup = _themeDisplay.getScopeGroup();
 
 				Page<com.liferay.object.rest.dto.v1_0.ObjectEntry>
