@@ -84,8 +84,8 @@ import javax.servlet.jsp.PageContext;
 public class WorkflowDefinitionDisplayContext {
 
 	public WorkflowDefinitionDisplayContext(
-		RenderRequest renderRequest, CTEntryLocalService ctEntryLocalService,
-		Portal portal, ResourceBundleLoader resourceBundleLoader,
+		CTEntryLocalService ctEntryLocalService, Portal portal,
+		RenderRequest renderRequest, ResourceBundleLoader resourceBundleLoader,
 		UserLocalService userLocalService) {
 
 		_ctEntryLocalService = ctEntryLocalService;

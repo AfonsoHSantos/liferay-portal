@@ -85,7 +85,7 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 
 			WorkflowDefinitionDisplayContext displayContext =
 				new WorkflowDefinitionDisplayContext(
-					renderRequest, ctEntryLocalService, portal,
+					ctEntryLocalService, portal, renderRequest,
 					ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
 					userLocalService);
 
