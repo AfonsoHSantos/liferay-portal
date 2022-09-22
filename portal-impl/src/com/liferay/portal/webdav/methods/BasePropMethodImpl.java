@@ -189,10 +189,10 @@ public abstract class BasePropMethodImpl implements Method {
 		if (props.contains(ISREADONLY)) {
 			props.remove(ISREADONLY);
 
-			Lock lock = resource.getLock();
-
 			Element successIsReadOnlyElement = successPropElement.addElement(
 				ISREADONLY);
+
+			Lock lock = resource.getLock();
 
 			if ((lock == null) || resource.isLocked()) {
 				successIsReadOnlyElement.addText(Boolean.FALSE.toString());
@@ -307,12 +307,12 @@ public abstract class BasePropMethodImpl implements Method {
 
 		for (QName qName : props) {
 			if (customProps.contains(qName)) {
+				Element qNameElement = successPropElement.addElement(qName);
+
 				Namespace namespace = qName.getNamespace();
 
 				String text = webDAVProps.getText(
 					qName.getName(), namespace.getPrefix(), namespace.getURI());
-
-				Element qNameElement = successPropElement.addElement(qName);
 
 				qNameElement.addText(GetterUtil.getString(text));
 
