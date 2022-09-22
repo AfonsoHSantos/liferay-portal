@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -298,6 +297,12 @@ public class ObjectEntryItemSelectorView
 			return searchContainer;
 		}
 
+		private DTOConverterContext _getDTOConverterContext() {
+			return new DefaultDTOConverterContext(
+				false, null, null, _httpServletRequest, null,
+				_themeDisplay.getLocale(), null, _themeDisplay.getUser());
+		}
+
 		private List<ObjectEntry> _getObjectEntries() throws Exception {
 			long objectDefinitionId = ParamUtil.getLong(
 				_portletRequest, "objectDefinitionId");
@@ -309,8 +314,8 @@ public class ObjectEntryItemSelectorView
 					_objectEntryManager.getObjectEntries(
 						_themeDisplay.getCompanyId(), _objectDefinition,
 						scopeGroup.getGroupKey(), null,
-						_getDTOConverterContext(), StringPool.BLANK,
-						null, null, null);
+						_getDTOConverterContext(), StringPool.BLANK, null, null,
+						null);
 
 				return TransformUtil.transform(
 					page.getItems(),
@@ -331,14 +336,7 @@ public class ObjectEntryItemSelectorView
 				ParamUtil.getLong(_portletRequest, "groupId"),
 				_objectDefinition,
 				ParamUtil.getLong(_portletRequest, "objectEntryId"),
-				ParamUtil.getLong(
-					_portletRequest, "objectRelationshipId"));
-		}
-
-		private DTOConverterContext _getDTOConverterContext() {
-			return new DefaultDTOConverterContext(
-				false, null, null, _httpServletRequest, null,
-				_themeDisplay.getLocale(), null, _themeDisplay.getUser());
+				ParamUtil.getLong(_portletRequest, "objectRelationshipId"));
 		}
 
 		private ObjectEntry _toObjectEntry(
