@@ -600,9 +600,18 @@ public class ObjectDefinitionResourceImpl
 						objectView),
 					ObjectView.class);
 				panelCategoryKey = objectDefinition.getPanelCategoryKey();
+				parameterRequired = finalRESTContextPath.matches(
+					".*/\\{\\w+}/.*");
 				pluralLabel = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getPluralLabelMap());
 				portlet = objectDefinition.getPortlet();
+
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-152650"))) {
+
+					restContextPath = finalRESTContextPath;
+				}
+
 				scope = objectDefinition.getScope();
 				status = new Status() {
 					{
@@ -625,20 +634,6 @@ public class ObjectDefinitionResourceImpl
 
 				system = objectDefinition.isSystem();
 
-				setRestContextPath(
-					() -> {
-						if (!GetterUtil.getBoolean(
-								PropsUtil.get("feature.flag.LPS-152650"))) {
-
-							return null;
-						}
-
-						return finalRESTContextPath;
-					});
-				setParameterRequired(
-					() -> {
-						return finalRESTContextPath.matches(".*/\\{\\w+}/.*");
-					});
 				setTitleObjectFieldName(
 					() -> {
 						com.liferay.object.model.ObjectField
