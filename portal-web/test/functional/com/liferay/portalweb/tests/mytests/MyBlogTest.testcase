@@ -1,0 +1,70 @@
+@component-name = "portal-lima"
+definition {
+    property testray.main.component.name = "Blogs";
+    setUp {
+        TestCase.setUpPortalInstance();
+        User.firstLoginPG();
+        JSONLayout.addPublicLayout(
+            groupName = "Guest",
+            layoutName = "Blogs Page");
+        JSONLayout.addWidgetToPublicLayout(
+            column = "1",
+            groupName = "Guest",
+            layoutName = "Blogs Page",
+            widgetName = "Blogs");
+        Navigator.gotoPage(pageName = "Blogs Page");
+    }
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        else {
+            BlogsEntry.tearDownCP();
+            JSONLayout.deletePublicLayout(
+                groupName = "Guest",
+                layoutName = "Blogs Page");
+        }
+    }
+    
+    @description = "Can Edit a Blog"
+    @priority = "5"
+    test CanEditBlog {
+        task("Edit entries on the blog") {
+            JSONBlog.addEntry(
+                entryContent = "Blog Entry Content",
+                entryTitle = "Test Title");
+            Navigator.gotoPage(pageName = "Blogs Page");
+        }
+
+        task("Edit entries on the blog") {
+            Blogs.editEntryPG(
+                entryContent = "Blog Entry Content",
+                entryContentEdit = "Blog Edit",
+                entryTitle = "Test Title",
+                entryTitleEdit = "Edited Title");
+        }
+
+        task("Go to page and view entries") {
+            Navigator.gotoPage(pageName = "Blogs Page");
+            BlogsNavigator.gotoEntryPG(
+                entryContent = "Blog Edit",
+                entryTitle = "Edited Title");
+            BlogsEntry.viewEntryPG(
+                entryContent = "Blog Edit",
+                entryTitle = "Edited Title");
+        }
+        
+    }
+    
+    
+}
+
+
+
+
+
+
+
+
+
