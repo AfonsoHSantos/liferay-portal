@@ -54,7 +54,7 @@ definition {
 				groupName = "Guest",
 				layoutName = "Blogs Page");
 		}
-	}
+    }
 
 	@description = "Can Create a Blog"
 	@priority = "5"
