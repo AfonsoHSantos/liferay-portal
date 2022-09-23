@@ -1,78 +1,128 @@
 @component-name = "portal-lima"
 definition {
-    property testray.main.component.name = "Blogs";
-    setUp {
-        TestCase.setUpPortalInstance();
-        User.firstLoginPG();
-        task("Make a blogs page and add a widget layout"){
-            JSONLayout.addPublicLayout(
-            groupName = "Guest",
-            layoutName = "Blogs Page");
-        JSONLayout.addWidgetToPublicLayout(
-            column = "1",
-            groupName = "Guest",
-            layoutName = "Blogs Page",
-            widgetName = "Blogs");
-        Navigator.gotoPage(pageName = "Blogs Page");
-        }
-        
-    }
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
-            BlogsEntry.tearDownCP();
-            JSONLayout.deletePublicLayout(
-                groupName = "Guest",
-                layoutName = "Blogs Page");
-        }
-    }
-    @description = "Can Create a Blog"
-    @priority = "5"
-    test CanCreateBlog {
-        
-        }
-    
-    @description = "Can Delete a Blog"
-    @priority = "5"
-    test CanDeleteBlog {
-        task("Add entries into the Blog Page") {         
-            JSONBlog.addEntry(
-            entryContent = "Blog Entry Content 2",
-            entryTitle = "Test Blog 2");
-            JSONBlog.addEntry(
-                entryContent = "Blog Entry Content 1",
-                entryTitle = "Test Blog 1");       
-        }
-        task("Navigate into Blog Page and delete one of the entries") {
-             Navigator.gotoPage(pageName = "Blogs Page");
-                
-            BlogsEntry.viewEntryPG(
-                entryContent = "Blog Entry Content 1",
-                entryTitle = "Test Blog 1"
-            );
-            Navigator.gotoPage(pageName = "Blogs Page");
-            BlogsEntry.viewEntryPG(
-                entryContent = "Blog Entry Content 2",
-                entryTitle = "Test Blog 2"
-            );
-            BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-            BlogsNavigator.moveToRecycleBinCP(
-                 assetType = "Blog Entry Content 2",
-                 entryTitle = "Test Blog 2");
-        }
-        task("Go to Blog Entries and check if the entry was deleted") {
-            BlogsEntry.viewNoCP(entryTitle = "Test Blog 2");
-            Blogs.viewEntryTitle(
-             entryTitle = "Test Blog 1",
-                position = "1");
-        }
-    }
-    @description = "Can Create a Blog"
-    @priority = "5"
-    test CanEditBlog {
-        
-    }
+
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Make a blogs page and add a widget layout") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Blogs Page",
+				widgetName = "Blogs");
+
+			Navigator.gotoPage(pageName = "Blogs Page");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+		}
+	}
+
+	@description = "Can Create a Blog"
+	@priority = "5"
+	test CanCreateBlog {
+		Blogs.addEntry(
+			entryContent = "Blog Entry Content",
+			entrySubtitle = "Test Blog",
+			entryTitle = "Test Blog");
+
+		Alert.viewSuccessMessage();
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blog Entry Content",
+			entryTitle = "Test Blog");
+	}
+
+	@description = "Can Delete a Blog"
+	@priority = "5"
+	test CanDeleteBlog {
+		task ("Add entries into the Blog Page") {
+			JSONBlog.addEntry(
+				entryContent = "Blog Entry Content 2",
+				entryTitle = "Test Blog 2");
+
+			JSONBlog.addEntry(
+				entryContent = "Blog Entry Content 1",
+				entryTitle = "Test Blog 1");
+		}
+
+		task ("Navigate into Blog Page and delete one of the entries") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsEntry.viewEntryPG(
+				entryContent = "Blog Entry Content 1",
+				entryTitle = "Test Blog 1");
+
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsEntry.viewEntryPG(
+				entryContent = "Blog Entry Content 2",
+				entryTitle = "Test Blog 2");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			BlogsNavigator.moveToRecycleBinCP(
+				assetType = "Blog Entry Content 2",
+				entryTitle = "Test Blog 2");
+		}
+
+		task ("Go to Blog Entries and check if the entry was deleted") {
+			BlogsEntry.viewNoCP(entryTitle = "Test Blog 2");
+
+			Blogs.viewEntryTitle(
+				entryTitle = "Test Blog 1",
+				position = "1");
+		}
+	}
+
+	@description = "Can Create a Blog"
+	@priority = "5"
+	test CanEditBlog {
+		JSONBlog.addEntry(
+			entryContent = "Blog Entry Content",
+			entryTitle = "Test Title");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.editEntryPG(
+			entryContent = "Blog Entry Content",
+			entryContentEdit = "Blog Edit",
+			entryTitle = "Test Title",
+			entryTitleEdit = "Edited Title");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blog Edit",
+			entryTitle = "Edited Title");
+
+		BlogsEntry.viewEntryPG(
+			entryContent = "Blog Edit",
+			entryTitle = "Edited Title");
+	}
+
 }
