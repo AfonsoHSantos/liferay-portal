@@ -1,4 +1,5 @@
 @component-name = "portal-lima"
+
 definition {
 
     property portal.acceptance = "true";
