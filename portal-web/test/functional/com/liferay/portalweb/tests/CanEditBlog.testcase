@@ -1,71 +1,72 @@
 @component-name = "portal-lima"
 definition {
 
-    property portal.acceptance = "true";
-    property portal.release = "true";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Blogs";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Blogs";
 
-    setUp {
+	setUp {
+		task ("Build portal instance and login") {
+			TestCase.setUpPortalInstance();
 
-        task("Build portal instance and login"){
-            TestCase.setUpPortalInstance();
+			User.firstLoginPG();
+		}
 
-            User.firstLoginPG();
-        }
-        
-        task("Add blog page and widget through API"){
-            JSONLayout.addPublicLayout(
-                groupName = "Guest",
-                layoutName = "Blogs Page");
+		task ("Add blog page and widget through API") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
 
-            JSONLayout.addWidgetToPublicLayout(
-                column = "1",
-                groupName = "Guest",
-                layoutName = "Blogs Page",
-                widgetName = "Blogs");
-        }
-        
-        task("Go to blog's page, add title and content"){
-            Navigator.gotoPage(pageName = "Blogs Page");
-            Blogs.addEntry(
-                entryContent = "Blogs Entry Content1",
-                entryTitle = "Blogs Entry Title1");  
-        }
-    }
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Blogs Page",
+				widgetName = "Blogs");
+		}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+		task ("Go to blog's page, add title and content") {
+			Navigator.gotoPage(pageName = "Blogs Page");
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
-            BlogsEntry.tearDownCP();
-            Blogs.tearDownConfigurationDisplaySettingsPG(
-                pageName = "Blogs Page",
-                portletName = "Blogs");
-            JSONLayout.deletePublicLayout(
-                groupName = "Guest",
-                layoutName = "Blogs Page");
-        }
-    }
+			Blogs.addEntry(
+				entryContent = "Blogs Entry Content1",
+				entryTitle = "Blogs Entry Title1");
+		}
+	}
 
-    test CanEditBlog {
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        task("Edit entry"){
-            Blogs.editEntryPG(
-			entryContent = "Blogs Entry Content1",
-			entryContentEdit = "Blogs Entry Content Edit1",
-			entryTitle = "Blogs Entry Title1",
-			entryTitleEdit = "Blogs Entry Title Edit1");
-        }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
 
-            task("Check edited content and title"){
-            BlogsEntry.viewPG(
-                entryContent = "Blogs Entry Content Edit1",
-                entryTitle = "Blogs Entry Title Edit1");
-        }
-    }
+			Blogs.tearDownConfigurationDisplaySettingsPG(
+				pageName = "Blogs Page",
+				portletName = "Blogs");
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+		}
+	}
+
+	test CanEditBlog {
+		task ("Edit entry") {
+			Blogs.editEntryPG(
+				entryContent = "Blogs Entry Content1",
+				entryContentEdit = "Blogs Entry Content Edit1",
+				entryTitle = "Blogs Entry Title1",
+				entryTitleEdit = "Blogs Entry Title Edit1");
+		}
+
+		task ("Check edited content and title") {
+			BlogsEntry.viewPG(
+				entryContent = "Blogs Entry Content Edit1",
+				entryTitle = "Blogs Entry Title Edit1");
+		}
+	}
+
 }
-
