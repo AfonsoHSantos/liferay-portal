@@ -277,9 +277,8 @@ public abstract class BaseSpellCheckIndexWriter
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
-						"Started indexing dictionary [companyId=",
-						searchContext.getCompanyId(), ", ", dictionaryFileName,
-						"]"));
+						"Start indexing dictionary ", dictionaryFileName,
+						" for company ", searchContext.getCompanyId()));
 			}
 
 			URL url = getResource(dictionaryFileName);
@@ -301,9 +300,8 @@ public abstract class BaseSpellCheckIndexWriter
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
-						"Finished indexing dictionary [companyId=",
-						searchContext.getCompanyId(), ", ", dictionaryFileName,
-						"]"));
+						"Finished indexing dictionary ", dictionaryFileName,
+						" for company ", searchContext.getCompanyId()));
 			}
 		}
 	}
