@@ -1,0 +1,80 @@
+@component-name = "portal-lima"
+definition {
+    property testray.main.component.name = "Blogs";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        Navigator.openURL();
+
+        JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");  
+        
+        Navigator.gotoPage(pageName = "Blogs Page");
+
+        JSONBlog.addEntry(
+           entryContent = "Blogs Entry Content1",
+           entryTitle = "Blogs Entry Title1");
+        JSONBlog.addEntry(
+           entryContent = "Blogs Entry Content2",
+           entryTitle = "Blogs Entry Title2");
+        
+        Navigator.openURL();
+
+	}
+
+     tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+        else {
+            BlogsEntry.tearDownCP();
+
+            JSONLayout.deletePublicLayout(
+                groupName = "Guest",
+                layoutName = "Blogs Page");
+        }
+     }
+
+    @description = "Can Create a Blog"
+    @priority = "5"
+    test CanCreateBlog {
+
+        task ("Create a page with a blog's widget") {
+        JSONLayout.addPublicLayout(
+            groupName = "Guest",
+            layoutName = "Create Blog");
+        JSONLayout.addWidgetToPublicLayout(
+            column = "1",
+            groupName = "Guest",
+            layoutName = "Create Blog",
+            widgetName = "Blogs");
+        }
+        Navigator.gotoPage(pageName = "Create Blog");
+        task ("Add the first blogs entry") {
+            Blogs.addEntry(
+            entryTitle = "My New Blog",
+            entryContent = "My Blog Content");
+        }
+        Alert.viewSuccessMessage();
+        Navigator.openURL();
+        task ("View the related assets in Blogs"){
+            Navigator.gotoPage(pageName = "Create Blog");
+            BlogsEntry.viewEntryPG(
+            entryTitle = "My New Blog",
+            entryContent = "My Blog Content");
+        }  
+    }
+
+} 
