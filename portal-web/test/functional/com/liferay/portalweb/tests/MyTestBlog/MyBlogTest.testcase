@@ -1,0 +1,78 @@
+@component-name = "portal-lima"
+definition {
+
+    property testray.main.component.name = "Blogs";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        task ("Makes login and go to home page"){
+            TestCase.setUpPortalInstance();
+            User.firstLoginPG();
+            Navigator.openURL();
+        }
+        task ("Create a page with a blog's widgetS"){
+            JSONLayout.addPublicLayout(
+                groupName = "Guest",
+                layoutName = "Blogs Page");
+            JSONLayout.addWidgetToPublicLayout(
+                column = "1",
+                groupName = "Guest",
+                layoutName = "Blogs Page",
+                widgetName = "Blogs");
+        }
+        task ("Add blogs entry"){
+            Navigator.gotoPage(pageName = "Blogs Page");
+            JSONBlog.addEntry(
+                entryContent = "Blogs Entry Content1",
+                entryTitle = "Blogs Entry Title1");
+            JSONBlog.addEntry(
+                entryContent = "Blogs Entry Content2",
+                entryTitle = "Blogs Entry Title2");
+        }
+        task ("Back to home"){
+            Navigator.openURL();
+        }
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        else {
+            BlogsEntry.tearDownCP();
+
+            JSONLayout.deletePublicLayout(
+                groupName = "Guest",
+                layoutName = "Blogs Page");
+
+        }
+    }
+
+    @description = "Can Delete a Blog"
+    @priority = "5"
+    test CanDeleteBlog {     
+		task ("Delete some especifc added entry"){
+            Navigator.gotoPage(pageName = "Blogs Page");
+            BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+            
+            BlogsNavigator.moveToRecycleBinCP(
+			  assetType = "Blogs Entry",
+			  entryTitle = "Blogs Entry Title1");
+        }
+
+        task ("Check if the other entries are still existing and have not been deleted"){
+            Blogs.viewEntryTitle(
+			  entryTitle = "Blogs Entry Title2",
+			  position = "1");
+        }
+
+        task ("Check if the deleted Entry was really moved to recycle bin"){
+            BlogsEntry.viewNoCP(entryTitle = "Blogs Entry Title1");  
+        }
+        
+    }  
+}
+
