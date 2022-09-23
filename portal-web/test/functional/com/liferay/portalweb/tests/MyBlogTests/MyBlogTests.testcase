@@ -1,0 +1,86 @@
+@component-name = "portal-lima"
+definition {
+
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		task ("login to the portal") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Page Name");
+		}
+
+		task ("find the respective buttons to create the blog") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Page Name",
+				widgetName = "Blogs");
+		}
+
+		task ("create a blog and edit the names according to the user's wishes") {
+			Navigator.gotoPage(pageName = "Page Name");
+
+			Blogs.addEntry(
+				entryContent = "Second blog test",
+				entrySubtitle = "Second blog",
+				entryTitle = "Test blog test");
+		}
+	}
+
+	tearDown {
+		task ("delete actions done") {
+			BlogsEntry.tearDownCP();
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.deletePage(pageName = "Page Name");
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "Can Create a Blog"
+	@priority = "5"
+	test CanCreateBlog {
+	}
+
+	@description = "Can Delete a Blog"
+	@priority = "5"
+	test CanDeleteBlog {
+	}
+
+	@description = "Can Edit a Blog"
+	@priority = "5"
+	test CanEditBlog {
+		task ("edit the blog already created") {
+			Blogs.editEntryPG(
+				entryContent = "Second blog test",
+				entryContentEdit = "Second blog test edit",
+				entryTitle = "Test blog test",
+				entryTitleEdit = "Test blog test edit");
+		}
+
+		task ("Check if you hear success in the edit") {
+			Alert.viewSuccessMessage();
+
+			BlogsEntry.viewEntryPG(
+				entryContent = "Second blog test edit",
+				entryTitle = "Test blog test edit");
+		}
+	}
+
+	@description = "Can Search Blogs"
+	@priority = "5"
+	test CanSearchBlogs {
+	}
+
+}
