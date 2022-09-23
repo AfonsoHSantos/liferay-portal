@@ -1,0 +1,78 @@
+@component-name = "portal-lima"
+definition {
+
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		task ("Opening the portal and doing the Login") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Creating a Page with a Blog widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Blogs Page",
+				widgetName = "Blogs");
+		}
+
+		task ("Entering The Blogs Page and Adding a Blog Entry") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			JSONBlog.addEntry(
+				entryContent = "Blog Entry Content1.",
+				entryTitle = "Test Blog1");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+
+			Blogs.tearDownConfigurationDisplaySettingsPG(
+				pageName = "Blogs Page",
+				portletName = "Blogs");
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "Can Edit a Blog"
+	test CanEditBlog {
+		task ("the User edits the blog Entry") {
+			BlogsNavigator.gotoEditPG(entryTitle = "Test Blog1");
+
+			BlogsEntry.editEntryContent(
+				entryContent = "Blog Entry Content1.",
+				entryContentEdit = "Blogs Entry Content Edit",
+				entrySubtitle = "",
+				entrySubtitleEdit = "Blogs Entry Subtitle Edit",
+				entryTitle = "Test Blog1",
+				entryTitleEdit = "Blogs Entry Title Edit");
+
+			PortletEntry.publish();
+		}
+
+		task ("Assert that the alteration were made") {
+			BlogsEntry.viewPG(
+				entryContent = "Blogs Entry Content Edit",
+				entryTitle = "Blogs Entry Title Edit");
+		}
+	}
+
+}
