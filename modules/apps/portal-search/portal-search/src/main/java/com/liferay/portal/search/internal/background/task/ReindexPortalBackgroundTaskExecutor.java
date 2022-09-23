@@ -54,7 +54,7 @@ public class ReindexPortalBackgroundTaskExecutor
 				companyIds);
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Reindexing started [companyId=" + companyId + "]");
+				_log.info("Start reindexing company " + companyId);
 			}
 
 			try {
@@ -73,7 +73,7 @@ public class ReindexPortalBackgroundTaskExecutor
 					companyIds);
 
 				if (_log.isInfoEnabled()) {
-					_log.info("Reindexing ended [companyId=" + companyId + "]");
+					_log.info("Finished reindexing company " + companyId);
 				}
 			}
 		}

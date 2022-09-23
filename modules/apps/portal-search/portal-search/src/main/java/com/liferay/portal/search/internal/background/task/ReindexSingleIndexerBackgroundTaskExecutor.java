@@ -124,8 +124,8 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
-						"Reindexing started [companyId=", companyId, ", ",
-						className, "]"));
+						"Start reindexing company ", companyId,
+						" for class name ", className));
 			}
 
 			try {
@@ -149,8 +149,8 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Reindexing ended [companyId=", companyId, ", ",
-							className, "]"));
+							"Finished reindexing company ", companyId,
+							" for class name ", className));
 				}
 			}
 		}
