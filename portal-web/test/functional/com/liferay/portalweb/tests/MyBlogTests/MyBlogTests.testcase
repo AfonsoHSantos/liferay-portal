@@ -1,47 +1,60 @@
 @component-name = "portal-lima"
 definition {
+
 	property testray.main.component.name = "Blogs";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-        task("Make a blogs page and add a widget layout"){
+
+		task ("Make a blogs page and add a widget layout") {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Page");
+
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
 			groupName = "Guest",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
         }
+
 		Navigator.gotoPage(pageName = "Blogs Page");
 	}
+
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
 			BlogsEntry.tearDownCP();
+
             JSONLayout.deletePublicLayout(
                 groupName = "Guest",
                 layoutName = "Blogs Page");
 		}
 	}
+
 	@description = "Can Create a Blog"
 	@priority = "5"
 	test CanCreateBlog {
-        task("Add a blogs entry and confirm the succesMessage"){
+		task ("Add a blogs entry and confirm the succesMessage") {
 			Blogs.addEntry(
 				entryContent = "Blog Entry Content",
 				entrySubtitle = "Test Blog",
 				entryTitle = "Test Blog");
+
         Alert.viewSuccessMessage();
         }
-        task("Go to the Blogs Page and ViewEntry on the page"){
+
+		task ("Go to the Blogs Page and ViewEntry on the page") {
         Navigator.openURL();
+
         Navigator.gotoPage(pageName = "Blogs Page");
+
         BlogsEntry.viewEntryPG(
                 entryContent = "Blog Entry Content",
                 entryTitle = "Test Blog");
