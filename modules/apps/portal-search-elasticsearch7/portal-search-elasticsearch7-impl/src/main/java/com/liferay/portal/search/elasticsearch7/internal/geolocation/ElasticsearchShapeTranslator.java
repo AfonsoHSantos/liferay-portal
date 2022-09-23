@@ -54,8 +54,7 @@ public class ElasticsearchShapeTranslator
 	public CircleBuilder translate(CircleShape circleShape) {
 		GeoDistance radiusGeoDistance = circleShape.getRadius();
 
-		return new CircleBuilder(
-		).center(
+		return new CircleBuilder().center(
 			translate(circleShape.getCenter())
 		).coordinates(
 			translate(circleShape.getCoordinates())

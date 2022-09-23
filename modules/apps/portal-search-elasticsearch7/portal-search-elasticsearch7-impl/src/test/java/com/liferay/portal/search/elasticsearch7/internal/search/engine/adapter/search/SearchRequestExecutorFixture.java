@@ -97,12 +97,12 @@ public class SearchRequestExecutorFixture {
 			new StatsResponseBuilderFactoryImpl());
 
 		_searchRequestExecutor = _createSearchRequestExecutor(
+			createComplexQueryBuilderFactory(new QueriesImpl()),
 			_elasticsearchClientResolver, elasticsearchQueryTranslator,
 			elasticsearchSortFieldTranslatorFixture.
 				getElasticsearchSortFieldTranslator(),
-			facetProcessor, statsTranslator,
-			new StatsRequestBuilderFactoryImpl(),
-			createComplexQueryBuilderFactory(new QueriesImpl()));
+			facetProcessor, new StatsRequestBuilderFactoryImpl(),
+			statsTranslator);
 	}
 
 	protected static CommonSearchSourceBuilderAssembler
@@ -222,18 +222,19 @@ public class SearchRequestExecutorFixture {
 		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler,
 		StatsTranslator statsTranslator) {
 
+		CountSearchRequestExecutor countSearchRequestExecutor =
+			new CountSearchRequestExecutorImpl();
+
 		CommonSearchResponseAssembler commonSearchResponseAssembler =
 			new CommonSearchResponseAssemblerImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			commonSearchResponseAssembler, "_statsTranslator", statsTranslator);
 
-		CountSearchRequestExecutor countSearchRequestExecutor =
-			new CountSearchRequestExecutorImpl();
-
 		ReflectionTestUtil.setFieldValue(
 			countSearchRequestExecutor, "_commonSearchResponseAssembler",
 			commonSearchResponseAssembler);
+
 		ReflectionTestUtil.setFieldValue(
 			countSearchRequestExecutor, "_commonSearchSourceBuilderAssembler",
 			commonSearchSourceBuilderAssembler);
@@ -267,12 +268,13 @@ public class SearchRequestExecutorFixture {
 	}
 
 	private SearchRequestExecutor _createSearchRequestExecutor(
+		ComplexQueryBuilderFactory complexQueryBuilderFactory,
 		ElasticsearchClientResolver elasticsearchClientResolver,
 		ElasticsearchQueryTranslator elasticsearchQueryTranslator,
 		ElasticsearchSortFieldTranslator elasticsearchSortFieldTranslator,
-		FacetProcessor<?> facetProcessor, StatsTranslator statsTranslator,
+		FacetProcessor<?> facetProcessor,
 		StatsRequestBuilderFactory statsRequestBuilderFactory,
-		ComplexQueryBuilderFactory complexQueryBuilderFactory) {
+		StatsTranslator statsTranslator) {
 
 		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler =
 			createCommonSearchSourceBuilderAssembler(
@@ -379,21 +381,23 @@ public class SearchRequestExecutorFixture {
 		StatsRequestBuilderFactory statsRequestBuilderFactory,
 		StatsTranslator statsTranslator) {
 
-		CommonSearchResponseAssembler commonSearchResponseAssembler =
-			new CommonSearchResponseAssemblerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			commonSearchResponseAssembler, "_statsTranslator", statsTranslator);
-
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
 			new SearchSearchResponseAssemblerImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_aggregationResults",
 			new AggregationResultsImpl());
+
+		CommonSearchResponseAssembler commonSearchResponseAssembler =
+			new CommonSearchResponseAssemblerImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			commonSearchResponseAssembler, "_statsTranslator", statsTranslator);
+
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_commonSearchResponseAssembler",
 			commonSearchResponseAssembler);
+
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_documentBuilderFactory",
 			new DocumentBuilderFactoryImpl());
