@@ -4,25 +4,28 @@ definition {
 	property testray.main.component.name = "Blogs";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task("Log in Liferay Portal"){
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
+		task("Create a new page, a blog widget and a blog entry via API"){
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Blogs Page",
+				widgetName = "Blogs");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
+			Navigator.gotoPage(pageName = "Blogs Page");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
 	}
 
 	tearDown {
@@ -37,25 +40,30 @@ definition {
 			Blogs.tearDownConfigurationDisplaySettingsPG(
 				pageName = "Blogs Page",
 				portletName = "Blogs");
-
+		
 			JSONLayout.deletePublicLayout(
 				groupName = "Guest",
 				layoutName = "Blogs Page");
 
 			PagesAdmin.tearDownCP();
-		}
+			 }
 	}
 
 	@description = "Can Create a Blog"
 	@priority = "5"
 	test CanCreateBlog {
-		Blogs.addEntry(
-			entryContent = "UI Blogs Entry Content",
-			entryTitle = "UI Blogs Entry Title");        
+		task("create a new blog entry"){
+			Blogs.addEntry(
+				entryContent = "UI Blogs Entry Content",
+				entryTitle = "UI Blogs Entry Title");
+		}
+		task("validade that the blog entry was really created"){
+			BlogsEntry.viewPG(
+				entryContent = "UI Blogs Entry Content",
+				entryTitle = "UI Blogs Entry Title");
+		}
 
-		BlogsEntry.viewPG(
-			entryContent = "UI Blogs Entry Content",
-			entryTitle = "UI Blogs Entry Title");
 	}
+
 
 }
