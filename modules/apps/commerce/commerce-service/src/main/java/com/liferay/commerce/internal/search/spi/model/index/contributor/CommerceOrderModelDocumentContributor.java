@@ -67,22 +67,23 @@ public class CommerceOrderModelDocumentContributor
 				"commerceAccountId", commerceOrder.getCommerceAccountId());
 			document.addKeyword(
 				"commerceChannelId", commerceChannel.getCommerceChannelId());
-			document.addNumber(
-				"itemsQuantity", _getItemsQuantity(commerceOrder));
-			document.addKeyword("orderStatus", commerceOrder.getOrderStatus());
-			document.addKeyword(
-				"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber());
 			document.addKeyword(
 				"externalReferenceCode",
 				commerceOrder.getExternalReferenceCode());
-			document.addNumber("total", commerceOrder.getTotal());
-			document.addDate("orderDate", commerceOrder.getOrderDate());
-			document.addDateSortable("orderDate", commerceOrder.getOrderDate());
+			document.addNumber(
+				"itemsQuantity", _getItemsQuantity(commerceOrder));
 
 			User user = _userLocalService.getUser(commerceOrder.getUserId());
 
 			document.addText(
 				"orderCreatorEmailAddress", user.getEmailAddress());
+
+			document.addDate("orderDate", commerceOrder.getOrderDate());
+			document.addDateSortable("orderDate", commerceOrder.getOrderDate());
+			document.addKeyword("orderStatus", commerceOrder.getOrderStatus());
+			document.addKeyword(
+				"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber());
+			document.addNumber("total", commerceOrder.getTotal());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
