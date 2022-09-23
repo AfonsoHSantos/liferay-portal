@@ -56,28 +56,24 @@ definition {
 		}
     }
 
-	@description = "Can Create a Blog"
-	@priority = "5"
-	test CanCreateBlog {
-		task ("Add the first blogs entry") {
-			Navigator.gotoPage(pageName = "Blogs Page");
-
-			Blogs.addEntry(
-				entryContent = "My Blog Content",
-				entryTitle = "My New Blog");
-		}
-
-		task ("Assert success message") {
-			Alert.viewSuccessMessage();
-		}
-
-		task ("View the related assets in Blogs") {
-			Navigator.gotoPage(pageName = "Blogs Page");
-
-			BlogsEntry.viewEntryPG(
-				entryContent = "My Blog Content",
-				entryTitle = "My New Blog");
-		}
-	}
-
+    @description = "Can search a Blog"
+    @priority = "5"
+    test CanSearchBlog {
+        task ("This bloc Search for exact string in Title"){
+            Navigator.gotoPage(pageName = "Blogs Page");
+            SearchPortlets.searchEmbedded(searchTerm = ""Blogs Entry Title1"");
+            SearchResultPortlet.viewSearchResults(
+               searchAssetTitle = "Blogs Entry Title1",
+               searchAssetType = "Blogs Entry",
+               searchTerm = ""Blogs Entry Title1"");
+        }
+        task ("Assert the other entry that have not been searched doesn't appear"){
+            BlogsEntry.viewNoCP(entryTitle = ""Blogs Entry Title2"");
+        }
+        task ("This bloc search for a entry that doesn't exists and show the menssage that no results were found"){
+            Navigator.gotoPage(pageName = "Blogs Page");
+            SearchPortlets.searchEmbedded(searchTerm = ""Blogs Entry Title3"");
+            SearchResultPortlet.viewNoSearchResults(searchTerm = ""Blogs Entry Title3"");
+        }
+    }
 }
