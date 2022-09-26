@@ -40,6 +40,7 @@ definition {
 		}
 	}
 
+
 	@description = "Can Edit a Blog"
 	@priority = "5"
 	test CanEditBlog {
