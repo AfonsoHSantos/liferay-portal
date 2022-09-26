@@ -41,20 +41,6 @@ definition {
 	@description = "Can Create a Blog"
 	@priority = "5"
 	test CanCreateBlog {
-		Blogs.addEntry(
-			entryContent = "Blog Entry Content",
-			entrySubtitle = "Test Blog",
-			entryTitle = "Test Blog");
-
-		Alert.viewSuccessMessage();
-
-		Navigator.openURL();
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blog Entry Content",
-			entryTitle = "Test Blog");
 	}
 
 	@description = "Can Delete a Blog"
@@ -102,27 +88,6 @@ definition {
 	@description = "Can Create a Blog"
 	@priority = "5"
 	test CanEditBlog {
-		JSONBlog.addEntry(
-			entryContent = "Blog Entry Content",
-			entryTitle = "Test Title");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		Blogs.editEntryPG(
-			entryContent = "Blog Entry Content",
-			entryContentEdit = "Blog Edit",
-			entryTitle = "Test Title",
-			entryTitleEdit = "Edited Title");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsNavigator.gotoEntryPG(
-			entryContent = "Blog Edit",
-			entryTitle = "Edited Title");
-
-		BlogsEntry.viewEntryPG(
-			entryContent = "Blog Edit",
-			entryTitle = "Edited Title");
 	}
 
 }
