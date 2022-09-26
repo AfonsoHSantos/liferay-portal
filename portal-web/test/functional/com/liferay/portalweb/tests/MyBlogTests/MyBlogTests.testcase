@@ -54,33 +54,30 @@ definition {
 				groupName = "Guest",
 				layoutName = "Blogs Page");
 		}
-	}
+    }
+    
+    @description = "Can search a Blog"
+    @priority = "5"
+    test CanSearchBlog {
+        task ("This bloc Search for exact string in Title"){
+            Navigator.gotoPage(pageName = "Blogs Page");
+            SearchPortlets.searchEmbedded(searchTerm = ""Blogs Entry Title1"");
+            SearchResultPortlet.viewSearchResults(
+               searchAssetTitle = "Blogs Entry Title1",
+               searchAssetType = "Blogs Entry",
+               searchTerm = ""Blogs Entry Title1"");
+        }
+        task ("Assert the other entry that have not been searched doesn't appear"){
+            BlogsEntry.viewNoCP(entryTitle = ""Blogs Entry Title2"");
+        }
+        task ("This bloc search for a entry that doesn't exists and show the menssage that no results were found"){
+            Navigator.gotoPage(pageName = "Blogs Page");
+            SearchPortlets.searchEmbedded(searchTerm = ""Blogs Entry Title3"");
+            SearchResultPortlet.viewNoSearchResults(searchTerm = ""Blogs Entry Title3"");
+            AssertTextEquals.assertPartialText(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No results were found that matched the keywords");
 
-	@description = "Can search a Blog"
-	@priority = "5"
-	test CanSearchBlog {
-		task ("This bloc Search for exact string in Title") {
-			Navigator.gotoPage(pageName = "Blogs Page");
-
-			SearchPortlets.searchEmbedded(searchTerm = "&quot;Blogs Entry Title1&quot;");
-
-			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = "Blogs Entry Title1",
-				searchAssetType = "Blogs Entry",
-				searchTerm = "&quot;Blogs Entry Title1&quot;");
-		}
-
-		task ("Assert the other entry that have not been searched doesn't appear") {
-			BlogsEntry.viewNoCP(entryTitle = "&quot;Blogs Entry Title2&quot;");
-		}
-
-		task ("This bloc search for a entry that doesn't exists and show the menssage that no results were found") {
-			Navigator.gotoPage(pageName = "Blogs Page");
-
-			SearchPortlets.searchEmbedded(searchTerm = "&quot;Blogs Entry Title3&quot;");
-
-			SearchResultPortlet.viewNoSearchResults(searchTerm = "&quot;Blogs Entry Title3&quot;");
-		}
-	}
-
+        }
+    }
 }
