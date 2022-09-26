@@ -73,11 +73,10 @@ definition {
         task ("This bloc search for a entry that doesn't exists and show the menssage that no results were found"){
             Navigator.gotoPage(pageName = "Blogs Page");
             SearchPortlets.searchEmbedded(searchTerm = ""Blogs Entry Title3"");
+			ClassicSearch.viewSearchNoPG(
+            searchAssetSummary = "Blogs Entry Content3",
+            searchAssetTitle = "Blogs Entry Title3");
             SearchResultPortlet.viewNoSearchResults(searchTerm = ""Blogs Entry Title3"");
-            AssertTextEquals.assertPartialText(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "No results were found that matched the keywords");
-
         }
     }
 }
