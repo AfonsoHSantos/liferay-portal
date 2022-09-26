@@ -44,7 +44,7 @@ definition {
 	@description = "LRQA-77334. Can Create a Blog"
 	@priority = "5"
 	test CanCreateBlog {
-		task("When the user Adds a new blog entry") {
+		task ("When the user Adds a new blog entry") {
 			Blogs.addEntry(
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title");
@@ -60,4 +60,5 @@ definition {
 				entryTitle = "Blogs Entry Title");
 		}
 	}
+
 }
