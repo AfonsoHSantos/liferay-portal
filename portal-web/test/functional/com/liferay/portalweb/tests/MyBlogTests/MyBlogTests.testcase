@@ -49,24 +49,7 @@ definition {
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title");
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		task ("Then the Blog Entry is displayed on the page and assert success message and entries") {
 			Alert.viewSuccessMessage();
 
