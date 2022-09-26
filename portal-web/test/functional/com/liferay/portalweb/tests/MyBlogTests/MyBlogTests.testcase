@@ -41,34 +41,34 @@ definition {
 	@description = "Can Search Blogs"
 	@priority = "5"
 	test CanSearchBlogs {
-    		JSONBlog.addEntry(
-            	entryContent = "Blog Entry Content",
-            	entryTitle = "Blogs Entry Title1");
-        task ("Search for the entry"){
+		JSONBlog.addEntry(
+			entryContent = "Blog Entry Content",
+			entryTitle = "Blogs Entry Title1");
 
-            Navigator.gotoPage(pageName = "Blogs Page");
+		task ("Search for the entry") {
+			Navigator.gotoPage(pageName = "Blogs Page");
 
-            SearchPortlets.searchEmbedded(searchTerm = ""Blogs Entry Title1"");
+			SearchPortlets.searchEmbedded(searchTerm = "&quot;Blogs Entry Title1&quot;");
 
-            SearchResultPortlet.viewSearchResults(
-               searchAssetTitle = "Blogs Entry Title1",
-               searchAssetType = "Blogs Entry",
-               searchTerm = ""Blogs Entry Title1"");
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Blogs Entry Title1",
+				searchAssetType = "Blogs Entry",
+				searchTerm = "&quot;Blogs Entry Title1&quot;");
+		}
 
-        }
-        task ("Assert the entry its not found"){
-            BlogsEntry.viewNoCP(entryTitle = ""Blogs Entry Title2"");
+		task ("Assert the entry its not found") {
+			BlogsEntry.viewNoCP(entryTitle = "&quot;Blogs Entry Title2&quot;");
+		}
 
-        }
-        task ("search for no exists entrys and show the menssage that no results, and make the validation on the text of no match results"){
-            Navigator.gotoPage(pageName = "Blogs Page");
-            SearchPortlets.searchEmbedded(searchTerm = ""Blogs Entry Title3"");
+		task ("search for no exists entrys and show the menssage that no results, and make the validation on the text of no match results") {
+			Navigator.gotoPage(pageName = "Blogs Page");
 
+			SearchPortlets.searchEmbedded(searchTerm = "&quot;Blogs Entry Title3&quot;");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No results were found that matched the keywords");
-				
-       }
+		}
 	}
+
 }
