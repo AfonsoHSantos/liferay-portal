@@ -4,21 +4,25 @@ definition {
 	property testray.main.component.name = "Blogs";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+        task("Do Login in the portal") {
+		    TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+		    User.firstLoginPG();
+        }
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Blogs Page");
+        task("Add Blog page and columns, and navigates to the Blog") {
+		    JSONLayout.addPublicLayout(
+			    groupName = "Guest",
+			    layoutName = "Blogs Page");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
+		    JSONLayout.addWidgetToPublicLayout(
+			    column = "1",
+			    groupName = "Guest",
+			    layoutName = "Blogs Page",
+			    widgetName = "Blogs");
+            Navigator.gotoPage(
+                pageName = "Blogs Page");
+        }
 	}
 
 	tearDown {
@@ -33,29 +37,6 @@ definition {
 			JSONLayout.deletePublicLayout(
 				groupName = "Guest",
 				layoutName = "Blogs Page");
-		}
-	}
-
-	@description = "Can Create a Blog"
-	@priority = "5"
-	test CanCreateBlog {
-		task ("Add an entry on the page and show success message") {
-			Blogs.addEntry(
-				entryContent = "Blog Entry Content",
-				entrySubtitle = "Test Blog",
-				entryTitle = "Test Blog");
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Go to the page and view entries") {
-			Navigator.openURL();
-
-			Navigator.gotoPage(pageName = "Blogs Page");
-
-			BlogsEntry.viewEntryPG(
-				entryContent = "Blog Entry Content",
-				entryTitle = "Test Blog");
 		}
 	}
 
