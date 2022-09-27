@@ -4,91 +4,91 @@ definition {
 	property testray.main.component.name = "Blogs";
 
 	setUp {
-		task ("Makes login"){
-			
-            TestCase.setUpPortalInstance();
+		task ("Makes login") {
+			TestCase.setUpPortalInstance();
 
-		    User.firstLoginPG();
-        }
+			User.firstLoginPG();
+		}
 
 		task ("Creates a public Blog page called 'Blog test' and publish it") {
 			JSONLayout.addPublicLayout(
-			    groupName = "Guest",
-			    layoutName = "Blog test");
+				groupName = "Guest",
+				layoutName = "Blog test");
 
-            JSONLayout.addWidgetToPublicLayout(
+			JSONLayout.addWidgetToPublicLayout(
 				column = "1",
 				groupName = "Guest",
 				layoutName = "Blog test",
 				widgetName = "Blogs");
-        }
+		}
 
 		task ("Navigate to 'Blog test' page") {
-		    Navigator.gotoPage(pageName = "Blog test");
-        }
+			Navigator.gotoPage(pageName = "Blog test");
+		}
 
 		task ("Add content, title and a subtitle in page") {
 			Blogs.addEntry(
 				entryContent = "First content",
 				entrySubtitle = "First subtitle",
 				entryTitle = "First head");
-        }     
-    }
-	    
-    tearDown {
+		}
+	}
+
+	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
-            BlogsEntry.tearDownCP();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
 
-            JSONLayout.deletePublicLayout(
-                groupName = "Guest",
-                layoutName = "Blogs Page");
-        }
-		
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+		}
+
 		User.logoutPG();
-    }
+	}
 
 	@description = "Can Search Blogs"
-    @priority = "5"
-    test CanSearchBlogs {
-        task ("Add a new entry called 'Second entry'") {
-            Blogs.addEntry(
-                entryContent = "Second entry",
-                entrySubtitle = "Second title",
-                entryTitle = "Second title");
+	@priority = "5"
+	test CanSearchBlogs {
+		task ("Add a new entry called 'Second entry'") {
+			Blogs.addEntry(
+				entryContent = "Second entry",
+				entrySubtitle = "Second title",
+				entryTitle = "Second title");
 
-            Alert.viewSuccessMessage();
+			Alert.viewSuccessMessage();
 
-            BlogsEntry.viewEntryPG(
-                entryContent = "Second entry",
-                entryTitle = "Second title");
-        }
+			BlogsEntry.viewEntryPG(
+				entryContent = "Second entry",
+				entryTitle = "Second title");
+		}
 
-        task ("Go to the home page and search for the entry 'Second entry'") {
-            Navigator.openURL();
+		task ("Go to the home page and search for the entry 'Second entry'") {
+			Navigator.openURL();
 
-            SearchPortlets.searchEmbedded(searchTerm = "First content");
+			SearchPortlets.searchEmbedded(searchTerm = "First content");
 
-            SearchResultPortlet.viewSearchResults(
-                searchAssetSummary = "First content",
-                searchAssetTitle = "First head",
-                searchAssetType = "Blogs Entry");
+			SearchResultPortlet.viewSearchResults(
+				searchAssetSummary = "First content",
+				searchAssetTitle = "First head",
+				searchAssetType = "Blogs Entry");
 
 			Blogs.viewEntryNotPresent(entryTitle = "Second entry");
-        }
+		}
 
-        task ("Not founding the 'third entrada' and validate it") {
-            Navigator.openURL();
+		task ("Not founding the 'third entrada' and validate it") {
+			Navigator.openURL();
 
-            SearchPortlets.searchEmbedded(searchTerm = "Third entrada");
+			SearchPortlets.searchEmbedded(searchTerm = "Third entrada");
 
-            AssertTextEquals.assertPartialText(
-                locator1 = "Message#EMPTY_INFO",
-                value1 = "No results were found that matched the keywords");
-        }
-    }
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No results were found that matched the keywords");
+		}
+	}
+
 }
