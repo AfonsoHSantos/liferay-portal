@@ -4,9 +4,11 @@ definition {
 	property testray.main.component.name = "Blogs";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Go to portal and make login for start of the test") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
 		task ("Make a blogs page and add a widget layout") {
 			JSONLayout.addPublicLayout(
@@ -20,7 +22,9 @@ definition {
 				widgetName = "Blogs");
 		}
 
-		Navigator.gotoPage(pageName = "Blogs Page");
+		task ("Go to blogs page") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+		}
 	}
 
 	tearDown {
@@ -41,11 +45,17 @@ definition {
 	@description = "Can Search Blogs"
 	@priority = "5"
 	test CanSearchBlogs {
-		JSONBlog.addEntry(
-			entryContent = "Blog Entry Content",
-			entryTitle = "Blogs Entry Title1");
+		task ("Add 2 blogs entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blog Entry Content",
+				entryTitle = "Blogs Entry Title1");
 
-		task ("Search for the entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blog Entry Content",
+				entryTitle = "Blogs Entry Title2");
+		}
+
+		task ("Search for the entry 1") {
 			Navigator.gotoPage(pageName = "Blogs Page");
 
 			SearchPortlets.searchEmbedded(searchTerm = "&quot;Blogs Entry Title1&quot;");
@@ -56,7 +66,7 @@ definition {
 				searchTerm = "&quot;Blogs Entry Title1&quot;");
 		}
 
-		task ("Assert the entry its not found") {
+		task ("Assert the entry 2 its not found") {
 			BlogsEntry.viewNoCP(entryTitle = "&quot;Blogs Entry Title2&quot;");
 		}
 
