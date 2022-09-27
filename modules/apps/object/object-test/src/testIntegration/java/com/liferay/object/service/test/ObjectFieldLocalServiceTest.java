@@ -1099,7 +1099,7 @@ public class ObjectFieldLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateRequiredRelationshipObjectField() throws Exception {
+	public void testUpdateRequired() throws Exception {
 		PropsUtil.addProperties(
 			UnicodePropertiesBuilder.setProperty(
 				"feature.flag.LPS-158962", "true"
