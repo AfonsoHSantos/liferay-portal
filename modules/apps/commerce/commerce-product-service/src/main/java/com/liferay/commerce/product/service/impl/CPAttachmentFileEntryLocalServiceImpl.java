@@ -852,15 +852,15 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		}
 
 		try {
+			com.liferay.portal.kernel.repository.Repository repository =
+				_repositoryProvider.getRepository(groupId);
+
 			Folder folder =
 				cpAttachmentFileEntryLocalService.getAttachmentsFolder(
 					userId, groupId, className, classPK);
 
 			String uniqueFileName = PortletFileRepositoryUtil.getUniqueFileName(
 				groupId, folder.getFolderId(), fileEntry.getFileName());
-
-			com.liferay.portal.kernel.repository.Repository repository =
-				_repositoryProvider.getRepository(groupId);
 
 			ServiceContext newServiceContext =
 				(ServiceContext)serviceContext.clone();
