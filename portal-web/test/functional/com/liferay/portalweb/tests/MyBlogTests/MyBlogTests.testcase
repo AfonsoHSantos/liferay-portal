@@ -1,0 +1,72 @@
+@component-name = "portal-lima"
+definition {
+
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Blogs";
+
+	var pageName = "Blogs Page";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given the Blogs Portlet is added to the page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Blogs Page",
+				widgetName = "Blogs");
+
+			Navigator.gotoPage(pageName = "Blogs Page");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+		}
+	}
+
+	@description = "LRQA-77337. Can Search Blogs"
+	test CanSearchBlogs {
+		task ("Given the user Adds 2 blog entries exists") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry2 Content",
+				entryTitle = "Blogs Entry2 Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry1 Content",
+				entryTitle = "Blogs Entry1 Title");
+		}
+
+		task ("When the user searches for Blog Entry 1") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			SearchPortlets.searchEmbedded(searchTerm = "&quot;Blog Entry1 Title&quot;");
+		}
+
+		task ("Then Blog Entry 1 should display and Blog entry 2 should not display") {
+			BlogsEntry.viewNoPG(entryTitle = "Blogs Entry2 Title");
+
+			SearchPortlets.gotoResultDetails(searchAssetTitle = "Blogs Entry1 Title");
+
+		}
+	}
+
+}
