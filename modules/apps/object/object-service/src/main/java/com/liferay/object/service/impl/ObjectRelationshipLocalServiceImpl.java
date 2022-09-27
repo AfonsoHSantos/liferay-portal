@@ -467,6 +467,9 @@ public class ObjectRelationshipLocalServiceImpl
 			indexer.reindex(reverseObjectRelationship);
 		}
 
+		objectRelationship = _updateObjectRelationship(
+			parameterObjectFieldId, deletionType, labelMap, objectRelationship);
+
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158962")) &&
 			(objectRelationship.getObjectFieldId2() != 0) &&
 			StringUtil.equals(
@@ -477,8 +480,7 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship.getObjectFieldId2(), false);
 		}
 
-		return _updateObjectRelationship(
-			parameterObjectFieldId, deletionType, labelMap, objectRelationship);
+		return objectRelationship;
 	}
 
 	private ObjectField _addObjectField(
