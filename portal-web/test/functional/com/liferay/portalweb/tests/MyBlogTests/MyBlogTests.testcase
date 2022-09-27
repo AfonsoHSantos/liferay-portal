@@ -65,7 +65,6 @@ definition {
 			BlogsEntry.viewNoPG(entryTitle = "Blogs Entry2 Title");
 
 			SearchPortlets.gotoResultDetails(searchAssetTitle = "Blogs Entry1 Title");
-
 		}
 	}
 
