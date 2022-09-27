@@ -374,7 +374,6 @@ public class ObjectRelationshipLocalServiceTest {
 		Assert.assertEquals(
 			objectRelationship1.getDeletionType(),
 			reverseObjectRelationship.getDeletionType());
-
 		Assert.assertEquals(
 			objectRelationship1.getLabelMap(),
 			reverseObjectRelationship.getLabelMap());
