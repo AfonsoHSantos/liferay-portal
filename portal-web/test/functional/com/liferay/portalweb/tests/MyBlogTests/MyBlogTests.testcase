@@ -1,0 +1,78 @@
+@component-name = "portal-lima"
+definition {
+
+    property portal.acceptance = "true";
+    property portal.release = "true";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Blogs";
+
+    var pageName = "Blogs Page";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        task ("Given the Blogs Portlet is added to the page") {
+            JSONLayout.addPublicLayout(
+                groupName = "Guest",
+                layoutName = "Blogs Page");
+
+            JSONLayout.addWidgetToPublicLayout(
+                column = "1",
+                groupName = "Guest",
+                layoutName = "Blogs Page",
+                widgetName = "Blogs");
+
+            Navigator.gotoPage(pageName = "Blogs Page");
+        }
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        else {
+            BlogsEntry.tearDownCP();
+
+            JSONLayout.deletePublicLayout(
+                groupName = "Guest",
+                layoutName = "Blogs Page");
+        }
+    }
+
+    @description = "LRQA-77335. Can Edit a Blog"
+    @priority = "5"
+    test CanEditBlog {
+        task("Given the user Adds a new blog entry"){
+            JSONBlog.addEntry(
+                entryContent = "Blogs Entry Content",
+                entryTitle = "Blogs Entry Title");
+        }
+
+        task("When the user edit entrys"){
+            Navigator.gotoPage(pageName = "Blogs Page");
+
+            Blogs.editEntryPG(
+                entryContent = "Blogs Entry Content",
+                entryContentEdit = "Blogs Entry Content Edit",
+                entryTitle = "Blogs Entry Title",
+                entryTitleEdit = "Blogs Entry Title Edit");
+        }
+
+        task("Then the blog entry should be edited edit"){
+
+            Navigator.gotoPage(pageName = "Blogs Page");
+
+            BlogsNavigator.gotoEntryPG(
+                entryContent = "Blogs Entry Content Edit",
+                entryTitle = "Blogs Entry Title Edit");
+
+            BlogsEntry.viewEntryPG(
+                entryContent = "Blogs Entry Content Edit",
+                entryTitle = "Blogs Entry Title Edit");
+        }
+    }
+}
