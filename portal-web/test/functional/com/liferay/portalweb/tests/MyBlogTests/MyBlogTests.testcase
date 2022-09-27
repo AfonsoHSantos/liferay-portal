@@ -59,7 +59,7 @@ definition {
 				entryTitle = "Blogs Entry Title 2");
 		}
 
-		task("Delete new blog entry"){
+		task ("Delete new blog entry") {
 			Navigator.gotoSitePage(
 				pageName = "Blogs Page",
 				siteName = "Guest");
@@ -69,15 +69,17 @@ definition {
 				entryTitle = "Blogs Entry Title 2");
 		}
 
-		task("Validate that the blog no longer exists"){
+		task ("Validate that the blog no longer exists") {
 			Blogs.viewEntryNotPresent(
 				entryContent = "Blogs Entry Content 2",
 				entryTitle = "Blogs Entry Title 2");
 		}
-		
 
-
-
+		task ("Validade that the blog that was not moved to the recycle bin still exists"){
+			BlogsEntry.viewPG(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
 	}
 
 }
