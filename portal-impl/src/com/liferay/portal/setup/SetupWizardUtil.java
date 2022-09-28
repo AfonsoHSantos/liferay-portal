@@ -298,7 +298,10 @@ public class SetupWizardUtil {
 
 		if (!DriverClassNamesHolder.contains(driverClassName)) {
 			throw new Exception(
-				driverClassName + " is not a valid driver class name");
+				StringBundler.concat(
+					driverClassName,
+					" is not a specified in the portal property \"",
+					PropsKeys.SETUP_DATABASE_DRIVER_CLASS_NAME, "\""));
 		}
 
 		DataSource dataSource = null;
