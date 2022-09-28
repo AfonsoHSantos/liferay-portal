@@ -28,20 +28,6 @@ definition {
         }
     }
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
-            BlogsEntry.tearDownCP();
-
-            JSONLayout.deletePublicLayout(
-                groupName = "Guest",
-                layoutName = "Blogs Page");
-        }
-    }
 
     @description = "LRQA-77336. Can Delete a Blog"
     @priority = "5"
