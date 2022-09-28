@@ -351,16 +351,18 @@ public class ActionUtil {
 			return parameterMap;
 		}
 
-		if ((siteId != null) && Objects.equals(firstParameterName, "siteId")) {
-			parameterMap.put(firstParameterName, siteId);
-		}
-		else if ((siteId != null) &&
-				 Objects.equals(firstParameterName, "assetLibraryId")) {
+		if ((siteId != null) &&
+				Objects.equals(firstParameterName, "assetLibraryId")) {
 
 			DepotEntry depotEntry = DepotEntryServiceUtil.getGroupDepotEntry(
 				siteId);
 
 			parameterMap.put(firstParameterName, depotEntry.getDepotEntryId());
+		}
+		else if ((siteId != null) &&
+				 Objects.equals(firstParameterName, "siteId")) {
+
+			parameterMap.put(firstParameterName, siteId);
 		}
 		else {
 			parameterMap.put(firstParameterName, id);
