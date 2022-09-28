@@ -8,7 +8,7 @@ definition {
 
 		User.firstLoginPG();
 
-		task("Creates a new page and adds a DM widget in it via API"){
+		task ("Creates a new page and adds a DM widget in it via API") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
 				layoutName = "Documents and Media Page");
@@ -21,8 +21,6 @@ definition {
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}
-
-
 	}
 
 	tearDown {
@@ -33,8 +31,8 @@ definition {
 		}
 		else {
 			JSONLayout.deletePublicLayout(
-                groupName = "Guest",
-                layoutName = "Documents and Media Page");
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
 
 			DMDocument.tearDownCP();
 
@@ -43,11 +41,11 @@ definition {
 			User.logoutPG();
 		}
 	}
-	
+
 	@description = "Can Create a Documents and Media"
-    @priority = "5"
-    test CanCreateDM {
-		task("Adds a new document via user UI"){
+	@priority = "5"
+	test CanCreateDM {
+		task ("Adds a new document via user UI") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 			DMDocument.addCP(
@@ -56,17 +54,11 @@ definition {
 				dmDocumentTitle = "DM Document Title");
 		}
 
-		task("Validate that the new DM was really created"){
-			
+		task ("Validate that the new DM was really created") {
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 			DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 		}
-
-
-
-    }
-
-
+	}
 
 }
