@@ -66,4 +66,8 @@ public class LayoutUtilityPageEntryNameException extends PortalException {
 
 	}
 
+	private LayoutUtilityPageEntryNameException(String msg) {
+		super(msg);
+	}
+
 }
