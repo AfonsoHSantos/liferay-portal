@@ -56,14 +56,14 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 	public void postDataSource(DataSourceToken dataSourceToken)
 		throws Exception {
 
-		Map<String, Object> dataSourceProperties =
+		Map<String, Object> properties =
 			_analyticsCloudClient.connectDataSource(
 				contextUser.getCompanyId(), dataSourceToken.getToken());
 
-		dataSourceProperties.put("token", dataSourceToken.getToken());
+		properties.put("token", dataSourceToken.getToken());
 
 		_analyticsSettingsManager.updateCompanyConfiguration(
-			contextUser.getCompanyId(), dataSourceProperties);
+			contextUser.getCompanyId(), properties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
