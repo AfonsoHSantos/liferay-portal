@@ -1,73 +1,78 @@
 @component-name = "portal-document-management"
 definition {
-   	
+
 	property custom.properties = "default.layout.template.id=1_column${line.separator}dl.actions.visible=true";
-    property portal.release = "true";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Document Management";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Document Management";
 
-    setUp {
+	setUp {
+		task ("Login") {
+			TestCase.setUpPortalInstance();
 
-		TestCase.setUpPortalInstance();
+			User.firstLoginPG();
+		}
 
-		User.firstLoginPG();
+		task ("Create Site and Page") {
+			JSONGroup.addGroup(groupName = "Guest");
 
-		JSONGroup.addGroup(groupName = "Guest");
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Documents and Media Page");
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Documents and Media Page",
-			widgetName = "Documents and Media");
+		task ("Create Document and File Upload") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Document JPG");
-
+			DMDocument.addCP(
+				dmDocumentDescription = "Document Description",
+				dmDocumentFile = "Document_1.jpg",
+				dmDocumentTitle = "DM Document JPG");
+		}
 	}
 
 	tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
-				
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
 			JSONLayout.deletePublicLayout(
-                groupName = "Guest",
-                layoutName = "Documents and Media Page");
-            
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
 			DMDocument.tearDownCP();
-            
+
 			User.logoutPG();
-        }
+		}
+	}
 
-    }
-    
 	@description = "Can Create a Documents and Media"
-    @priority = "5"
-    test CanCreateDM {
+	@priority = "5"
+	test CanCreateDM {
+		task ("Create Document and Upload File") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			DMDocument.addCP(
+				dmDocumentDescription = "Document Description",
+				dmDocumentFile = "Document_1.jpg",
+				dmDocumentTitle = "DM Document JPEG");
+		}
 
-		DMDocument.addCP(
-			dmDocumentDescription = "Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM Document JPEG");
+		task ("Assert Content") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPEG");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPEG");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document JPEG");
-		
+			DMDocument.viewCP(dmDocumentTitle = "DM Document JPEG");
+		}
 	}
 
 }
