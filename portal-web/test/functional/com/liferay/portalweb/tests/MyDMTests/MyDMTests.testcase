@@ -1,92 +1,89 @@
 @component-name = "portal-document-management"
 definition {
-    property testray.main.component.name = "Document Management";
 
-    setUp {
-        task("Login into the portal") {
-            TestCase.setUpPortalInstance();
+	property testray.main.component.name = "Document Management";
 
-            User.firstLoginPG(); 
-        }
+	setUp {
+		task ("Login into the portal") {
+			TestCase.setUpPortalInstance();
 
-            //Navigator.openURL();
+			User.firstLoginPG();
+		}
 
-        task("Create a Page and add the Documents and Media widget") {
-            JSONLayout.addPublicLayout(
-                groupName = "Guest",
-                layoutName = "Documents and Media Page");
+		//Navigator.openURL();
 
-            JSONLayout.addWidgetToPublicLayout(
-                column = "1",
-                groupName = "Guest",
-                layoutName = "Documents and Media Page",
-                widgetName = "Documents and Media");
-        }
-            
-        task("Go to Documents and Media Page") {
-            Navigator.gotoPage(pageName = "Documents and Media Page");
-        }
-            
+		task ("Create a Page and add the Documents and Media widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
 
-    }
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+		}
 
-    tearDown {
+		task ("Go to Documents and Media Page") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+	}
+
+	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-        else {
-            task ("Delete pages and Documents that have been created") {
-            JSONLayout.deletePublicLayout(
-                groupName = "Guest",
-                layoutName = "Documents and Media Page");
-            DMDocument.tearDownCP();
-            PagesAdmin.tearDownCP();
-            User.logoutPG();
-            }
-        }
-    }
+		else {
+			task ("Delete pages and Documents that have been created") {
+				JSONLayout.deletePublicLayout(
+					groupName = "Guest",
+					layoutName = "Documents and Media Page");
 
-    @description = "Can Create a Documents and Media"
-    @priority = "5"
-    test CanCreateDM {
-        task("Go to Portlet and upload a DM") {
-            ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+				DMDocument.tearDownCP();
 
-            DMDocument.addCP(
-			dmDocumentDescription = "Document Description",
-			dmDocumentFile = "analytics-cloud-hero-image.png",
-			dmDocumentTitle = "DM Document Title");
+				PagesAdmin.tearDownCP();
 
-        }
-        task("Go to the document and verify that the DM was uploaded") {
-            DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+				User.logoutPG();
+			}
+		}
+	}
 
-            DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-        }
+	@description = "Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		task ("Go to Portlet and upload a DM") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
 
-    }
+			DMDocument.addCP(
+				dmDocumentDescription = "Document Description",
+				dmDocumentFile = "analytics-cloud-hero-image.png",
+				dmDocumentTitle = "DM Document Title");
+		}
 
-    @description = "Can Edit a Documents and Media"
-    @priority = "5"
-    test CanEditDM {
+		task ("Go to the document and verify that the DM was uploaded") {
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
+			DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+		}
+	}
 
-    }
-    @description = "Can Delete a Documents and Media"
-    @priority = "5"
-    test CanDeleteDM {
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+	}
 
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+	}
 
-    }
-    @description = "Can Download a Documents and Media"
-    @priority = "5"
-    test CanDownloadDM {
-
-
-    }
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+	}
 
 }
