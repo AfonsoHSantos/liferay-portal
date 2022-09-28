@@ -94,6 +94,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		}
 
 		layoutUtilityPageEntry.setPlid(plid);
+
 		layoutUtilityPageEntry.setName(name);
 		layoutUtilityPageEntry.setType(type);
 

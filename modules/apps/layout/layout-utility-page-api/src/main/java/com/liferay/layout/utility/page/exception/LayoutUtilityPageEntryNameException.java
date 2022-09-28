@@ -22,23 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class LayoutUtilityPageEntryNameException extends PortalException {
 
-	public LayoutUtilityPageEntryNameException() {
-	}
-
-	public LayoutUtilityPageEntryNameException(String msg) {
-		super(msg);
-	}
-
-	public LayoutUtilityPageEntryNameException(
-		String msg, Throwable throwable) {
-
-		super(msg, throwable);
-	}
-
-	public LayoutUtilityPageEntryNameException(Throwable throwable) {
-		super(throwable);
-	}
-
 	public static class MustNotBeDuplicate
 		extends LayoutUtilityPageEntryNameException {
 
