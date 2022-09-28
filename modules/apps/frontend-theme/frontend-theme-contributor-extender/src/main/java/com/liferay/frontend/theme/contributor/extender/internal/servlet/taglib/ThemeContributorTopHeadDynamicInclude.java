@@ -110,9 +110,7 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 
 		_rebuild();
 
-		String pathContext = _portal.getPathContext();
-
-		_comboContextPath = pathContext.concat("/combo");
+		_comboContextPath = _portal.getPathContext() + "/combo";
 	}
 
 	@Reference(
