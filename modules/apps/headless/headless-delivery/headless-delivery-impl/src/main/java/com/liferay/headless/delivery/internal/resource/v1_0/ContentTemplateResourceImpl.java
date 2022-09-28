@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -89,7 +90,7 @@ public class ContentTemplateResourceImpl
 			contentTemplateId);
 
 		return ContentTemplateUtil.toContentTemplate(
-			ddmTemplate, _getDtoConverterContext(ddmTemplate),
+			ddmTemplate, _getDTOConverterContext(ddmTemplate),
 			groupLocalService, _portal, _userLocalService);
 	}
 
@@ -138,12 +139,12 @@ public class ContentTemplateResourceImpl
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
 
 				return ContentTemplateUtil.toContentTemplate(
-					ddmTemplate, _getDtoConverterContext(ddmTemplate),
+					ddmTemplate, _getDTOConverterContext(ddmTemplate),
 					groupLocalService, _portal, _userLocalService);
 			});
 	}
 
-	private DefaultDTOConverterContext _getDtoConverterContext(
+	private DTOConverterContext _getDTOConverterContext(
 		DDMTemplate ddmTemplate) {
 
 		return new DefaultDTOConverterContext(
