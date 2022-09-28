@@ -1366,22 +1366,22 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (system) {
 			throw new ObjectDefinitionEnableObjectEntryHistoryException(
-				"Enable entry history is not allowed for system object " +
-					"definitions");
+				"Enable object entry history is not allowed for system " +
+					"object definitions");
 		}
 
 		if (!StringUtil.equals(
 				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
 
 			throw new ObjectDefinitionEnableObjectEntryHistoryException(
-				"Enable entry history is allowed only for object definitions " +
-					"with the default storage type");
+				"Enable object entry history is allowed only for object " +
+					"definitions with the default storage type");
 		}
 
 		if (active) {
 			throw new ObjectDefinitionEnableObjectEntryHistoryException(
-				"It is not allowed to enable or disable entry history after " +
-					"the object definition has been published");
+				"Enable object entry histroy cannot be updated when the " +
+					"object definition is published");
 		}
 	}
 

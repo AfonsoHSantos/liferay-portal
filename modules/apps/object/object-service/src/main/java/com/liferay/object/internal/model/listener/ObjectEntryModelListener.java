@@ -153,11 +153,11 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		JSONObject additionalInfoJSONObject = auditMessage.getAdditionalInfo();
 
-		Map<String, Serializable> values = objectEntry.getValues();
-
 		for (ObjectField objectField :
 				_objectFieldLocalService.getObjectFields(
 					objectDefinition.getObjectDefinitionId())) {
+
+			Map<String, Serializable> values = objectEntry.getValues();
 
 			additionalInfoJSONObject.put(
 				objectField.getName(),
