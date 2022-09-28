@@ -289,11 +289,6 @@ public class FragmentEntryConfigurationParserImpl
 			return _getInfoDisplayObjectEntryJSONObject(parsedValue);
 		}
 		else if (StringUtil.equalsIgnoreCase(
-					fragmentConfigurationField.getType(), "url")) {
-
-			return _getURLValue(parsedValue);
-		}
-		else if (StringUtil.equalsIgnoreCase(
 					fragmentConfigurationField.getType(), "length") ||
 				 StringUtil.equalsIgnoreCase(
 					 fragmentConfigurationField.getType(), "select") ||
@@ -312,6 +307,11 @@ public class FragmentEntryConfigurationParserImpl
 
 			return _getFieldValue(
 				fragmentConfigurationFieldDataType, parsedValue);
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					fragmentConfigurationField.getType(), "url")) {
+
+			return _getURLValue(parsedValue);
 		}
 
 		return _getFieldValue(
