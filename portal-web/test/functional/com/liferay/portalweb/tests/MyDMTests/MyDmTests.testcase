@@ -64,17 +64,15 @@ definition {
 	}
 
 	@description = "Can Edit a Documents and Media"
-    @priority = "5"
-    test CanEditDM {
+	@priority = "5"
+	test CanEditDM {
+		task ("Navigate to Product Menu: Documents and Media") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
 
-        task ("Navigate to Product Menu: Documents and Media"){
-                ProductMenu.gotoPortlet(
-                    category = "Content & Data",
-                    portlet = "Documents and Media");
-        }
-
-        task ("Edit the Document entries: title, descriptions and uploaded file "){
-
+		task ("Edit the Document entries: title, descriptions and uploaded file ") {
 			DMDocument.editCP(
 				dmDocumentDescription = "Document Image 1 Description",
 				dmDocumentDescriptionEdit = "Document Image 1 Description edit",
@@ -83,15 +81,16 @@ definition {
 				dmDocumentTitle = "marketplace_icon",
 				dmDocumentTitleEdit = "new img Edit");
 		}
-        task ("Open the Document in the Documents and Media page"){
 
+		task ("Open the Document in the Documents and Media page") {
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "new img Edit");
 		}
-		task ("check if the title and file were edited"){
 
+		task ("check if the title and file were edited") {
 			DMDocument.viewCP(
-				dmDocumentTitle = "new img Edit",
-				dmDocumentFileName = "Document_4.jpg");
+				dmDocumentFileName = "Document_4.jpg",
+				dmDocumentTitle = "new img Edit");
 		}
-    }	
+	}
+
 }
