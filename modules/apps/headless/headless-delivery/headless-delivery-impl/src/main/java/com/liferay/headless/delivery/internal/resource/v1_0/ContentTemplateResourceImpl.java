@@ -64,7 +64,7 @@ public class ContentTemplateResourceImpl
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getContentTemplatePage(
+		return _getContentTemplatesPage(
 			Collections.singletonMap(
 				"get",
 				addAction(
@@ -99,7 +99,7 @@ public class ContentTemplateResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getContentTemplatePage(
+		return _getContentTemplatesPage(
 			Collections.singletonMap(
 				"get",
 				addAction(
@@ -108,7 +108,7 @@ public class ContentTemplateResourceImpl
 			siteId, search, aggregation, filter, pagination, sorts);
 	}
 
-	private Page<ContentTemplate> _getContentTemplatePage(
+	private Page<ContentTemplate> _getContentTemplatesPage(
 			Map<String, Map<String, String>> actions, Long assetLibraryId,
 			String search, Aggregation aggregation, Filter filter,
 			Pagination pagination, Sort[] sorts)
