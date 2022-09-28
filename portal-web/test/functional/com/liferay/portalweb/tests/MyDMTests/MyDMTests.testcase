@@ -1,37 +1,40 @@
 @component-name = "portal-document-management"
 definition {
-    property testray.main.component.name = "Document Management";
-    
-    setUp {
-		task("Open the portal and log in"){
-	    TestCase.setUpPortalInstance();
 
-	User.firstLoginPG();
-	    }
-	task("create a page and add a Documents and Media widget"){
-	JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Documents and Media Page");
+	property testray.main.component.name = "Document Management";
 
-	JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Documents and Media Page",
-			widgetName = "Documents and Media");
-	   } 
-	task("navigate to the Documents and Media page"){
-	Navigator.gotoPage(pageName = "Documents and Media Page");
-	   }
-        
+	setUp {
+		task ("Open the portal and log in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("create a page and add a Documents and Media widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+		}
+
+		task ("navigate to the Documents and Media page") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
 	}
-    tearDown {
-	    var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
-            JSONLayout.deletePublicLayout(
+			JSONLayout.deletePublicLayout(
 				groupName = "Guest",
 				layoutName = "Documents and Media Page");
 
@@ -43,25 +46,25 @@ definition {
 		}
 	}
 
-    @description = "Can Create a Documents and Media"
-    @priority = "5"
-    test CanCreateDM {
-    task("navigate to Content & Data and add a file under Documents and Media"){
-        ProductMenu.gotoPortlet(
-            category = "Content & Data",
-            portlet = "Documents and Media");
-                      
-        DMDocument.addCP(
-			dmDocumentDescription = "Document Description",
-			dmDocumentFile = "high_resolution_photo.jpg",
-			dmDocumentTitle = "DM Test");
-		}
-		
-    task("Go to the document and assert the title of the document"){
-        DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Test");
+	@description = "Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		task ("navigate to Content & Data and add a file under Documents and Media") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
 
-		DMDocument.viewCP(dmDocumentTitle = "DM Test");
+			DMDocument.addCP(
+				dmDocumentDescription = "Document Description",
+				dmDocumentFile = "high_resolution_photo.jpg",
+				dmDocumentTitle = "DM Test");
 		}
 
+		task ("Go to the document and assert the title of the document") {
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Test");
+
+			DMDocument.viewCP(dmDocumentTitle = "DM Test");
+		}
 	}
- }
+
+}
