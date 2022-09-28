@@ -740,36 +740,35 @@ public class FragmentEntryConfigurationParserImpl
 
 		JSONObject layoutJSONObject = jsonObject.getJSONObject("layout");
 
-		if (layoutJSONObject != null) {
-			long groupId = layoutJSONObject.getLong("groupId");
-			boolean privateLayout = layoutJSONObject.getBoolean(
-				"privateLayout");
-			long layoutId = layoutJSONObject.getLong("layoutId");
-
-			Layout layout = _layoutLocalService.fetchLayout(
-				groupId, privateLayout, layoutId);
-
-			if (layout == null) {
-				return StringPool.POUND;
-			}
-
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			try {
-				return _portal.getLayoutFullURL(
-					layout, serviceContext.getThemeDisplay());
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-
-				return null;
-			}
+		if (layoutJSONObject == null) {
+			return jsonObject.getString("href");
 		}
 
-		return jsonObject.getString("href");
+		long groupId = layoutJSONObject.getLong("groupId");
+		boolean privateLayout = layoutJSONObject.getBoolean("privateLayout");
+		long layoutId = layoutJSONObject.getLong("layoutId");
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			groupId, privateLayout, layoutId);
+
+		if (layout == null) {
+			return StringPool.POUND;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		try {
+			return _portal.getLayoutFullURL(
+				layout, serviceContext.getThemeDisplay());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return null;
+		}
 	}
 
 	private void _translateConfigurationField(
