@@ -93,12 +93,12 @@ public class TestrayRun {
 			return null;
 		}
 
-		Map<String, String> targetFactors = new HashMap<>();
+		Map<String, String> factorValues = new HashMap<>();
 
 		for (Factor factor : getFactors()) {
 			String factorValue = factor.getValue();
 
-			targetFactors.put(factor.getName(), factorValue.toLowerCase());
+			factorValues.put(factor.getName(), factorValue.toLowerCase());
 		}
 
 		for (int i = 0; i < dataJSONArray.length(); i++) {
@@ -113,7 +113,7 @@ public class TestrayRun {
 				continue;
 			}
 
-			Map<String, String> currentFactors = new HashMap<>();
+			Map<String, String> factorOptionNames = new HashMap<>();
 
 			for (int j = 0; j < testrayFactorsJSONArray.length(); j++) {
 				JSONObject testrayFactorJSONObject =
@@ -131,11 +131,11 @@ public class TestrayRun {
 					continue;
 				}
 
-				currentFactors.put(
+				factorOptionNames.put(
 					factorCategoryName, factorOptionName.toLowerCase());
 			}
 
-			if (targetFactors.equals(currentFactors)) {
+			if (factorValues.equals(factorOptionNames)) {
 				return dataJSONObject.getString("testrayRunId");
 			}
 		}
