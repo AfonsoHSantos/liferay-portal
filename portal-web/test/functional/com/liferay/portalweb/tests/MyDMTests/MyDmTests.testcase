@@ -1,0 +1,104 @@
+@component-name = "portal-document-management"
+definition {
+   
+	property testray.main.component.name = "Document Management";
+
+    setUp {
+        task ("Makes login and go to home page") {
+
+		  TestCase.setUpPortalInstance();
+
+          User.firstLoginPG();
+
+          Navigator.openURL();
+		}
+
+        task ("Add a group based on Blank") {
+
+			 JSONGroup.addGroup(groupName = "Guest");
+		}
+
+		task ("Create a page with a Documents and Media's widgets") {
+
+			JSONLayout.addPublicLayout( 
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+		    JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+		}
+
+		task ("Add a Document entry with uploaded file"){
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "marketplace_icon",
+			dmDocumentDescription = "Document Image 1 Description",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "marketplace_icon.png");
+		}
+
+		task ("Navigate to the Page:"Documents and Media Page" ") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+		
+    }
+
+     tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+        else {
+			task ("Delete pages and Documents that have been created") {
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			DMDocument.tearDownCP();
+
+			PagesAdmin.tearDownCP();
+			
+			User.logoutPG();
+			}
+        }
+    }
+
+    @description = "Can Create a Documents and Media"
+    @priority = "5"
+    test CanCreateDM {
+
+		task ("Navigate to Product Menu: Documents and Media"){
+				ProductMenu.gotoPortlet(
+					category = "Content & Data",
+					portlet = "Documents and Media");
+		}
+
+		task ("Create by UI a Document whith a document filed "){ 
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				dmDocumentTypeName = "DM Document Type Name",
+				fieldFieldLabel = "Image",
+				imageField = "Document_1.jpg",
+				navTab = "Documents and Media");
+		}
+
+		task ("Open the Document in the Documents and Media page "){ 
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+		}
+
+		task ("View the related assets in the Document "){ 
+
+			DMDocument.viewDocumentTypePG(itextField = "Document_1.jpg");
+
+		    DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+		}
+
+    }
+}
