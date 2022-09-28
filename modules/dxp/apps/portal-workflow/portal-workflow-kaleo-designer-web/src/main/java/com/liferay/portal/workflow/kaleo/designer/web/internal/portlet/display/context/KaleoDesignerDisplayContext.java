@@ -779,10 +779,6 @@ public class KaleoDesignerDisplayContext {
 				_kaleoDesignerRequestHelper.getPermissionChecker(),
 				_themeDisplay.getCompanyGroupId()));
 
-		KaleoDefinitionVersionActiveComparator
-			kaleoDefinitionVersionActiveComparator =
-				new KaleoDefinitionVersionActiveComparator();
-
 		kaleoDefinitionVersions = ListUtil.filter(
 			kaleoDefinitionVersions,
 			kaleoDefinitionVersion -> {
@@ -804,6 +800,10 @@ public class KaleoDesignerDisplayContext {
 
 				return false;
 			});
+
+		KaleoDefinitionVersionActiveComparator
+			kaleoDefinitionVersionActiveComparator =
+				new KaleoDefinitionVersionActiveComparator();
 
 		Collections.sort(
 			kaleoDefinitionVersions,
