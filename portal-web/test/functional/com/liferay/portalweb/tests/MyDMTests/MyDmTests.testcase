@@ -1,0 +1,97 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		task ("Makes login and go to home page") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Navigator.openURL();
+		}
+
+		task ("Add a group based on Blank") {
+			JSONGroup.addGroup(groupName = "Guest");
+		}
+
+		task ("Create a page with a Documents and Media's widgets") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+		}
+
+		task ("Add a Document entry with uploaded file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "Document Image 1 Description",
+				dmDocumentTitle = "marketplace_icon",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "marketplace_icon.png");
+		}
+
+		task ("Navigate to the Page:"Documents and Media Page" ") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			task ("Delete pages and Documents that have been created") {
+				JSONLayout.deletePublicLayout(
+					groupName = "Guest",
+					layoutName = "Documents and Media Page");
+
+				DMDocument.tearDownCP();
+
+				PagesAdmin.tearDownCP();
+
+				User.logoutPG();
+			}
+		}
+	}
+
+	@description = "Can Edit a Documents and Media"
+    @priority = "5"
+    test CanEditDM {
+
+        task ("Navigate to Product Menu: Documents and Media"){
+                ProductMenu.gotoPortlet(
+                    category = "Content & Data",
+                    portlet = "Documents and Media");
+        }
+
+        task ("Edit the Document entries: title, descriptions and uploaded file "){
+
+			DMDocument.editCP(
+				dmDocumentDescription = "Document Image 1 Description",
+				dmDocumentDescriptionEdit = "Document Image 1 Description edit",
+				dmDocumentFileEdit = "Document_4.jpg",
+				dmDocumentFileNameEdit = "Document_4.jpg",
+				dmDocumentTitle = "marketplace_icon",
+				dmDocumentTitleEdit = "new img Edit");
+		}
+        task ("Open the Document in the Documents and Media page"){
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "new img Edit");
+		}
+		task ("check if the title and file were edited"){
+
+			DMDocument.viewCP(
+				dmDocumentTitle = "new img Edit",
+				dmDocumentFileName = "Document_4.jpg");
+		}
+    }	
+}
