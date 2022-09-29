@@ -73,5 +73,19 @@ definition {
 		}
 	}
 
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+	}
+
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+	}
+
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+	}
 
 }
