@@ -54,35 +54,35 @@ definition {
 		}
 	}
 
-	 @description = "Can Delete a Documents and Media"
-    @priority = "5"
-    test CanDeleteDM {
-        task ("Create Document and Add File") {
-            DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		task ("Create Document and Add File") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-            DMDocument.addCP(
-                dmDocumentDescription = "Document Description2",
-                dmDocumentFile = "Document_3.jpg",
-                dmDocumentTitle = "DM Document JPG2");
-        }
+			DMDocument.addCP(
+				dmDocumentDescription = "Document Description2",
+				dmDocumentFile = "Document_3.jpg",
+				dmDocumentTitle = "DM Document JPG2");
+		}
 
-        task("Delete Document and File"){
-            DMDocument.deleteCP(
-                dmDocumentFile = "Document_3.jpg",
-                dmDocumentTitle = "DM Document JPG2");
+		task ("Delete Document and File") {
+			DMDocument.deleteCP(
+				dmDocumentFile = "Document_3.jpg",
+				dmDocumentTitle = "DM Document JPG2");
+		}
 
-        }
+		task ("Check if the DM was deleted") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-        task("Check if the DM was deleted"){
-            DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+			Navigator.gotoPage(pageName = "Documents and Media Page");
 
-            Navigator.gotoPage(pageName = "Documents and Media Page");
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
 
-            DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
+			DMDocument.viewCP(
+				dmDocumentFile = "Document_1.jpg",
+				dmDocumentTitle = "DM Document JPG");
+		}
+	}
 
-            DMDocument.viewCP(
-                dmDocumentFile = "Document_1.jpg",
-                dmDocumentTitle = "DM Document JPG");
-        }
-    }
 }
