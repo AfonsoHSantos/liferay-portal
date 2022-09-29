@@ -14,29 +14,18 @@ definition {
 
 		User.firstLoginPG();
 
-		task ("Given the DM Portlet is added to the page") {
+		task ("DM Portlet is added to the page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
 				layoutName = "Documents and Media Page");
 		}
 
-		task ("When the user create a Documents and Media (Upload the file)") {
+		task ("Create a Documents and Media (Upload the file)") {
 			JSONLayout.addWidgetToPublicLayout(
 				column = "1",
 				groupName = "Guest",
 				layoutName = "Documents and Media Page",
 				widgetName = "Documents and Media");
-
-			Navigator.gotoPage(pageName = "Documents and Media Page");
-
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Documents and Media");
-
-			DMDocument.addCP(
-				dmDocumentDescription = "Document Description",
-				dmDocumentFile = "Document_1.jpeg",
-				dmDocumentTitle = "DM Test");
 		}
 	}
 
@@ -48,19 +37,36 @@ definition {
 		}
 		else {
 			DMDocument.tearDownCP();
+			
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+			
 
-			DMDocumentType.tearDownCP();
+			User.logoutPG();
 		}
 	}
 
 	@description = "LRQA-77576. Can Create a Documents and Media"
 	@priority = "5"
 	test CanCreateDM {
-		task ("Then the Documents and Media should display on the page") {
-			Navigator.gotoPage(pageName = "Documents and Media Page");
+		task ("User adds content") {
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "Document Description",
+				dmDocumentFile = "Document_1.jpeg",
+				dmDocumentTitle = "DM Test");
+		}
+		task("Then the Documents and Media should display on the page"){
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Test");
+
+			DMDocument.viewCP(dmDocumentTitle = "DM Test");
+
 		}
 	}
-
 }
