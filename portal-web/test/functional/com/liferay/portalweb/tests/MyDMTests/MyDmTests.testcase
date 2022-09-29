@@ -70,34 +70,6 @@ definition {
 		}
 	}
 
-	test CanCreateDM {
-		task ("Navigate to Product Menu: Documents and Media") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Documents and Media");
-		}
-
-		task ("Create by UI a Document whith a document filed ") {
-			DMDocument.addCP(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title",
-				dmDocumentTypeName = "DM Document Type Name",
-				fieldFieldLabel = "Image",
-				imageField = "Document_1.jpg",
-				navTab = "Documents and Media");
-		}
-
-		task ("Open the Document in the Documents and Media page") {
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-		}
-
-		task ("View the related assets in the Document ") {
-			DMDocument.viewDocumentTypePG(itextField = "Document_1.jpg");
-
-			DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-		}
-	}
-
 	@description = "Can Delete a Documents and Media"
 	@priority = "5"
 	test CanDeleteDM {
@@ -119,4 +91,5 @@ definition {
 				previewImage = "marketplace_icon.png");
 		}
 	}
+
 }
