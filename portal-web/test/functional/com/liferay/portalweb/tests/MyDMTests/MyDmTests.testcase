@@ -69,21 +69,25 @@ definition {
 			}
 		}
 	}
+
 	@description = "Can Download a Documents and Media"
-    @priority = "5"
-    test CanDownloadDM {	
+	@priority = "5"
+	test CanDownloadDM {
 		task ("Dowload the selected File") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Guest");
 
 			DMDocument.downloadCP(
-				dmDocumentTitle = "marketplace_icon",
-				dmDocumentSize = "19 KB" );
+				dmDocumentSize = "19 KB",
+				dmDocumentTitle = "marketplace_icon");
 		}
+
 		task ("check if the selected file was downloaded") {
 			DMDocument.assertFileNameFromTempFolder(fileName = "marketplace_icon.png");
 		}
+
 		task ("check if a file that wasn't selected was not downloaded") {
 			DMDocument.assertNoFileNameFromTempFolder(fileName = "analytics-cloud-hero-image.png");
 		}
 	}
+
 }
