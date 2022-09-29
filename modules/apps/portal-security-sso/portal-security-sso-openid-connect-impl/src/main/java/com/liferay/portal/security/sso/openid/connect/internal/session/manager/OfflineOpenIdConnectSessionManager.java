@@ -190,15 +190,13 @@ public class OfflineOpenIdConnectSessionManager {
 			return;
 		}
 
-		_registerServices(
-			bundleContext,
-			OpenIdConnectDestinationNames.OPENID_CONNECT_TOKEN_REFRESH);
+		_registerServices(bundleContext);
 
 		if (_tokenRefreshScheduledInterval < 30) {
 			_unscheduleJob();
 		}
 		else {
-			_scheduleJob(DestinationNames.SCHEDULER_DISPATCH);
+			_scheduleJob();
 		}
 	}
 
@@ -274,16 +272,14 @@ public class OfflineOpenIdConnectSessionManager {
 		return null;
 	}
 
-	private void _registerServices(
-		BundleContext bundleContext, String destinationName) {
-
+	private void _registerServices(BundleContext bundleContext) {
 		if (_messageListenerServiceRegistration != null) {
 			return;
 		}
 
 		DestinationConfiguration destinationConfiguration =
 			DestinationConfiguration.createSerialDestinationConfiguration(
-				destinationName);
+				OpenIdConnectDestinationNames.OPENID_CONNECT_TOKEN_REFRESH);
 
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
@@ -301,7 +297,7 @@ public class OfflineOpenIdConnectSessionManager {
 			dictionary);
 	}
 
-	private void _scheduleJob(String destinationName) {
+	private void _scheduleJob() {
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			TokensRefreshMessageListener.class.getName(),
 			_triggerFactory.createTrigger(
@@ -312,7 +308,8 @@ public class OfflineOpenIdConnectSessionManager {
 		_tokensRefreshMessageListener = new TokensRefreshMessageListener();
 
 		_schedulerEngineHelper.register(
-			_tokensRefreshMessageListener, schedulerEntry, destinationName);
+			_tokensRefreshMessageListener, schedulerEntry,
+			DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	private void _unregisterServices() {
