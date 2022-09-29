@@ -21,6 +21,13 @@ definition {
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}
+		task("Creates new DM via API"){
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "For Document Viewers Eyes Only",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_4.jpg");
+		}
 	}
 
 	tearDown {
@@ -105,8 +112,15 @@ definition {
 				dmDocumentTitle = "DM Document Title");
 		}
 
-		task("Delete the DM"){
-			DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+		task("Delete the API's DM, validate that it was really deleted and validate that the UI DM still exists"){
+
+			DMDocument.deleteCP(dmDocumentTitle = "For Document Viewers Eyes Only");
+			
+			DMDocument.cannotViewCP(dmDocumentTitle = "For Document Viewers Eyes Only");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+			DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 		}
 
     }
