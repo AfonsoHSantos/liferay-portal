@@ -37,11 +37,10 @@ definition {
 		}
 		else {
 			DMDocument.tearDownCP();
-			
+
 			JSONLayout.deletePublicLayout(
 				groupName = "Guest",
 				layoutName = "Documents and Media Page");
-			
 
 			User.logoutPG();
 		}
@@ -51,7 +50,6 @@ definition {
 	@priority = "5"
 	test CanCreateDM {
 		task ("User adds content") {
-
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
 				portlet = "Documents and Media");
@@ -61,12 +59,12 @@ definition {
 				dmDocumentFile = "Document_1.jpeg",
 				dmDocumentTitle = "DM Test");
 		}
-		task("Then the Documents and Media should display on the page"){
 
+		task ("Then the Documents and Media should display on the page") {
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Test");
 
 			DMDocument.viewCP(dmDocumentTitle = "DM Test");
-
 		}
 	}
+
 }
