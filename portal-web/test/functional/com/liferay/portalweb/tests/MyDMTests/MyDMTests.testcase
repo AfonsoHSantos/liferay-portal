@@ -1,61 +1,60 @@
 @component-name = "portal-document-management"
 definition {
-    property testray.main.component.name = "Document Management";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	property testray.main.component.name = "Document Management";
 
-        User.firstLoginPG();
-        
-            JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Documents and Media page");
+	setUp {
+		TestCase.setUpPortalInstance();
 
-			JSONLayout.addWidgetToPublicLayout(
-				column = "1",
-				groupName = "Guest",
-				layoutName = "Documents and Media page",
-				widgetName = "Documents and Media");
+		User.firstLoginPG();
 
-        Navigator.gotoPage(pageName = "Documents and Media page");
-    }
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media page");
 
-     tearDown {
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media page");
+	}
+
+	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
-
-        else {
-			
+		else {
 			JSONLayout.deletePublicLayout(
 				groupName = "Guest",
 				layoutName = "Documents and Media page");
 
-                DMDocument.tearDownCP();
+			DMDocument.tearDownCP();
 
-                User.logoutPG();
+			User.logoutPG();
 		}
-     }
+	}
 
-        @description = "Can Create a Documents and Media"
-            @priority = "5"
-            test CanCreateDM {
-
-           ProductMenu.gotoPortlet(
-			category = "Content & Data",																																										
+	@description = "Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
 			portlet = "Documents and Media");
 
-			DMDocument.addCP(
+		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title Cluster3");
 
-			Navigator.gotoPage(pageName = "Documents and Media page");
+		Navigator.gotoPage(pageName = "Documents and Media page");
 
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Cluster3");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Cluster3");
 
-			DMDocument.viewCP(dmDocumentTitle = "DM Document Title Cluster3");
-    }
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title Cluster3");
+	}
+
 }
