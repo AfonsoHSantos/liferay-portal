@@ -69,4 +69,45 @@ definition {
 		}
 	}
 
+	@description = "Can Edit a Documents and Media"
+    @priority = "5"
+    test CanEditDM {
+		task ("Create a new Documents and Media") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+		task ("Documents and Media should display on the page") {	
+			DMDocument.addCP(
+				dmDocumentDescription = "Document Description1",
+				dmDocumentFile = "Commerce_Blue.jpg",
+				dmDocumentTitle = "foto1");
+		}
+		task ("Edit the Documents and Media")	{			
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "foto1");
+			
+			DMDocument.editCmd(
+			dmDocumentDescriptionEdit = "Document Description2",
+			dmDocumentFileEdit = "Document_2.jpg",
+			dmDocumentTitleEdit = "foto2");
+
+			Button.clickPublish(); }
+
+		task ("Assert the Documents and Media should be edited") {
+
+			Navigator.gotoPage(pageName = "Documents and Media page");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "foto2");
+
+			DMDocument.viewCP(dmDocumentTitle = "foto2");
+		}
+		
+    	
+
+	}
+
 }
