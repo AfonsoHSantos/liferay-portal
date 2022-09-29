@@ -21,6 +21,13 @@ definition {
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 		}
+		task ("Creates new DM via API") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "For Document Viewers Eyes Only",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_4.jpg");
+		}
 	}
 
 	tearDown {
@@ -74,12 +81,12 @@ definition {
 		}
 
 		task ("Edit the DM") {
-			DMDocument.editCP(
-				dmDocumentFileEdit = "これは写真です.jpg",
-				dmDocumentFileNameEdit = "これは写真です.jpg",
-				dmDocumentTitle = "DM Document Title",
-				dmDocumentTitleEdit = "DM Document Title 2");
-		}
+				DMDocument.editCP(
+					dmDocumentFileEdit = "これは写真です.jpg",
+					dmDocumentFileNameEdit = "これは写真です.jpg",
+					dmDocumentTitle = "For Document Viewers Eyes Only",
+					dmDocumentTitleEdit = "DM Document Title 2");
+			}
 
 		task ("Validate that the DM title was really edited") {
 			Navigator.openSitePage(
@@ -87,7 +94,6 @@ definition {
 				siteName = "Guest");
 
 			DMDocument.viewPG(
-				dmDocumentDescription = "DM Document Description",
 				dmDocumentFileName = "これは写真です.jpg",
 				dmDocumentTitle = "DM Document Title 2");
 		}
