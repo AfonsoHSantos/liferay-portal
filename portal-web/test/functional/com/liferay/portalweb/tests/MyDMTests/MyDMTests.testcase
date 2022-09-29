@@ -57,7 +57,6 @@ definition {
 	@priority = "5"
 	test CanCreateDM {
 		task ("Then the Documents and Media should display on the page") {
-
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Test");
