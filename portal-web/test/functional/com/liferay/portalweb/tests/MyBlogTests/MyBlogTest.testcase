@@ -1,0 +1,80 @@
+@component-name = "portal-lima"
+definition {
+
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		task ("Makes login") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Creates a public Blog page called 'Blog test' and publish it") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blog test");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Blog test",
+				widgetName = "Blogs");
+		}
+
+		task ("Navigate to 'Blog test' page") {
+			Navigator.gotoPage(pageName = "Blog test");
+		}
+
+		task ("Add content, title and a subtitle in page") {
+			Blogs.addEntry(
+				entryContent = "First content",
+				entrySubtitle = "First subtitle",
+				entryTitle = "First head");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+		}
+
+		User.logoutPG();
+	}
+
+	@description = "Can Delete a Blog"
+	@priority = "5"
+	test CanDeleteBlog {
+		task ("Add a new entry called 'Second entry'") {
+			Blogs.addEntry(
+				entryContent = "Second entry",
+				entrySubtitle = "Second title",
+				entryTitle = "Second title");
+		}
+
+		task ("Move the 'Second entry' to Recylce") {
+			BlogsEntry.moveToRecycleBinPG(
+				assetType = "Blogs Entry",
+				entryContent = "Second entry",
+				entryTitle = "Second title");
+		}
+
+		task ("Assert that the deleted entry is not there") {
+			BlogsEntry.viewNoEntryAsGuestPG(entryTitle = "Second entry");
+		}
+
+		task ("Assert that the first entry still exist") {
+			BlogsEntry.viewEntryPG(entryTitle = "First head");
+		}
+	}
+
+}
