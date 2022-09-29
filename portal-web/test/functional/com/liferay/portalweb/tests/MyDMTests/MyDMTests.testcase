@@ -61,10 +61,9 @@ definition {
 		}
 	}
 
-
-    @description = "Can Edit a Documents and Media"
-    @priority = "5"
-    test CanEditDM {
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
 		task ("Adds a new document via user UI") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -73,9 +72,8 @@ definition {
 				dmDocumentFile = "Document_1.jpg",
 				dmDocumentTitle = "DM Document Title");
 		}
-		//Alice's Adventures in Wonderland, by Lewis Carroll.txt
 
-		task("Edit the DM"){
+		task ("Edit the DM") {
 			DMDocument.editCP(
 				dmDocumentFileEdit = "これは写真です.jpg",
 				dmDocumentFileNameEdit = "これは写真です.jpg",
@@ -93,9 +91,6 @@ definition {
 				dmDocumentFileName = "これは写真です.jpg",
 				dmDocumentTitle = "DM Document Title 2");
 		}
-		
-
-    }
-
+	}
 
 }
