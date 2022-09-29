@@ -74,9 +74,11 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		List<Role> roles = new ArrayList<>(page.getItems());
 
 		Role role1 = _addRole(randomRole());
-		Role role2 = _addRole(randomRole());
 
 		roles.add(role1);
+
+		Role role2 = _addRole(randomRole());
+
 		roles.add(role2);
 
 		page = roleResource.getRolesPage(
@@ -90,9 +92,9 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		page = roleResource.getRolesPage(
 			null, role1.getName(), Pagination.of(1, roles.size()));
 
-		List<Role> roleList = (List<Role>)page.getItems();
+		roles = (List<Role>)page.getItems();
 
-		assertEquals(role1, roleList.get(0));
+		assertEquals(role1, roles.get(0));
 	}
 
 	@Override
