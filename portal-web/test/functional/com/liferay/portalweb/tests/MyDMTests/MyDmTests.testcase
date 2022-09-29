@@ -1,0 +1,89 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		task ("Makes login and go to home page") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Navigator.openURL();
+		}
+
+		task ("Add a group based on Blank") {
+			JSONGroup.addGroup(groupName = "Guest");
+		}
+
+		task ("Create a page with a Documents and Media's widgets") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+		}
+
+		task ("Add a Document entry with uploaded file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "Document Image 1 Description",
+				dmDocumentTitle = "marketplace_icon",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "marketplace_icon.png");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "Document Image 2 Description",
+				dmDocumentTitle = "analytics-cloud",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "analytics-cloud-hero-image.png");
+		}
+
+		task ("Navigate to the Page:"Documents and Media Page" ") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			task ("Delete pages and Documents that have been created") {
+				JSONLayout.deletePublicLayout(
+					groupName = "Guest",
+					layoutName = "Documents and Media Page");
+
+				DMDocument.tearDownCP();
+
+				PagesAdmin.tearDownCP();
+
+				User.logoutPG();
+			}
+		}
+	}
+	@description = "Can Download a Documents and Media"
+    @priority = "5"
+    test CanDownloadDM {	
+		task ("Dowload the selected File") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Guest");
+
+			DMDocument.downloadCP(
+				dmDocumentTitle = "marketplace_icon",
+				dmDocumentSize = "19 KB" );
+		}
+		task ("check if the selected file was downloaded") {
+			DMDocument.assertFileNameFromTempFolder(fileName = "marketplace_icon.png");
+		}
+		task ("check if a file that wasn't selected was not downloaded") {
+			DMDocument.assertNoFileNameFromTempFolder(fileName = "analytics-cloud-hero-image.png");
+		}
+	}
+}
