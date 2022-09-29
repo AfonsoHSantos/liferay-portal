@@ -122,24 +122,40 @@ definition {
 		task ("Adds a new media document and an image to it") {
 			DMDocument.addCP(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "cleibson.jpg",
-				dmDocumentTitle = "DM Document Title");
+				dmDocumentFile = "analytics-cloud-hero-image.png",
+				dmDocumentTitle = "DM Document Title 01");
+		}
+
+		task ("Go to Document and Media in order to add") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+
+		task ("Adds a new media document and an image to it") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description 02",
+				dmDocumentFile = "Document_3.jpg",
+				dmDocumentTitle = "DM Document Title 02");
 		}
 
 		task ("Edit the existing document by changing photo, title and description") {
 			DMDocument.editCP(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentDescriptionEdit = "DM Document Description Edit",
-				dmDocumentFile = "cleibson.jpg",
-				dmDocumentFileEdit = "Document_3.png",
-				dmDocumentTitle = "DM Document Title",
+				dmDocumentFile = "analytics-cloud-hero-image.png",
+				dmDocumentFileEdit = "Commerce_Blue.jpg",
+				dmDocumentFileNameEdit = "Commerce_Blue.jpg",
+				dmDocumentTitle = "DM Document Title 01",
 				dmDocumentTitleEdit = "DM Document Title Edit");
 		}
 
 		task ("confirms that changes have been made") {
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit");
 
-			DMDocument.viewCP(dmDocumentTitle = "DM Document Title Edit");
+			DMDocument.viewCP(
+				dmDocumentTitle = "DM Document Title Edit",
+				previewImage = "Commerce_Blue.jpg");
 		}
 	}
 
