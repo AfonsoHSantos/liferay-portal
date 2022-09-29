@@ -209,6 +209,22 @@ public class OfflineOpenIdConnectSessionManager {
 		_unregisterServices();
 	}
 
+	private void _executeOnMaster(Message message) {
+		try {
+			_clusterMasterExecutor.executeOnMaster(
+				new MethodHandler(
+					MessageBusUtil.class.getDeclaredMethod(
+						"sendMessage", String.class, Message.class),
+					OpenIdConnectDestinationNames.OPENID_CONNECT_TOKEN_REFRESH,
+					message));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+	}
+
 	private AccessToken _extendOpenIdConnectSession(
 		OpenIdConnectSession openIdConnectSession) {
 
@@ -297,22 +313,6 @@ public class OfflineOpenIdConnectSessionManager {
 
 		_schedulerEngineHelper.register(
 			_tokensRefreshMessageListener, schedulerEntry, destinationName);
-	}
-
-	private void _executeOnMaster(Message message) {
-		try {
-			_clusterMasterExecutor.executeOnMaster(
-				new MethodHandler(
-					MessageBusUtil.class.getDeclaredMethod(
-						"sendMessage", String.class, Message.class),
-					OpenIdConnectDestinationNames.OPENID_CONNECT_TOKEN_REFRESH,
-					message));
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
 	}
 
 	private void _unregisterServices() {
