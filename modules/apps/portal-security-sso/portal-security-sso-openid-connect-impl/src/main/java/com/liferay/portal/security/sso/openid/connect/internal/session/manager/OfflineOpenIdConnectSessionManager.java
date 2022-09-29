@@ -205,6 +205,7 @@ public class OfflineOpenIdConnectSessionManager {
 	@Deactivate
 	protected void deactivate() {
 		_unscheduleJob();
+
 		_unregisterServices();
 	}
 
