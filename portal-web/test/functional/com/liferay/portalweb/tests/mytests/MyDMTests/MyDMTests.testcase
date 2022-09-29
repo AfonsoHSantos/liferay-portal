@@ -1,0 +1,77 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		task ("Login to the Portal") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Navigator.openURL();
+		}
+
+		task ("Add a New Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+		}
+
+		task ("Add DM Widget and navigates to to DM") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			PagesAdmin.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		task ("Add DM") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "Image from Liferay",
+				dmDocumentFile = "Document_1.jpeg",
+				dmDocumentTitle = "LiferayDM");
+		}
+
+		task ("Content Assert on the Page") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "LiferayDM");
+
+			DMDocument.viewCP(dmDocumentTitle = "LiferayDM");
+		}
+	}
+
+
+}
