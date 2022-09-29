@@ -132,7 +132,7 @@ public class OfflineOpenIdConnectSessionManager {
 					message);
 			}
 			else {
-				_sendMessageOnMaster(message);
+				_executeOnMaster(message);
 			}
 		}
 
@@ -299,7 +299,7 @@ public class OfflineOpenIdConnectSessionManager {
 			_tokensRefreshMessageListener, schedulerEntry, destinationName);
 	}
 
-	private void _sendMessageOnMaster(Message message) {
+	private void _executeOnMaster(Message message) {
 		try {
 			_clusterMasterExecutor.executeOnMaster(
 				new MethodHandler(
