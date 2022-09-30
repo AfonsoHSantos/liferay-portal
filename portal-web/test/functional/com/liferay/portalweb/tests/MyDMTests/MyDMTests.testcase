@@ -54,31 +54,28 @@ definition {
 	}
 
 	@description = "LRQA-77577.Can Delete a Documents and Media"
-    @priority = "5"
-    test CanDeleteDM {
+	@priority = "5"
+	test CanDeleteDM {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_4.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_4.jpg");
 
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_4.jpg",
-				groupName = "Guest",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_4.jpg");
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-			Navigator.gotoPage(pageName = "Documents and Media Page");
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
 
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Documents and Media");
+		DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
 
-			DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
+		DMDocument.cannotViewCP(dmDocumentTitle = "Document_2.jpg");
 
-			DMDocument.cannotViewCP(dmDocumentTitle = "Document_2.jpg");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_4.jpg");
 
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_4.jpg");
-
-			DMDocument.viewCP(dmDocumentTitle = "Document_4.jpg");
-
-    }
-
+		DMDocument.viewCP(dmDocumentTitle = "Document_4.jpg");
+	}
 
 }
