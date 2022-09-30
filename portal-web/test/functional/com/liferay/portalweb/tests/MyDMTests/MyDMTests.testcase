@@ -77,8 +77,9 @@ definition {
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
 
-			DMDocument.viewCP(dmDocumentTitle = "DM Document Title 2",
-				dmDocumentFileName = "Document_4.jpg");
+			DMDocument.viewCP(
+				dmDocumentFileName = "Document_4.jpg",
+				dmDocumentTitle = "DM Document Title 2");
 		}
 	}
 
