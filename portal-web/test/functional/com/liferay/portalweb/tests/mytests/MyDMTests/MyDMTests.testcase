@@ -1,0 +1,92 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		task ("Login to the Portal") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			Navigator.openURL();
+		}
+
+		task ("Add a New Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+		}
+
+		task ("Add DM Widget and navigates to DM") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+
+		task ("Create two Files in DM by API") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "Resolution Image",
+				dmDocumentTitle = "DM Test 1",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "high_resolution_photo.jpg");
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "Cut the Rope Image",
+				dmDocumentTitle = "DM Test 2",
+				groupName = "Guest",
+				mimeType = "image/png",
+				sourceFileName = "marketplace_icon.png");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			PagesAdmin.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		task("Go to the DM Page") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		}
+
+		task("Delete a DM") {
+			DMDocument.deleteCP(dmDocumentTitle = "DM Test 1");
+		}
+
+		task("Assert that DM Test 1 was deleted and DM Test 2 exist") {
+			DMDocument.viewNoFilesViaMG(mgDocumentTitle = "high_resolution_photo.jpg");
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Test 2");
+			DMDocument.viewCP(
+				dmDocumentTitle = "DM Test 2",
+				dmDocumentFileName = "marketplace_icon.png");
+		}
+
+	}
+
+
+}
