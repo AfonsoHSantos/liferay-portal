@@ -60,16 +60,16 @@ definition {
 	@description = "Can Delete a Documents and Media"
 	@priority = "5"
 	test CanDeleteDM {
-		 task ("Go to Portlet and upload a DM") {
-            ProductMenu.gotoPortlet(
-                category = "Content & Data",
-                portlet = "Documents and Media");
+		task ("Go to Portlet and upload a DM") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
 
-            DMDocument.addCP(
-                dmDocumentDescription = "Document Description 2",
-                dmDocumentFile = "marketplace_icon.png",
-                dmDocumentTitle = "Document Title 2");
-        }
+			DMDocument.addCP(
+				dmDocumentDescription = "Document Description 2",
+				dmDocumentFile = "marketplace_icon.png",
+				dmDocumentTitle = "Document Title 2");
+		}
 
 		task ("Delete one DM and assert that the DM was deleted") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Guest");
@@ -81,8 +81,6 @@ definition {
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Title 2");
 
 			DMDocument.viewCP(dmDocumentTitle = "Document Title 2");
-		
-
 		}
 	}
 
