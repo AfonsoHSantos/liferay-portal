@@ -44,6 +44,8 @@ definition {
 
 			DMDocument.tearDownCP();
 
+			PagesAdmin.tearDownCP();
+
 			DMFolder.tearDownCP();
 
 			User.logoutPG();
@@ -121,6 +123,30 @@ definition {
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentFileName = "これは写真です.jpg",
 				dmDocumentTitle = "DM Document Title 2");
+		}
+	}
+
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		task ("Creates new DM via API") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "2nd Document API",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "これは写真です.jpg");
+		}
+
+		task ("Download the DM file") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Guest");
+
+			DMDocument.downloadCP(
+				dmDocumentSize = "21 KB",
+				dmDocumentTitle = "For Document Viewers Eyes Only");
+		}
+
+		task ("Validate that the DM was downloaded") {
+			DMDocument.assertFileNameFromTempFolder(fileName = "Document_4.jpg");
 		}
 	}
 
