@@ -28,12 +28,12 @@ definition {
 		}
 
 		task ("Create Document and File Upload") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-			DMDocument.addCP(
-				dmDocumentDescription = "Document Description",
-				dmDocumentFile = "Document_1.jpg",
-				dmDocumentTitle = "DM Document JPG");
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document JPG",
+				groupName = "Guest",
+				mimeType = "Document_1.jpg",
+				sourceFileName = "Document_1.jpg");
 		}
 	}
 
