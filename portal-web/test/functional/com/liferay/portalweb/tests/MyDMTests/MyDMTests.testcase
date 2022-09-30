@@ -58,12 +58,21 @@ definition {
 	@priority = "5"
 	test CanDownloadDM {
 		task ("Donwloaded the file") {
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description Edit",
+				dmDocumentTitle = "DM Document JPG2",
+				groupName = "Guest",
+				mimeType = "Document_3.jpg",
+				sourceFileName = "Document_3.jpg");
+
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 
 			DMDocument.downloadPG(dmDocumentTitle = "DM Document JPG");
 
 			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
+
+			DMDocument.cannotViewCP(dmDocumentTitle = "Document_3.jpg");
 		}
 	}
-
 }
