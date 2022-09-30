@@ -35,6 +35,7 @@ definition {
 				groupName = "Guest",
 				mimeType = "image/jpeg",
 				sourceFileName = "high_resolution_photo.jpg");
+
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "Cut the Rope Image",
 				dmDocumentTitle = "DM Test 2",
@@ -68,23 +69,21 @@ definition {
 	@description = "Can Download a Documents and Media"
 	@priority = "5"
 	test CanDownloadDM {
-		task("Go to teh DM Page") {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		task ("Go to teh DM Page") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 		}
 
-		task("Download DM File") {
-		DMDocument.downloadCP(
-			dmDocumentSize = "4.2 MB",
-			dmDocumentTitle = "DM Test 1");
+		task ("Download DM File") {
+			DMDocument.downloadCP(
+				dmDocumentSize = "4.2 MB",
+				dmDocumentTitle = "DM Test 1");
 		}
 
-		task("Assert Downloaded File not Downloaded File") {
-		ImportExport.assertDownloadedFileName(
-			downloadedFile = "high_resolution_photo.jpg");
-		DMDocument.assertNoFileNameFromTempFolder(
-			fileName = "marketplace_icon.png");
-		}
+		task ("Assert Downloaded File not Downloaded File") {
+			ImportExport.assertDownloadedFileName(downloadedFile = "high_resolution_photo.jpg");
 
+			DMDocument.assertNoFileNameFromTempFolder(fileName = "marketplace_icon.png");
+		}
 	}
 
 }
