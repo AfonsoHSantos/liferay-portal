@@ -35,6 +35,7 @@ definition {
 				groupName = "Guest",
 				mimeType = "image/jpeg",
 				sourceFileName = "high_resolution_photo.jpg");
+
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "Cut the Rope Image",
 				dmDocumentTitle = "DM Test 2",
@@ -65,28 +66,28 @@ definition {
 		}
 	}
 
-
 	@description = "Can Delete a Documents and Media"
 	@priority = "5"
 	test CanDeleteDM {
-		task("Go to the DM Page") {
+		task ("Go to the DM Page") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 		}
 
-		task("Delete a DM") {
+		task ("Delete a DM") {
 			DMDocument.deleteCP(dmDocumentTitle = "DM Test 1");
 		}
 
-		task("Assert that DM Test 1 was deleted and DM Test 2 exist") {
+		task ("Assert that DM Test 1 was deleted and DM Test 2 exist") {
 			DMDocument.viewNoFilesViaMG(mgDocumentTitle = "high_resolution_photo.jpg");
+
 			Navigator.gotoPage(pageName = "Documents and Media Page");
+
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Test 2");
+
 			DMDocument.viewCP(
-				dmDocumentTitle = "DM Test 2",
-				dmDocumentFileName = "marketplace_icon.png");
+				dmDocumentFileName = "marketplace_icon.png",
+				dmDocumentTitle = "DM Test 2");
 		}
-
 	}
-
 
 }
