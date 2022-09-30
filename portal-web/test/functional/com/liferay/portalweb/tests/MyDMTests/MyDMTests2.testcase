@@ -46,6 +46,40 @@ definition {
 		}
 	}
 
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		task ("Add a document with a file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document JPG 1",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Documento 3",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_3.jpg");
+		}
+
+		task ("Go to Documents and Media") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+
+		task ("Delete and make a validation of the file who as delet and the remain") {
+			DMDocument.deleteCP(dmDocumentTitle = "Document JPG 1");
+
+			DMDocument.cannotViewCP(dmDocumentTitle = "Document JPG 1");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Documento 3");
+
+			DMDocument.viewCP(dmDocumentTitle = "Documento 3");
+		}
+	}
+
 	@description = "Can Edit a Documents and Media"
 	@priority = "5"
 	test CanEditDM {
@@ -84,37 +118,4 @@ definition {
 		}
 	}
 
-    @description = "Can Delete a Documents and Media"
-    @priority = "5"
-    test CanDeleteDM {
-        task("Add a document with a file"){
-        JSONDocument.addFileWithUploadedFile(
-                dmDocumentTitle = "Document JPG 1",
-                groupName = "Guest",
-                mimeType = "image/jpeg",
-                sourceFileName = "Document_1.jpg");
-
-                JSONDocument.addFileWithUploadedFile(
-                dmDocumentTitle = "Documento 3",
-                groupName = "Guest",
-                mimeType = "image/jpeg",
-                sourceFileName = "Document_3.jpg");
-        }
-        task("Go to Documents and Media"){
-        ProductMenu.gotoPortlet(
-                category = "Content & Data",
-                portlet = "Documents and Media");
-        }
-        task("Delete and make a validation of the file who as delet and the remain"){
-            DMDocument.deleteCP(dmDocumentTitle = "Document JPG 1");
-            DMDocument.cannotViewCP(dmDocumentTitle = "Document JPG 1");
-            DMNavigator.gotoDocumentCP(dmDocumentTitle = "Documento 3");
-            DMDocument.viewCP(dmDocumentTitle = "Documento 3");
-        }
-            
-
-            
-
-             
-    }   
 }
