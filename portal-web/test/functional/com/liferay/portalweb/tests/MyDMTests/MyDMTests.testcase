@@ -68,6 +68,41 @@ definition {
 	@description = "Can Delete a Documents and Media"
 	@priority = "5"
 	test CanDeleteDM {
+		task ("Go to Document and Media in order to add") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+
+		task ("Create a media document with description DMTest 1 jpg and add image") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DMTest 1",
+				dmDocumentFile = "Document_2.jpeg",
+				dmDocumentTitle = "DMTest 1");
+		}
+
+		task ("Go to Document and Media in order to add") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+
+		task ("Create a media document with description DMTest 2 test jpg and add image") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DMTest 2",
+				dmDocumentFile = "これは写真です.jpg",
+				dmDocumentTitle = "DMTest 2");
+		}
+
+		DMDocument.deleteCP(dmDocumentTitle = "DMTest 1");
+
+		AssertElementNotPresent(
+			entryTitle = "DMTest 1",
+			locator1 = "DMTest 1");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DMTest 2");
+
+		DMDocument.viewCP(dmDocumentTitle = "DMTest 2");
 	}
 
 	@description = "Can Download a Documents and Media"
@@ -78,6 +113,34 @@ definition {
 	@description = "Can Edit a Documents and Media"
 	@priority = "5"
 	test CanEditDM {
+		task ("Go to Document and Media in order to add") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+
+		task ("Adds a new media document and an image to it") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "cleibson.jpg",
+				dmDocumentTitle = "DM Document Title");
+		}
+
+		task ("Edit the existing document by changing photo, title and description") {
+			DMDocument.editCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentDescriptionEdit = "DM Document Description Edit",
+				dmDocumentFile = "cleibson.jpg",
+				dmDocumentFileEdit = "Document_3.png",
+				dmDocumentTitle = "DM Document Title",
+				dmDocumentTitleEdit = "DM Document Title Edit");
+		}
+
+		task ("confirms that changes have been made") {
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit");
+
+			DMDocument.viewCP(dmDocumentTitle = "DM Document Title Edit");
+		}
 	}
 
 }
