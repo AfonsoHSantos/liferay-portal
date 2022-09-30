@@ -1,65 +1,66 @@
 @component-name = "portal-document-management"
 definition {
 
-    property portal.release = "true";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Document Management";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Document Management";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        User.firstLoginPG();
+		User.firstLoginPG();
 
-        task ("Given the DM Portlet is added to the page") {
-            JSONLayout.addPublicLayout(
-                groupName = "Guest",
-                layoutName = "Documents and Media Page");
+		task ("Given the DM Portlet is added to the page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
 
-            JSONLayout.addWidgetToPublicLayout(
-                column = "1",
-                groupName = "Guest",
-                layoutName = "Documents and Media Page",
-                widgetName = "Documents and Media");
-        }
-    }
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+		}
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
-            JSONLayout.deletePublicLayout(
-                groupName = "Guest",
-                layoutName = "Documents and Media Page");
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
 
-            DMDocument.tearDownCP();
+			DMDocument.tearDownCP();
 
-            User.logoutPG();
-        }
-    }
+			User.logoutPG();
+		}
+	}
 
-    @description = "LRQA-77523. Can Create a Documents and Media"
-    @priority = "5"
-    test CanCreateDM {
-        task ("When the user create a Documents and Media (Upload the file)") {
-            ProductMenu.gotoPortlet(
-                category = "Content & Data",
-                portlet = "Documents and Media");
+	@description = "LRQA-77523. Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		task ("When the user create a Documents and Media (Upload the file)") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
 
-            DMDocument.addCP(
-                dmDocumentDescription = "DM Document Description",
-                dmDocumentFile = "Document_1.jpg",
-                dmDocumentTitle = "Document_1.jpg");
-        }
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_1.jpg",
+				dmDocumentTitle = "Document_1.jpg");
+		}
 
-        task ("Then the Documents and Media should display on the page") {
-            Navigator.gotoPage(pageName = "Documents and Media Page");
+		task ("Then the Documents and Media should display on the page") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
 
-            DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
 
-            DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
-        }
-    }
+			DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
+		}
+	}
+
 }
