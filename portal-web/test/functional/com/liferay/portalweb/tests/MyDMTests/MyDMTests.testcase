@@ -1,4 +1,4 @@
-component-name = "portal-document-management"
+@component-name = "portal-document-management"
 definition {
 
 	property testray.main.component.name = "Document Management";
@@ -51,37 +51,37 @@ definition {
 	test CanEditDM {
 		task ("via API navigate to Content & Data and saved a file in Documents and Media and then go back to Documents and Media.") {
 			JSONDocument.addFileWithUploadedFile(
-			    dmDocumentTitle = "DM Test",
-			    groupName = "Guest",
-			    mimeType = "image/jpeg",
-			    sourceFileName = "Document_2.jpeg");
-            
-				ProductMenu.gotoPortlet(
-					category = "Content & Data",
-					portlet = "Documents and Media");
+				dmDocumentTitle = "DM Test",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpeg");
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
 		}
 
 		task ("go to the edit menu on the selected file and edit the information and make a new upload") {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
-				rowEntry = "DM Test");  
-            
+				rowEntry = "DM Test");
+
 			DMDocument.editDocument(
 				dmDocumentDescription = "Document Description Two",
 				dmDocumentFile = "Document_3.jpg",
-                dmDocumentTitleEdit = "Document_3.jpg",
-				dmDocumentTitle = "DM Tests Two");
+				dmDocumentTitle = "DM Tests Two",
+				dmDocumentTitleEdit = "Document_3.jpg");
 
 			Button.clickPublish();
 		}
 
 		task ("Open the DM Tests Two file and check the edition") {
-            DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Tests Two");
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Tests Two");
 
-            DMDocument.viewCP(
-                dmDocumentTitle = "DM Tests Two",
-                previewImage = "Document_2.jpeg");
-
+			DMDocument.viewCP(
+				dmDocumentTitle = "DM Tests Two",
+				previewImage = "Document_2.jpeg");
 		}
 	}
+
 }
