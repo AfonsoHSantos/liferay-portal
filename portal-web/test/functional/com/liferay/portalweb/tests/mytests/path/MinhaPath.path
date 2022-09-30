@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>MinhaPath</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MinhaPath</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>MENU_BUTTON</td>
+	<td>//button[@data-qa-id='applicationsMenu']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTROL_PANEL</td>
+	<td>//span[contains(text(), 'Control Panel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_STRING</td>
+	<td>//h2[text()='Configuration']</td>
+	<td></td>
+</tr>
+</tbody>
+
+</table>
+</body>
+</html>

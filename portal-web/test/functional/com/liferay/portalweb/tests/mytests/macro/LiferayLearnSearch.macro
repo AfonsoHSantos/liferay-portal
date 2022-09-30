@@ -1,0 +1,23 @@
+definition {
+    
+    macro searchForTerm {
+        Click(locator1 = "LiferayLearn#SEARCH_BAR");
+
+        Type(
+            locator1 = "LiferayLearn#SEARCH_BAR",
+            value1 = "Staging");
+
+        KeyPress(
+            locator1 = "LiferayLearn#SEARCH_BAR",
+            value1 = "\ENTER");
+    }
+
+    macro assertNoResult {
+        AssertElementNotPresent(locator1 = "LiferayLearn#SEARCH_RESULTS",
+        value1 = "No Result");
+
+        AssertElementPresent(locator1 = "LiferayLearn#SEARCH_RESULTS");
+    
+    
+    }
+}
