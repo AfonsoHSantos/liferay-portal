@@ -67,6 +67,7 @@ definition {
 
 			DMDocument.editCP(
 				dmDocumentFileEdit = "Document_4.jpg",
+				dmDocumentFileNameEdit = "Document_4.jpg",
 				dmDocumentTitle = "DM Document Title",
 				dmDocumentTitleEdit = "DM Document Title 2");
 		}
@@ -76,7 +77,8 @@ definition {
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
 
-			DMDocument.viewCP(dmDocumentTitle = "DM Document Title 2");
+			DMDocument.viewCP(dmDocumentTitle = "DM Document Title 2",
+				dmDocumentFileName = "Document_4.jpg");
 		}
 	}
 
