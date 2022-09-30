@@ -59,7 +59,6 @@ definition {
 		}
 	}
 
-
 	@description = "Can Edit a Documents and Media"
 	@priority = "5"
 	test CanEditDM {
