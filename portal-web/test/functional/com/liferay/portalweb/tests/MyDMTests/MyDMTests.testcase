@@ -72,7 +72,7 @@ definition {
 
 			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
 
-			DMDocument.cannotViewCP(dmDocumentTitle = "Document_3.jpg");
+			DMDocument.assertNoFileNameFromTempFolder(filename = "Document_3.jpg");
 		}
 	}
 }
