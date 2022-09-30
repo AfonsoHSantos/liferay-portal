@@ -53,29 +53,27 @@ definition {
 		}
 	}
 
-
 	@description = "LRQA-77577. Can Edit a Documents and Media"
-    @priority = "5"
-    test CanEditDM {
-		task ("User edit DM and file"){
-		
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+	@priority = "5"
+	test CanEditDM {
+		task ("User edit DM and file") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
 
-		DMDocument.editCP(
-			dmDocumentFileEdit = "Document_1.jpeg",
-			dmDocumentTitle = "Document_2.jpg",
-			dmDocumentTitleEdit = "Document_1.jpeg");
+			DMDocument.editCP(
+				dmDocumentFileEdit = "Document_1.jpeg",
+				dmDocumentTitle = "Document_2.jpg",
+				dmDocumentTitleEdit = "Document_1.jpeg");
 		}
-		task ("Checking the edit the user"){
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
+		task ("Checking the edit the user") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpeg");
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpeg");
 
-		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpeg");
-
+			DMDocument.viewCP(dmDocumentTitle = "Document_1.jpeg");
 		}
-    }
+	}
+
 }
