@@ -19,7 +19,8 @@ definition {
 				layoutName = "Documents and Media Page",
 				widgetName = "Documents and Media");
 		}
-		task("Upload a file"){
+
+		task ("Upload a file") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document_1.jpg",
 				groupName = "Guest",
@@ -27,6 +28,7 @@ definition {
 				sourceFileName = "Document_1.jpg");
 		}
 	}
+
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
@@ -56,12 +58,15 @@ definition {
 				dmDocumentFileEdit = "Document_2.jpg",
 				dmDocumentTitle = "Document_1.jpg",
 				dmDocumentTitleEdit = "Document_2.jpg");
-			}
-		task("Assert edited file"){
+		}
+
+		task ("Assert edited file") {
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2.jpg");
 
-			DMDocument.viewCP(dmDocumentTitle = "Document_2.jpg",
-			dmDocumentFileName = "Document_1.jpg");
+			DMDocument.viewCP(
+				dmDocumentFileName = "Document_1.jpg",
+				dmDocumentTitle = "Document_2.jpg");
 		}
 	}
+
 }
