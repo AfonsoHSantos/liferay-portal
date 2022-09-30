@@ -1,0 +1,89 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		task ("Login into the portal") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a Page and add the Documents and Media widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+		}
+
+		task ("Go to Portlet and upload a DM") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Guest",
+				mimeType = "image/png",
+				sourceFileName = "analytics-cloud-hero-image.png");
+		}
+
+		task ("Go to Documents and Media Page") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			task ("Delete pages and Documents that have been created") {
+				JSONLayout.deletePublicLayout(
+					groupName = "Guest",
+					layoutName = "Documents and Media Page");
+
+				DMDocument.tearDownCP();
+
+				PagesAdmin.tearDownCP();
+
+				User.logoutPG();
+			}
+		}
+	}
+
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		 task ("Go to Portlet and upload a DM") {
+            ProductMenu.gotoPortlet(
+                category = "Content & Data",
+                portlet = "Documents and Media");
+
+            DMDocument.addCP(
+                dmDocumentDescription = "Document Description 2",
+                dmDocumentFile = "marketplace_icon.png",
+                dmDocumentTitle = "Document Title 2");
+        }
+
+		task ("Delete one DM and assert that the DM was deleted") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Guest");
+
+			DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+			DMDocument.cannotViewCP(dmDocumentTitle = "DM Document Title");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Title 2");
+
+			DMDocument.viewCP(dmDocumentTitle = "Document Title 2");
+		
+
+		}
+	}
+
+}
