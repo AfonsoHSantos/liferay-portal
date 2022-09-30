@@ -58,17 +58,18 @@ definition {
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_2.jpg");
 		}
+
 		task ("When the User delete a document and media") {
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
 				portlet = "Documents and Media");
 
 			DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
-			
 		}
+
 		task ("Then Document_1.jpg should not exist And Document_2.jpg should exist") {
 			DMDocument.cannotViewCP(dmDocumentTitle = "Document_1.jpg");
-			
+
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2.jpg");
 
 			DMDocument.viewCP(dmDocumentTitle = "Document_2.jpg");
