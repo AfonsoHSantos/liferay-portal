@@ -1,0 +1,87 @@
+component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		task ("Open the portal and log in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("create a page and add a Documents and Media widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+		}
+
+		task ("navigate to the Documents and Media page") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			DMDocument.tearDownCP();
+
+			PagesAdmin.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+		task ("via API navigate to Content & Data and saved a file in Documents and Media and then go back to Documents and Media.") {
+			JSONDocument.addFileWithUploadedFile(
+			    dmDocumentTitle = "DM Test",
+			    groupName = "Guest",
+			    mimeType = "image/jpeg",
+			    sourceFileName = "Document_2.jpeg");
+            
+				ProductMenu.gotoPortlet(
+					category = "Content & Data",
+					portlet = "Documents and Media");
+		}
+
+		task ("go to the edit menu on the selected file and edit the information and make a new upload") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "DM Test");  
+            
+			DMDocument.editDocument(
+				dmDocumentDescription = "Document Description Two",
+				dmDocumentFile = "Document_3.jpg",
+                dmDocumentTitleEdit = "Document_3.jpg",
+				dmDocumentTitle = "DM Tests Two");
+
+			Button.clickPublish();
+		}
+
+		task ("Open the DM Tests Two file and check the edition") {
+            DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Tests Two");
+
+            DMDocument.viewCP(
+                dmDocumentTitle = "DM Tests Two",
+                previewImage = "Document_2.jpeg");
+
+		}
+	}
+}
