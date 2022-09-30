@@ -1,0 +1,82 @@
+@component-name = "portal-document-management"
+definition {
+
+    property testray.main.component.name = "Document Management";
+
+    setUp {
+        task ("Open the portal and log in") {
+            TestCase.setUpPortalInstance();
+
+            User.firstLoginPG();
+        }
+
+        task ("create a page and add a Documents and Media widget") {
+            JSONLayout.addPublicLayout(
+                groupName = "Guest",
+                layoutName = "Documents and Media Page");
+
+            JSONLayout.addWidgetToPublicLayout(
+                column = "1",
+                groupName = "Guest",
+                layoutName = "Documents and Media Page",
+                widgetName = "Documents and Media");
+        }
+
+        task ("navigate to the Documents and Media page") {
+            Navigator.gotoPage(pageName = "Documents and Media Page");
+        }
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        else {
+            JSONLayout.deletePublicLayout(
+                groupName = "Guest",
+                layoutName = "Documents and Media Page");
+
+            DMDocument.tearDownCP();
+
+            PagesAdmin.tearDownCP();
+            
+            User.logoutPG();
+             
+            }
+        }
+    @description = "Can Delete a Documents and Media"
+    @priority = "5"
+    test CanDeleteDM {
+
+    task ("add 2 files and navigate to Documents and Media"){
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Test",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpeg");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Test Second",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+        ProductMenu.gotoPortlet(
+            category = "Content & Data",
+            portlet = "Documents and Media");
+        }
+    task("delete one of the files and check if it has been deleted"){
+        DMDocument.deleteCP(dmDocumentTitle = "DM Test Second");
+        
+        DMDocument.cannotViewCP(dmDocumentTitle = "DM Test Second");
+        }
+    task("opens and checks if the second file remains"){
+        DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Test");
+        
+        DMDocument.viewCP(dmDocumentTitle = "DM Test");
+        }
+
+    }
+}
