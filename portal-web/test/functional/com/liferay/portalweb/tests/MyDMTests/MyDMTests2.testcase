@@ -1,0 +1,84 @@
+@component-name = "portal-document-management"
+definition {
+
+    property testray.main.component.name = "Document Management";
+
+    setUp {
+        task ("go to portal and make login") {
+            TestCase.setUpPortalInstance();
+
+            User.firstLoginPG();
+        }
+
+        task ("Add a layout of Documents and Media page on guest and one widget") {
+            JSONLayout.addPublicLayout(
+                groupName = "Guest",
+                layoutName = "Documents and Media page");
+
+            JSONLayout.addWidgetToPublicLayout(
+                column = "1",
+                groupName = "Guest",
+                layoutName = "Documents and Media page",
+                widgetName = "Documents and Media");
+        }
+
+        task ("Go to page Documents and Media page") {
+            Navigator.gotoPage(pageName = "Documents and Media page");
+        }
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        else {
+            JSONLayout.deletePublicLayout(
+                groupName = "Guest",
+                layoutName = "Documents and Media page");
+
+            DMDocument.tearDownCP();
+
+            PagesAdmin.tearDownCP();
+
+            User.logoutPG();
+        }
+    }
+    @description = "Can Edit a Documents and Media"
+    @priority = "5"
+    test CanEditDM {
+        task ("Create a page and upload a document for API and go to Documents and Media") {
+            JSONDocument.addFileWithUploadedFile(
+                dmDocumentTitle = "Document JPG 2",
+                groupName = "Guest",
+                mimeType = "image/jpeg",
+                sourceFileName = "Document_1.jpg");
+
+            ProductMenu.gotoPortlet(
+                category = "Content & Data",
+                portlet = "Documents and Media");
+        }
+
+        task ("Go to the document entry, edit the document file and publish") {
+            LexiconEntry.gotoEntryMenuItem(
+                menuItem = "Edit",
+                rowEntry = "Document JPG 2");
+
+            DMDocument.editDocument(
+                dmDocumentDescription = "Document 2 editado",
+                dmDocumentFile = "Document_3.jpg",
+                dmDocumentFileNameEdit = "Document_3.jpg",
+                dmDocumentTitle = "Document of test two");
+
+            Button.clickPublish();
+        }
+
+        task ("Open the documents and assert the entry") {
+            DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document of test two");
+
+            DMDocument.viewCP(
+                dmDocumentTitle = "Document of test two",
+                previewImage = "Document_1.jpg");
+        }
+    }
