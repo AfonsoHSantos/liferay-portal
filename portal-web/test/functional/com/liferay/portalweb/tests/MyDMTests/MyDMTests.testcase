@@ -58,20 +58,21 @@ definition {
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_2.jpg");
 		}
+
 		task ("When the user download document from Document_1") {
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
 				portlet = "Documents and Media");
-            
-            DMDocument.downloadCP(
-			    dmDocumentSize = "13 KB",
-			    dmDocumentTitle = "Document_1.jpg");
-                
+
+			DMDocument.downloadCP(
+				dmDocumentSize = "13 KB",
+				dmDocumentTitle = "Document_1.jpg");
 		}
+
 		task ("Then the file that was downloaded must be from Document_1 and Document_2 file should not be downloaded") {
 			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
-            
-            DMDocument.assertNoFileNameFromTempFolder(translationFileName = "Document_2.jpg");
+
+			DMDocument.assertNoFileNameFromTempFolder(translationFileName = "Document_2.jpg");
 		}
 	}
 
