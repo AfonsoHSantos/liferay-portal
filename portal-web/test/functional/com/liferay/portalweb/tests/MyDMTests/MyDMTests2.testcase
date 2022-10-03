@@ -1,0 +1,178 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		task ("go to portal and make login") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a layout of Documents and Media page on guest and one widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media page",
+				widgetName = "Documents and Media");
+		}
+
+		task ("Go to page Documents and Media page") {
+			Navigator.gotoPage(pageName = "Documents and Media page");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media page");
+
+			DMDocument.tearDownCP();
+
+			PagesAdmin.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		task ("Go to Documents and Media add a documentfile") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "Document Description",
+				dmDocumentFile = "Document_2.jpg",
+				dmDocumentTitle = "Document JPG 2");
+		}
+
+		task ("Go to the document entry and assert the document file") {
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document JPG 2");
+
+			DMDocument.viewCP(dmDocumentTitle = "Document JPG 2");
+		}
+	}
+
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		task ("Add a document with a file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document JPG 1",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Documento 3",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_3.jpg");
+		}
+
+		task ("Go to Documents and Media") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+
+		task ("Delete and make a validation of the file who as delet and the remain") {
+			DMDocument.deleteCP(dmDocumentTitle = "Document JPG 1");
+
+			DMDocument.cannotViewCP(dmDocumentTitle = "Document JPG 1");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Documento 3");
+
+			DMDocument.viewCP(dmDocumentTitle = "Documento 3");
+		}
+	}
+
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		task ("Add a document with a file") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document JPG 1",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Documento 2",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+		}
+
+		task ("Go to Documents and Media") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+
+		task ("Download the Documento of DM 1") {
+			DMDocument.downloadCP(
+				dmDocumentSize = "13 KB",
+				dmDocumentTitle = "Document JPG 1");
+		}
+
+		task ("assert the DM 1 as Download and DM 2 not") {
+			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
+
+			DMDocument.assertNoFileNameFromTempFolder(fileName = "Document_2.jpg");
+		}
+	}
+
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+		task ("Create a page and upload a document for API and go to Documents and Media") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document JPG 2",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+
+		task ("Go to the document entry, edit the document file and publish") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Document JPG 2");
+
+			DMDocument.editDocument(
+				dmDocumentDescription = "Document 2 editado",
+				dmDocumentFile = "Document_3.jpg",
+				dmDocumentFileNameEdit = "Document_3.jpg",
+				dmDocumentTitle = "Document of test two");
+
+			Button.clickPublish();
+		}
+
+		task ("Open the documents and assert the entry") {
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document of test two");
+
+			DMDocument.viewCP(
+				dmDocumentTitle = "Document of test two",
+				previewImage = "Document_1.jpg");
+		}
+	}
+
+}
