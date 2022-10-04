@@ -1,0 +1,81 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		task ("Set up instance and login") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add Documents and Media Page and Widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+		task ("Go to Documents and Media Page") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		}
+
+		task ("Add image to Documents and Media widget") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DMTest",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Change image file, title and description") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.editCP(
+				dmDocumentDescription = "DM Document Description Edited",
+				dmDocumentFileEdit = "marketplace_icon.png",
+				dmDocumentFileNameEdit = "marketplace_icon.png",
+				dmDocumentTitle = "DMTest",
+				dmDocumentTitleEdit = "DMTestEdited");
+		}
+
+		task ("Assert that image and title were edited") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DMTestEdited");
+
+			DMDocument.viewCP(
+				dmDocumentFileName = "marketplace_icon.png",
+				dmDocumentTitle = "DMTestEdited");
+		}
+	}
+
+}
