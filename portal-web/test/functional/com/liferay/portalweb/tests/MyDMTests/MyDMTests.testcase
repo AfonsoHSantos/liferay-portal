@@ -73,13 +73,15 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Guest");
 
 			DMDocument.downloadCP(
-			dmDocumentSize = "133 KB",
-			dmDocumentTitle = "DM Document Title");
+				dmDocumentSize = "133 KB",
+				dmDocumentTitle = "DM Document Title");
 		}
+
 		task ("Assert if one DM was downloaded and the other not") {
 			DMDocument.assertFileNameFromTempFolder(fileName = "analytics-cloud-hero-image.png");
+
 			DMDocument.assertNoFileNameFromTempFolder(fileName = "marketplace_icon.png");
-		} 
+		}
 	}
 
 }
