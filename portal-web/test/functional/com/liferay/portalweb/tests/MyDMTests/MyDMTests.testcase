@@ -1,46 +1,54 @@
 @component-name = "portal-document-management"
 definition {
 
-	property testray.main.component.name = "Document Management";
+    property testray.main.component.name = "Document Management";
 
-	setUp {
-		TestCase.setUpPortalInstance();
+    setUp {
+        TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+        User.firstLoginPG();
 
-		task ("Creates a new page and adds a DM widget in it via API") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Documents and Media Page");
+        task ("Creates a new page and adds a DM widget in it via API") {
+            JSONLayout.addPublicLayout(
+                groupName = "Guest",
+                layoutName = "Documents and Media Page");
 
-			JSONLayout.addWidgetToPublicLayout(
-				column = "1",
-				groupName = "Guest",
-				layoutName = "Documents and Media Page",
-				widgetName = "Documents and Media");
+            JSONLayout.addWidgetToPublicLayout(
+                column = "1",
+                groupName = "Guest",
+                layoutName = "Documents and Media Page",
+                widgetName = "Documents and Media");
 
-			Navigator.gotoPage(pageName = "Documents and Media Page");
-		}
-	}
+            Navigator.gotoPage(pageName = "Documents and Media Page");
+        }
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+        task ("Creates new DM via API") {
+            JSONDocument.addFileWithUploadedFile(
+                dmDocumentTitle = "For Document Viewers Eyes Only",
+                groupName = "Guest",
+                mimeType = "image/jpeg",
+                sourceFileName = "Document_4.jpg");
+        }
+    }
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONLayout.deletePublicLayout(
-				groupName = "Guest",
-				layoutName = "Documents and Media Page");
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-			DMDocument.tearDownCP();
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+        else {
+            JSONLayout.deletePublicLayout(
+                groupName = "Guest",
+                layoutName = "Documents and Media Page");
 
-			DMFolder.tearDownCP();
+            DMDocument.tearDownCP();
 
-			User.logoutPG();
-		}
-	}
+            DMFolder.tearDownCP();
+
+            User.logoutPG();
+        }
+    }
 
 	@description = "Can Create a Documents and Media"
 	@priority = "5"
@@ -73,8 +81,6 @@ definition {
 				dmDocumentTitle = "DM Document Title");
 		}
 
-		// Alice's Adventures in Wonderland, by Lewis Carroll.txt
-
 		task ("Edit the DM") {
 			DMDocument.editCP(
 				dmDocumentFileEdit = "これは写真です.jpg",
@@ -94,5 +100,30 @@ definition {
 				dmDocumentTitle = "DM Document Title 2");
 		}
 	}
+
+	@description = "Can Delete a Documents and Media"
+    @priority = "5"
+    test CanDeleteDM {
+		task ("Creates new DM via API") {
+            JSONDocument.addFileWithUploadedFile(
+                dmDocumentTitle = "DM Document Title",
+                groupName = "Guest",
+                mimeType = "image/jpeg",
+                sourceFileName = "Document_1.jpg");
+
+				DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Guest");
+        }
+
+        task ("Delete the API's DM, validate that it was really deleted and validate that the UI DM still exists") {
+            DMDocument.deleteCP(dmDocumentTitle = "For Document Viewers Eyes Only");
+
+            DMDocument.cannotViewCP(dmDocumentTitle = "For Document Viewers Eyes Only");
+
+            DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+            DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+        }
+    }
+
 
 }
