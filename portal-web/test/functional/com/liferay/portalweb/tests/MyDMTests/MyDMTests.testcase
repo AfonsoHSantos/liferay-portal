@@ -82,6 +82,8 @@ definition {
 			DMDocument.viewCP(
 				dmDocumentFile = "Document_1.jpg",
 				dmDocumentTitle = "DM Document JPG");
+
+			DMDocument.cannotViewCP(dmDocumentTitle = "Document_3.jpg");
 		}
 	}
 
