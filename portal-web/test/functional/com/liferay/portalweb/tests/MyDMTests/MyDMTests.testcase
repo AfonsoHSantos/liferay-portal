@@ -28,7 +28,7 @@ definition {
 				widgetName = "Documents and Media");
 
 			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
+				dmDocumentDescription = "DM Image Description",
 				dmDocumentTitle = "Document_2.jpg",
 				groupName = "Guest",
 				mimeType = "image/jpeg",
@@ -62,17 +62,21 @@ definition {
 				portlet = "Documents and Media");
 
 			DMDocument.editCP(
-				dmDocumentFileEdit = "Document_1.jpeg",
+				dmDocumentFileEdit = "Document_1.png",
+				dmDocumentFileNameEdit = "Document_1.png",
 				dmDocumentTitle = "Document_2.jpg",
-				dmDocumentTitleEdit = "Document_1.jpeg");
+				dmDocumentTitleEdit = "Document_1edit.png");
 		}
 
 		task ("Checking the edit the user") {
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpeg");
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1edit.png");
 
-			DMDocument.viewCP(dmDocumentTitle = "Document_1.jpeg");
+			DMDocument.viewCP(
+				dmDocumentFile = "Document_1.png",
+				dmDocumentFileName = "Document_1.png",
+				dmDocumentTitle = "Document_1edit.png");
 		}
 	}
 
