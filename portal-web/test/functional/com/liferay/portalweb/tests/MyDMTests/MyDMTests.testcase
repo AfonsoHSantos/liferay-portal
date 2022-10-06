@@ -1,93 +1,87 @@
 @component-name = "portal-document-management"
 definition {
 
-    property custom.properties = "default.layout.template.id=1_column${line.separator}dl.actions.visible=true";
-    property portal.release = "true";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Document Management";
+	property custom.properties = "default.layout.template.id=1_column${line.separator}dl.actions.visible=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Document Management";
 
-    var pageName = "Documents and Media Page";
-    var portletName = "Documents and Media";
+	var pageName = "Documents and Media Page";
+	var portletName = "Documents and Media";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        User.firstLoginPG();
+		User.firstLoginPG();
 
-        task ("DM Portlet is added to the page") {
-            JSONLayout.addPublicLayout(
-                groupName = "Guest",
-                layoutName = "Documents and Media Page");
-        }
+		task ("DM Portlet is added to the page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+		}
 
-        task ("Create a Documents and Media 1 and 2 (Upload the file)") {
-            JSONLayout.addWidgetToPublicLayout(
-                column = "1",
-                groupName = "Guest",
-                layoutName = "Documents and Media Page",
-                widgetName = "Documents and Media");
+		task ("Create a Documents and Media 1 and 2 (Upload the file)") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
 
-            JSONDocument.addFileWithUploadedFile(
-                dmDocumentDescription = "DM Document Description",
-                dmDocumentTitle = "Document 1",
-                groupName = "Guest",
-                mimeType = "image/jpg",
-                sourceFileName = "Document_1.jpg");
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document 1",
+				groupName = "Guest",
+				mimeType = "image/jpg",
+				sourceFileName = "Document_1.jpg");
 
-           JSONDocument.addFileWithUploadedFile(
-                dmDocumentDescription = "DM Document Description",
-                dmDocumentTitle = "Document 2",
-                groupName = "Guest",
-                mimeType = "image/jpg",
-                sourceFileName = "Document_2.jpg");
-        }
-    }
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document 2",
+				groupName = "Guest",
+				mimeType = "image/jpg",
+				sourceFileName = "Document_2.jpg");
+		}
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
-            DMDocument.tearDownCP();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
 
-            JSONLayout.deletePublicLayout(
-                groupName = "Guest", 
-                layoutName = "Documents and Media Page");
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
 
-            User.logoutPG();
-        }
-    }
+			User.logoutPG();
+		}
+	}
 
-    @description = "LRQA-77579. Can Download a Documents and Media"
-    @priority = "5"
-    test CanDownloadDM {
-    
-       task ("Go to the page DM"){
-            Navigator.gotoPage(pageName = "Documents and Media Page");
+	@description = "LRQA-77579. Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		task ("Go to the page DM") {
+			Navigator.gotoPage(pageName = "Documents and Media Page");
 
-            DMDocument.enableActionsMenuOnPortlet();
-        }
+			DMDocument.enableActionsMenuOnPortlet();
+		}
 
-        task("Downloading the first image"){
-		   DMDocument.downloadCP(
-                dmDocumentSize = "13 KB",
-                dmDocumentTitle = "Document 1");
+		task ("Downloading the first image") {
+			DMDocument.downloadCP(
+				dmDocumentSize = "13 KB",
+				dmDocumentTitle = "Document 1");
+		}
 
-        }
+		task ("Image 1 file should not be downloaded") {
+			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
+		}
 
-        task ("Image 1 file should not be downloaded"){
-            DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
-        
-	    }
-
-         task ("DMTest2 file should not be downloaded"){
-            DMDocument.assertNoFileNameFromTempFolder(translationFileName = "Document_2.jpg");        
-	    }
-
-
-        
-    }
+		task ("DMTest2 file should not be downloaded") {
+			DMDocument.assertNoFileNameFromTempFolder(translationFileName = "Document_2.jpg");
+		}
+	}
 
 }
