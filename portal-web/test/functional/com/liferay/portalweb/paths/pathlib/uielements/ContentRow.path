@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ENTRY_CHOOSE</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//span[contains(.,'Choose')]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//h1[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 <tr>
