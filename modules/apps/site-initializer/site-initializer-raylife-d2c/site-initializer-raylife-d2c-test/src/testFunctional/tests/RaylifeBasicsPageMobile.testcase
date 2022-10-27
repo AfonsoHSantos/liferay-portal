@@ -42,6 +42,7 @@ definition {
 	@description = "LPS-146557 - Verify if Continue Button is only enabled when has a valid email in 'Business Email'. Smartphone)"
 	@priority = "4"
 	test CanContinueWithBusinessEmailFilledPhone {
+		property test.name.skip.portal.instance = "RaylifeBasicPageMobile#CanContinueWithBusinessEmailFilledPhone";
 		SetWindowSize(value1 = "360,720");
 
 		ApplicationsMenu.gotoSite(siteName = "${testSiteName}");
