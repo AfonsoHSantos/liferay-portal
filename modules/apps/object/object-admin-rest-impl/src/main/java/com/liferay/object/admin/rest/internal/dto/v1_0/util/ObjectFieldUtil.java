@@ -63,6 +63,10 @@ public class ObjectFieldUtil {
 			return 0;
 		}
 
+		if (objectField.getListTypeDefinitionId() != null) {
+			return objectField.getListTypeDefinitionId();
+		}
+
 		ListTypeDefinition listTypeDefinition =
 			listTypeDefinitionLocalService.
 				fetchListTypeDefinitionByExternalReferenceCode(
