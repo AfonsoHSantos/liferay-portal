@@ -1,0 +1,31 @@
+@component-name = "OSB Site Initializer Partner Portal"
+definition {
+
+	property custom.properties = "feature.flag.LPS-135430=true";
+	property osgi.modules.includes = "osb-site-initializer-partner-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Partner Portal";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	test TestApi {
+		var requestID = JSONPRM.addMDF(
+			campaignDescription = "Desc API",
+			campaignName = "Name API",
+			goalsOptions = "Thought leadership",
+			targetMarketOptions = "Professional Services (Technical/Web/IT)",
+			targetRolesOptions = "Director/Manager");
+
+		var activityID = JSONPRM.addActivity(
+			activityDescription = "Description 1",
+			activityName = "Activity 1",
+			requestId = ${requestID});
+	}
+
+}

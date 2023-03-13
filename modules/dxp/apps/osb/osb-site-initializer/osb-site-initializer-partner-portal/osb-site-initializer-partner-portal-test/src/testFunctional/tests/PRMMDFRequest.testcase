@@ -69,18 +69,16 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Partner Portal");
-
-			Account.tearDownCP();
-		}
-	}
+	//tearDown {
+	//	var testPortalInstance = PropsUtil.get("test.portal.instance");
+	//	if (${testPortalInstance} == "true") {
+	//		PortalInstances.tearDownCP();
+	//}
+	//	else {
+	//		JSONGroup.deleteGroupByName(groupName = "Partner Portal");
+	//		Account.tearDownCP();
+	//}
+	//}
 
 	@description = "This is a test for LPS-172917. Verify that If there are multiple activities, the review page will display them as dropdown items that can be expandable"
 	@priority = 5
