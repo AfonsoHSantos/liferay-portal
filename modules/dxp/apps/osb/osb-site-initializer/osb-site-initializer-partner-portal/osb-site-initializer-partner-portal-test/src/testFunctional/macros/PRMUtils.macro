@@ -14,6 +14,12 @@ definition {
 			locator1 = "Header#H1_TITLE");
 	}
 
+	macro click {
+		ClickNoError(
+			key_text = ${button},
+			locator1 = "Button#ANY");
+	}
+
 	@summary = "Define object permission to a role"
 	macro definePermission {
 		ApplicationsMenu.gotoPortlet(
@@ -62,12 +68,6 @@ definition {
 		if (IsElementPresent(locator1 = "PRMUtils#SIGN_IN")) {
 			Click(locator1 = "PRMUtils#SIGN_IN");
 		}
-	}
-
-	macro click {
-		ClickNoError(
-			key_text = ${button},
-			locator1 = "Button#ANY");
 	}
 
 	@summary = "Publish an object"
