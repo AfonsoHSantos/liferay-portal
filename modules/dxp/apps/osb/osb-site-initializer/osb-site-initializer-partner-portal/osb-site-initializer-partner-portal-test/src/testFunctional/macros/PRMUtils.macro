@@ -31,7 +31,7 @@ definition {
 			key_roleName = ${roleName},
 			locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
 
-		Button.clickSave();
+		PRMUtils.clickSave();
 	}
 
 	macro downloadFileViaCurl {
@@ -62,6 +62,12 @@ definition {
 		if (IsElementPresent(locator1 = "PRMUtils#SIGN_IN")) {
 			Click(locator1 = "PRMUtils#SIGN_IN");
 		}
+	}
+
+	macro click {
+		ClickNoError(
+			key_text = ${button},
+			locator1 = "Button#ANY");
 	}
 
 	@summary = "Publish an object"
