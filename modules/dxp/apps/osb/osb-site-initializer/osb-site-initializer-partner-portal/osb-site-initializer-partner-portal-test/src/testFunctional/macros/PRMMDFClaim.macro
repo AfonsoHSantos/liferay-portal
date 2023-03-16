@@ -10,7 +10,7 @@ definition {
 			var budgetIndex = 0;
 		}
 
-		Button.click(button = "New Claim");
+		PRMUtils.click(button = "New Claim");
 
 		WaitForPageLoad();
 
@@ -61,7 +61,7 @@ definition {
 			locator1 = "PRMMDFClaim#UPLOAD_FIELD",
 			value1 = ${reimbursementInvoice});
 
-		Button.click(button = "Submit");
+		PRMUtils.click(button = "Submit");
 	}
 
 	@summary = "Get the claim ID by index"

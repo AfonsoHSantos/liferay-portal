@@ -104,7 +104,7 @@ definition {
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 		}
 
 		task ("And I add two activities") {
@@ -119,7 +119,7 @@ definition {
 				targetOfLeads = "test",
 				typeOfActivity = "Miscellaneous Marketing");
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 
 			PRMMDFRequest.newActivity(
 				activityDescription = "Activity Description",
@@ -133,11 +133,11 @@ definition {
 				targetOfLeads = "test",
 				typeOfActivity = "Miscellaneous Marketing");
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 		}
 
 		task ("When I go to the MDF Review Page") {
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 		}
 
 		task ("And when I click on the first acitivity") {
@@ -215,7 +215,7 @@ definition {
 		}
 
 		task ("When I click on the 'Export MDF Report' button") {
-			Button.click(button = "Export MDF Report");
+			PRMUtils.click(button = "Export MDF Report");
 		}
 
 		task ("Then the information of the visible MDF's will be inside the exported file") {
@@ -245,7 +245,7 @@ definition {
 		}
 
 		task ("Then the Continue button will be clickable") {
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 		}
 
 		task ("When I don't fill all mandatory fields on the MDF Request") {
@@ -296,7 +296,7 @@ definition {
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 		}
 
 		task ("And I add an activity and fill it with my information") {
@@ -441,7 +441,7 @@ definition {
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 		}
 
 		task ("And when I go to activity page") {
@@ -554,7 +554,7 @@ definition {
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 		}
 
 		task ("When a new activity is added") {
@@ -612,7 +612,7 @@ definition {
 				targetMarketOptions = ${targetMarketOptions},
 				targetRolesOptions = ${targetRolesOptions});
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 
 			PRMMDFRequest.newActivity(
 				activityDescription = ${activityDescription},
@@ -625,9 +625,9 @@ definition {
 				targetOfLeads = ${targetOfLeads},
 				typeOfActivity = ${typeOfActivity});
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 		}
 
 		task ("Then all inputted information are displayed on Review Page") {
@@ -672,7 +672,7 @@ definition {
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 		}
 
 		task ("And when I got to activity page") {
@@ -707,7 +707,7 @@ definition {
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 		}
 
 		task ("When the user goes to add a new activity") {

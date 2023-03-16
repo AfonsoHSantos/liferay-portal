@@ -123,7 +123,7 @@ definition {
 				targetMarketOptions = "Education,Energy",
 				targetRolesOptions = "Administrator");
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 
 			PRMMDFRequest.newActivity(
 				activityDescription = "Activity Description",
@@ -136,7 +136,7 @@ definition {
 				targetOfLeads = "test",
 				typeOfActivity = "Miscellaneous Marketing");
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 
 			PRMMDFRequest.newActivity(
 				activityDescription = "Activity Description",
@@ -150,11 +150,11 @@ definition {
 				targetOfLeads = "test",
 				typeOfActivity = "Miscellaneous Marketing");
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 
-			Button.click(button = "Continue");
+			PRMUtils.click(button = "Continue");
 
-			Button.click(button = "Submit");
+			PRMUtils.click(button = "Submit");
 		}
 
 		task ("And given that the manager user is logged in and goes to MDF listing page") {
@@ -203,7 +203,7 @@ definition {
 		}
 
 		task ("When I export all visible MDF's") {
-			Button.click(button = "Export MDF Claim");
+			PRMUtils.click(button = "Export MDF Claim");
 		}
 
 		task ("Then the information about the visible MDF's will be inside the exported file") {

@@ -50,7 +50,7 @@ definition {
 			targetMarketOptions = ${targetMarketOptions},
 			targetRolesOptions = ${targetRolesOptions});
 
-		Button.click(button = "Continue");
+		PRMUtils.click(button = "Continue");
 
 		PRMMDFRequest.newActivity(
 			activityDescription = ${activityDescription},
@@ -63,13 +63,13 @@ definition {
 			targetOfLeads = ${targetOfLeads},
 			typeOfActivity = ${typeOfActivity});
 
-		Button.click(button = "Continue");
+		PRMUtils.click(button = "Continue");
 
-		Button.click(button = "Continue");
+		PRMUtils.click(button = "Continue");
 
 		ScrollWebElementIntoView(locator1 = "Button#SUBMIT");
 
-		Button.click(button = "Submit");
+		PRMUtils.click(button = "Submit");
 
 		WaitForPageLoad();
 

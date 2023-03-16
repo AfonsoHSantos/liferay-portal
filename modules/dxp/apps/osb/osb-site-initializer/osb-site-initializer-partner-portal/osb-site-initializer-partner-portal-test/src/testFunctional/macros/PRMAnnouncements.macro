@@ -10,7 +10,7 @@ definition {
 			content = ${announcementBody},
 			fieldLabel = "Body");
 
-		Button.click(button = "Publish");
+		PRMUtils.click(button = "Publish");
 
 		Alert.viewSuccessMessage();
 	}
