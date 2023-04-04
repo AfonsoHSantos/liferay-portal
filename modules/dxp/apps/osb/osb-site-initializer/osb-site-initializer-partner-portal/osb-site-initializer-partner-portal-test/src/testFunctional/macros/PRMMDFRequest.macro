@@ -384,6 +384,95 @@ definition {
 			value1 = "\RETURN");
 	}
 
+	@summary = "View the activity information on MDF Review Page"
+	macro viewActivityInReviewPage {
+		Click(
+			key_textButton = ${activityName},
+			locator1 = "PRMMDFRequest#TEXT_BUTTON");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Activity name",
+			key_fieldValue = ${activityName},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "Activity name",
+			key_fieldValue = ${activityName},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Type of Activity",
+			key_fieldValue = ${typeOfActivity},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "Type of Activity",
+			key_fieldValue = ${typeOfActivity},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Tactic",
+			key_fieldValue = ${tactic},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "Tactic",
+			key_fieldValue = ${tactic},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Marketing activity",
+			key_fieldValue = ${activityDescription},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "Marketing activity",
+			key_fieldValue = ${activityDescription},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Start Date",
+			key_fieldValue = ${startDate},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertTextEquals.assertPartialText(
+			key_fieldName = "Start Date",
+			key_fieldValue = ${startDate},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD",
+			value1 = ${startDate});
+
+		ScrollWebElementIntoView(
+			key_fieldName = "End Date",
+			key_fieldValue = ${endDate},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertTextEquals.assertPartialText(
+			key_fieldName = "End Date",
+			key_fieldValue = ${endDate},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD",
+			value1 = ${endDate});
+
+		ScrollWebElementIntoView(
+			key_fieldName = ${expenseOption},
+			key_fieldValue = ${bugdetValue},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = ${expenseOption},
+			key_fieldValue = ${bugdetValue},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Is a lead list an outcome of this activity?",
+			key_fieldValue = ${leadList},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "Is a lead list an outcome of this activity?",
+			key_fieldValue = ${leadList},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+	}
+
 	@summary = "Assert button is not clickable"
 	macro viewDisabledButton {
 		AssertElementPresent(
