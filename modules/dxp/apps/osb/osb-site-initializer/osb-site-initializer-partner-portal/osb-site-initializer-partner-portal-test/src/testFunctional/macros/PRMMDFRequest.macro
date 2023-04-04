@@ -507,6 +507,79 @@ definition {
 		FileUtil.delete("${directoryPath}/${fileName}");
 	}
 
+	@summary = "View the goals information on MDF Review Page"
+	macro viewGoalsInReviewPage {
+		ScrollWebElementIntoView(
+			key_fieldName = "Company Name",
+			key_fieldValue = ${accountName},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "Company Name",
+			key_fieldValue = ${accountName},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Region",
+			key_fieldValue = ${countryName},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "Region",
+			key_fieldValue = ${countryName},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Provide the name of the campaign",
+			key_fieldValue = ${campaignName},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "Provide the name of the campaign",
+			key_fieldValue = ${campaignName},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Provide a short description of the overall campaign",
+			key_fieldValue = ${campaignDescription},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "Provide a short description of the overall campaign",
+			key_fieldValue = ${campaignDescription},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Liferay business/sales goals",
+			key_fieldValue = ${goalsOptions},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "Liferay business/sales goals",
+			key_fieldValue = ${goalsOptions},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Target Market(s)",
+			key_fieldValue = ${targetMarketOptions},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "Target Market(s)",
+			key_fieldValue = ${targetMarketOptions},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		ScrollWebElementIntoView(
+			key_fieldName = "Target Audience/Role",
+			key_fieldValue = ${targetRolesOptions},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "Target Audience/Role",
+			key_fieldValue = ${targetRolesOptions},
+			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
+	}
+
 	@summary = "Verify the fills done by the user on the Campaign Information"
 	macro viewMDFActivityDetails {
 		Click(
