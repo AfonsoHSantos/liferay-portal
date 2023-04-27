@@ -476,7 +476,7 @@ definition {
 		property test.name.skip.portal.instance = "PRMMDFClaim#TotalClaimAmountReflectsBudgetValue";
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
-		
+
 		task ("Given that the manager goes to the created MDF and approve it") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
