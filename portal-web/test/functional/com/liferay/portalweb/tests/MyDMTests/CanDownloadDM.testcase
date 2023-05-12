@@ -1,0 +1,64 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Add a DM page and widget, upload a jpg file.") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1.jpg",
+				groupName = "Guest",
+				mimeType = "image/jpg",
+				sourceFileName = "Document_1.jpg");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		task ("Upload another file and then download it") {
+			DMDocument.addCP(
+				dmDocumentDescription = "Document Description",
+				dmDocumentFile = "Document_2.jpg",
+				dmDocumentTitle = "Document_2.jpg");
+
+			DMDocument.downloadCP(
+				dmDocumentSize = "30 KB",
+				dmDocumentTitle = "Document_2.jpg");
+
+			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
+		}
+	}
+
+}
