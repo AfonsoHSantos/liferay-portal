@@ -25,6 +25,11 @@ definition {
 			JSONUser.addUser(
 				userEmailAddress = "partner@liferay.com",
 				userFirstName = "partner",
+		
+		
+		
+		
+		
 				userLastName = "partner",
 				userScreenName = "partner");
 
