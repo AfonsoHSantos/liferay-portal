@@ -227,11 +227,7 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Given that the manager creates a new claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferay.com",
-				userLoginFullName = "cmm");
-
+		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
@@ -242,11 +238,15 @@ definition {
 				thirdInvoice = "Document_1.jpg");
 
 			task ("The Claim ID is saved in a variable") {
-				PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+				var staticClaimId1 = PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
 			}
 		}
 
 		task ("When the manager goes to the created claim in 'Pending Marketing Review' status") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
+
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
 
