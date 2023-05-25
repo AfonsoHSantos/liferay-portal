@@ -8,6 +8,14 @@ definition {
 		JSONPRMAPI.addAccountEntry(accountName = ${accountName});
 	}
 
+	macro updateAccount {
+		if (!(isSet(accountName))) {
+			var accountName = "Company Name 1";
+		}
+
+		JSONPRMAPI.updateAccountEntry(accountName = ${accountName});
+	}
+
 	macro changeClaimStatus {
 		var statusKey = StringUtil.lowerCaseFirstLetter(${claimStatus});
 
