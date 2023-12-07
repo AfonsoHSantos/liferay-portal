@@ -1,0 +1,162 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		task ("Access the portal and log in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a documentmedia page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+		}
+
+		task ("In column 1 add a public layout page and confirm by navigating to it") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+
+			Navigator.openURL();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+		}
+	}
+
+	@description = "Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {
+		task ("Go to Document and Media in order to add") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+
+		task ("Create a media document with description DM Liferay logo test jpg and add image") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Liferay logo test jpg",
+				dmDocumentFile = "Document_2.jpeg",
+				dmDocumentTitle = "DM Liferay logo jpg");
+		}
+
+		task ("confirms the creation of the page by the title and shows the image") {
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Liferay logo jpg");
+
+			DMDocument.viewCP(dmDocumentTitle = "DM Liferay logo jpg");
+		}
+	}
+
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		task ("Go to Document and Media in order to add") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+
+		task ("Create a media document with description DMTest 1 jpg and add image") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DMTest 1",
+				dmDocumentFile = "Document_2.jpeg",
+				dmDocumentTitle = "DMTest 1");
+		}
+
+		task ("Go to Document and Media in order to add") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+
+		task ("Create a media document with description DMTest 2 test jpg and add image") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DMTest 2",
+				dmDocumentFile = "これは写真です.jpg",
+				dmDocumentTitle = "DMTest 2");
+		}
+
+		DMDocument.deleteCP(dmDocumentTitle = "DMTest 1");
+
+		AssertElementNotPresent(
+			entryTitle = "DMTest 1",
+			locator1 = "DMTest 1");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DMTest 2");
+
+		DMDocument.viewCP(dmDocumentTitle = "DMTest 2");
+	}
+
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+	}
+
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+		task ("Go to Document and Media in order to add") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+
+		task ("Adds a new media document and an image to it") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "analytics-cloud-hero-image.png",
+				dmDocumentTitle = "DM Document Title 01");
+		}
+
+		task ("Go to Document and Media in order to add") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+		}
+
+		task ("Adds a new media document and an image to it") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description 02",
+				dmDocumentFile = "Document_3.jpg",
+				dmDocumentTitle = "DM Document Title 02");
+		}
+
+		task ("Edit the existing document by changing photo, title and description") {
+			DMDocument.editCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentDescriptionEdit = "DM Document Description Edit",
+				dmDocumentFile = "analytics-cloud-hero-image.png",
+				dmDocumentFileEdit = "Commerce_Blue.jpg",
+				dmDocumentFileNameEdit = "Commerce_Blue.jpg",
+				dmDocumentTitle = "DM Document Title 01",
+				dmDocumentTitleEdit = "DM Document Title Edit");
+		}
+
+		task ("confirms that changes have been made") {
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit");
+
+			DMDocument.viewCP(
+				dmDocumentTitle = "DM Document Title Edit",
+				previewImage = "Commerce_Blue.jpg");
+		}
+	}
+
+}
