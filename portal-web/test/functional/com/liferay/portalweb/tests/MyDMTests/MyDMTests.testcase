@@ -1,0 +1,78 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given the DM Portlet is added to the page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+		}
+
+		task ("When the user create a Documents and Media (Upload the file)") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1.jpg",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			DMDocument.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "LRQA-77525. Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+		task ("When the User edits the Documents and Media (Change DM name and the file)") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.editCP(
+				dmDocumentFileEdit = "Document_2.jpg",
+				dmDocumentFileNameEdit = "Document_22.jpg",
+				dmDocumentTitle = "Document_1.jpg",
+				dmDocumentTitleEdit = "Document_2.jpg");
+		}
+
+		task ("Then the Documents and Media should be edited") {
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2.jpg");
+
+			DMDocument.viewCP(
+				dmDocumentFile = "Document_2.jpg",
+				dmDocumentFileName = "Document_22.jpg",
+				dmDocumentTitle = "Document_2.jpg");
+		}
+	}
+
+}
